@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -24,15 +24,15 @@
 		<property name="source" value="xmlfile"></property>
 		<property name="configFiles" value="menuconfig/menu-config-custdir.xml" />
 		<!-- <property name="source" value="database"></property> -->
-	        <property name="repositoryId" value="SAMPLE-MENU"></property>
+    <property name="repositoryId" value="APPLICATION-MENU"></property>
 		<property name="useAjax" value="true" />
 	</bean>
-	<!-- <bean id="iframe4.jsf.MenuValidator" class="com.ncs.iframe4.jsf.component.menu.util.DefaultMenuValidator" 
+	<!-- <bean id="iframe4.jsf.MenuValidator" class="com.ncs.iframe4.jsf.component.menu.util.DefaultMenuValidator"
 		scope="request"> </bean> -->
 	<bean id="iframe4.jsf.MenuValidator" class="com.ncs.itrust4.jsf.component.menu.util.MenuValidator">
 	</bean>
 
-	<bean id="commonPageLayout" class="com.ncs.iframe4.jsf.component.menu.util.CommonPageLayout" scope="session">		
+	<bean id="commonPageLayout" class="com.ncs.iframe4.jsf.component.menu.util.CommonPageLayout" scope="session">
 		<property name="mainIncludePage" value="/xhtml/common/Welcome.xhtml"></property>
 	</bean>
 
