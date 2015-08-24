@@ -5,14 +5,20 @@ import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 
 public interface DepartmentService {
 
+  // Create
   public DepartmentTO add(DepartmentTO department);
 
-  public DepartmentTO update(DepartmentTO department);
-
-  public DepartmentTO delete(DepartmentTO department);
-
+  // Read
   public ListAndPagingInfo<DepartmentTO> findByName(String name);
 
   public DepartmentTO findById(String id);
+
+  //Update
+  public DepartmentTO update(DepartmentTO department);
+
+  // Delete
+  public DepartmentTO delete(DepartmentTO department);
+
+
 
 }
