@@ -21,11 +21,6 @@
 
 	<!-- Page Controller begin -->
 
-
-
-
-
-
 	<bean id="conversationManager"
 		class="com.ncs.iframe4.jsf.scope.web.conversation.ConversationManager">
 		<property name="conversationTimeout" value="3600000"></property>
