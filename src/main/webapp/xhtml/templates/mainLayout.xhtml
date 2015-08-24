@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ncs="http://iconnect.ncs.com.sg/jsf/iframe"
+      xmlns:it="http://iconnect.ncs.com.sg/jsf/itrust"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <ui:insert name="pageTitle"/>
+    <p:messages id="globalMessages" showDetail="true" showSummary="false" autoUpdate="true" closable="true"/>
+    <br/>
+    <ui:insert name="content"/>
+    <p:ajaxStatus style="width:240px;height:64px;position:fixed;margin-left:30%;top:300px">
+        <f:facet name="start">
+            <p:panel header="Please wait.." style="width:240px;">
+                <p:graphicImage value="/resources/images/ajaxloadingbar.gif"/>
+            </p:panel>
+        </f:facet>
+
+        <f:facet name="complete">
+            <h:outputText value=""/>
+        </f:facet>
+    </p:ajaxStatus>
+
+</ui:composition>

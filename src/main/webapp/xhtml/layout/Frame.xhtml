@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <h:outputStylesheet library="css" name="custom-pf-dataTable.css"/>
+    <h:outputStylesheet library="primefaces" name="fileupload/fileupload.css" />
+	<h:outputScript library="primefaces" name="fileupload/fileupload.js"/>
+    <f:loadBundle basename="com.ncs.iframe4.jsf.i18n.SampleMessages" var="msgItruest"/>
+    <f:view contentType="text/html; charset=utf-8"/>
+</h:head>
+
+<h:body>
+    <div>
+        <ui:include src="/xhtml/common/Header.xhtml"/>
+    </div>
+    <div style="float:left;width:200px;margin-left:2px">
+        <ui:include src="/xhtml/common/MenuList.xhtml"/>
+    </div>
+    <div style="margin-left:202px;margin-top:2px">
+    	<p:outputPanel id="main">
+    		<aa:checkACL var="mainCheckACL" scope="request" resPath="#{commonPageLayout.mainIncludePage}" resType="URI"/>
+    		<p:outputPanel rendered="#{mainCheckACL==true}">
+    			<ui:include src="#{commonPageLayout.mainIncludePage}" />
+    		</p:outputPanel>
+			<p:outputPanel rendered="#{mainCheckACL==false}">
+				<ui:include src="/xhtml/itrust/403_Error.xhtml" />
+			</p:outputPanel>			
+		</p:outputPanel>
+    </div>
+</h:body>
+</html>

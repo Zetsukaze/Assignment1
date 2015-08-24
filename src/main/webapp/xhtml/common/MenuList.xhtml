@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:url="http://itrust.ncs.com/itrust-jsf/navigationpath"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ifm="http://iconnect.ncs.com.sg/jsf/iframe"
+	xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust">
+
+	<div class="ui-widget"><br />
+	<h:outputLabel value="#{msg['title.currentuser']}: "
+		style="color:#222222;" /> <h:outputLabel
+		style="color:red;font-weight:bold">
+		<aa:info name="UserFullName"></aa:info>
+	</h:outputLabel> <br />
+	<br />
+	</div>
+	<h:form>
+		<!-- type="sliding" sliding tiered -->
+		<p:panelMenu model="#{menuSupport.showModel}" style="width:180px" />
+		<br />
+		<br />
+		<aa:login type="link"
+			loginPath="#{url:outcome('/xhtml/itrust/loginForm')}"
+			loginText="#{msg['button.login']}"
+			logoutPath="#{url:outcome('/xhtml/itrust/logout.faces')}"
+			logoutText="#{msg['button.logout']}" target="_parent"></aa:login>
+		<br />
+		<br />
+		<ifm:locale type="href" newline="true"
+			onsuccess="window.parent.document.location='#{url:outcome('/xhtml/layout/Frame')}'" />
+	</h:form>
+	<script>
+	$(document).ready(function() {
+		document.title = "iFrame Sample";
+	});
+</script>
+</ui:composition>

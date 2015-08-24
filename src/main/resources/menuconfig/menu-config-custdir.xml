@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+<Menus name="SAMPLE-MENU">
+<!-- if you change property file name. note update new property file name in faces-config.xml <resource-bundle>
+and system-infrastructure-config.xml<bean id="messageSource"/>
+-->
+	<Menu name="Course Menu" title="title.course.menu" description="no use">
+		<Item name="Maintain Contact" title="title.contact" location="/xhtml/common/Welcome.xhtml" target=":main"/>
+	</Menu>
+</Menus>
+
+</MenuConfig>
+
