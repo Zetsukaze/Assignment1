@@ -8,7 +8,7 @@
 	<description>Assignment 1 Application</description>
 
 	<properties>
-		<context.path>/iframe-blank</context.path>
+		<context.path>/assignment1</context.path>
 	</properties>
 	<build>
 		<finalName>assignment1</finalName>
