@@ -1,38 +1,49 @@
 package com.ncs.iframe.course.department.service;
 
+import com.ncs.iframe.course.department.dao.DepartmentDAO;
 import com.ncs.iframe.course.department.to.DepartmentTO;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 
 public class DepartmentServiceImpl implements DepartmentService {
 
-  @Override
-  public DepartmentTO add(DepartmentTO department) {
-    // TODO Auto-generated method stub
-    return null;
+  private DepartmentDAO departmentDAO;
+
+  // Getters
+
+  public DepartmentDAO getDepartmentDAO() {
+    return departmentDAO;
   }
 
-  @Override
-  public DepartmentTO update(DepartmentTO department) {
-    // TODO Auto-generated method stub
-    return null;
+  // Setters
+
+  public void setDepartmentDAO(DepartmentDAO departmentDAO) {
+    this.departmentDAO = departmentDAO;
   }
 
-  @Override
-  public DepartmentTO delete(DepartmentTO department) {
-    // TODO Auto-generated method stub
-    return null;
+  // Create
+  public DepartmentTO add(DepartmentTO dept) {
+    departmentDAO.save(dept);
+    return dept;
   }
 
-  @Override
+  // Read
   public ListAndPagingInfo<DepartmentTO> findByName(String name) {
-    // TODO Auto-generated method stub
-    return null;
+    return departmentDAO.findByName(name);
   }
 
-  @Override
   public DepartmentTO findById(String id) {
-    // TODO Auto-generated method stub
-    return null;
+    DepartmentTO dept = departmentDAO.findById(id);
+    return dept;
+  }
+
+  // Update
+  public DepartmentTO update(DepartmentTO dept) {
+    DepartmentTO updated = departmentDAO.update(dept);
+    return updated;
+  }
+
+  public void delete(DepartmentTO dept) {
+    departmentDAO.delete(dept);
   }
 
 }

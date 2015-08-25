@@ -19,6 +19,8 @@ public class DepartmentTO implements Serializable {
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @Column(name = "id")
   private String id;
+
+
   @Column(name="dept_name")
   private String name;
   @Column(name="dept_desc")
@@ -26,10 +28,9 @@ public class DepartmentTO implements Serializable {
   @Version
   private Integer version;
 
-
   // Getters
 
-  public String getID() {
+  public String getId() {
     return id;
   }
 
@@ -41,17 +42,24 @@ public class DepartmentTO implements Serializable {
     return desc;
   }
 
-  // Setters
-
-  public void setID(String id) {
-    this.id = id;
+  public Integer getVersion() {
+    return version;
   }
 
+  // Setters
+
+  public void setId(String id) {
+    this.id = id;
+  }
   public void setName(String name) {
     this.name = name;
   }
 
   public void setDesc(String desc) {
     this.desc = desc;
+  }
+
+  public void setVersion(Integer version) {
+    this.version = version;
   }
 }

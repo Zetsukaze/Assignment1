@@ -1,21 +1,21 @@
-package com.ncs.iframe.course.department.service;
+package com.ncs.iframe.course.department.dao;
 
 import com.ncs.iframe.course.department.to.DepartmentTO;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 
-public interface DepartmentService {
+public interface DepartmentDAO {
 
   // Create
-  public DepartmentTO add(DepartmentTO department);
+  public void save(DepartmentTO dept);
 
   // Read
   public ListAndPagingInfo<DepartmentTO> findByName(String name);
 
   public DepartmentTO findById(String id);
 
-  //Update
-  public DepartmentTO update(DepartmentTO department);
+  // Update
+  public DepartmentTO update(DepartmentTO dept);
 
   // Delete
-  public void delete(DepartmentTO department);
+  public void delete(DepartmentTO dept);
 }

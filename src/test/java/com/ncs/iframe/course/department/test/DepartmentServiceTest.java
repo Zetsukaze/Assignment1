@@ -34,25 +34,46 @@ public class DepartmentServiceTest {
 
   @Test
   public void testCRUD() {
+    // Create
     DepartmentTO dept = new DepartmentTO();
-    dept.setID("testID");
     dept.setName("testName");
     dept.setDesc("testDesc");
     dept = deptSvc.add(dept);
 
     assertNotNull(dept);
+    assertNotNull(dept.getId());
+
+    // Update
+    dept.setName("testUpdateName");
+    dept = deptSvc.update(dept);
+    dept = deptSvc.findById(dept.getId());
+    assertNotNull(dept);
+    assertNotNull("testUpdateName", dept.getName());
   }
 
   @Test
   public void testFindByName() {
-    DepartmentTO dept = new DepartmentTO();
-    dept.setID("testID");
-    dept.setName("testName");
-    dept.setDesc("testDesc");
-    dept = deptSvc.add(dept);
-    ListAndPagingInfo<DepartmentTO> result = deptSvc.findByName("testName");
+    // Create
+    DepartmentTO dept1 = new DepartmentTO();
+    dept1.setName("test1");
+    dept1.setDesc("testDesc1");
+    dept1 = deptSvc.add(dept1);
 
-    assertNotNull(result);
+    DepartmentTO dept2 = new DepartmentTO();
+    dept2.setName("test2");
+    dept2.setDesc("testDesc2");
+    dept2 = deptSvc.add(dept2);
+
+    // Full match test
+    ListAndPagingInfo<DepartmentTO> result1 = deptSvc.findByName("test1");
+    assertNotNull(result1);
+    assertNotNull(result1.getResult());
+    assert(result1.getResult().size() > 0);
+
+    // Partial match
+    ListAndPagingInfo<DepartmentTO> result2 = deptSvc.findByName("testN");
+    assertNotNull(result2);
+    assertNotNull(result2.getResult());
+    assert(result2.getResult().size() > 0);
   }
-
 }

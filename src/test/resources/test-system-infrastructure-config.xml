@@ -13,7 +13,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-		
+
     <!-- For Transparent Exception Translation-->
     <bean id="persistenceExceptionInterceptor" class="org.springframework.dao.support.PersistenceExceptionTranslationInterceptor"/>
 
@@ -57,6 +57,7 @@
                 <value>com.ncs.iframe4.hibernate.audit.entity</value>
                 <value>com.ncs.iframe4.jsf.component.menu.to</value>
                 <value>com.ncs.iframe4.jsf.component.codelookup.entity</value>
+                <value>com.ncs.iframe.course.department.to</value>
             </list>
         </property>
 
@@ -115,7 +116,7 @@
     <bean id="iframeTableAuditInterceptor" class="com.ncs.iframe4.hibernate.interceptor.IframeTableAuditInterceptor"/>
 
     <bean id="auditFuncInterceptor" class="com.ncs.iframe4.hibernate.audit.func.AuditFuncNameInterceptor"/>
-    
+
     <aop:config>
         <aop:advisor advice-ref="auditFuncInterceptor" pointcut="execution(* *..bean.*Bean+.*(..))"/>
     </aop:config>
@@ -127,25 +128,25 @@
     </jdbc:embedded-database>-->
 
 
-	<!-- 2. Datasource JNDI lookup definition      	
+	<!-- 2. Datasource JNDI lookup definition
 	<jee:jndi-lookup id="iconnectDS" jndi-name="jdbc/iconnectDS"
 		lookup-on-startup="false" proxy-interface="javax.sql.DataSource"
 		cache="true" resource-ref="true" />
 -->
 
-    <!-- 3. Datasource JNDI lookup definition for jboss 
+    <!-- 3. Datasource JNDI lookup definition for jboss
        <jee:jndi-lookup id="iconnectDS" jndi-name="jdbc/iconnectDS"
    		lookup-on-startup="false" proxy-interface="javax.sql.DataSource"
    		cache="true" resource-ref="false" />-->
-	
+
 	<!-- 4. Direct JDBC Connection without Connection Pooling --><!---->
 	<bean id="iconnectDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/iconnect"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/assignment1"/>
         <property name="username" value="root"/>
         <property name="password" value="password"/>
     </bean>
-   
+
     <bean class="com.ncs.iframe4.commons.config.IFrameBeans"/>
 
 </beans>
