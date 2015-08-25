@@ -2,16 +2,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>war</packaging>
 	<groupId>com.ncs.iconnect.iframe</groupId>
-	<artifactId>assignment1</artifactId>
+	<artifactId>iframe-ryanlimwr</artifactId>
 	<name>Assignment 1</name>
 	<version>1.0</version>
-	<description>Assignment 1 Application</description>
+	<description>iFrame RyanLimWR Assignment 1 Application</description>
 
 	<properties>
-		<context.path>/assignment1</context.path>
+		<context.path>/iframe-ryanlimwr</context.path>
 	</properties>
 	<build>
-		<finalName>assignment1</finalName>
+		<finalName>iframe-ryanlimwr</finalName>
         <plugins>
             <plugin>
 				<groupId>org.mortbay.jetty</groupId>
