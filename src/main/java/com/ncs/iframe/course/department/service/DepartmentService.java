@@ -17,5 +17,5 @@ public interface DepartmentService {
   public DepartmentTO update(DepartmentTO department);
 
   // Delete
-  public void delete(DepartmentTO department);
+  public void delete(DepartmentTO[] department);
 }

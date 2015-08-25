@@ -42,8 +42,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     return updated;
   }
 
-  public void delete(DepartmentTO dept) {
-    departmentDAO.delete(dept);
+  public void delete(DepartmentTO[] departments) {
+    if (departments != null && departments.length > 0) {
+      for (int i = 0; i < departments.length; i++) {
+        DepartmentTO department = departments[i];
+        this.getDepartmentDAO().delete(department);
+      }
+    }
   }
 
 }

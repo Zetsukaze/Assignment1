@@ -104,7 +104,7 @@ public class DepartmentFormBean {
         return listAndPagingInfo;
       }
 
-      public DepartmentTO[] getRowData(String rowKey) {
+      public DepartmentTO getRowData(String rowKey) {
         if (listAndPagingInfo != null) {
           List<DepartmentTO> list = listAndPagingInfo.getResult();
           for (int i = 0; i < list.size(); i++) {
@@ -114,20 +114,18 @@ public class DepartmentFormBean {
               return departmentTO;
             }
           }
-        } else {
-          return null;
         }
+        return null;
+      }
+      public Object getRowKey(DepartmentTO object) {
+        return object.getId();
+      }
+    };
 
-        public Object getRowKey(DepartmentTO object) {
-          return object.getId();
-        }
-      };
-
-      int size = refreshedLazyDataModel.getPageSize();
-      int pageSize = (size == 0) ? 1 : size;
-      refreshedLazyDataModel.initialWrappedData(0, pageSize);
-      this.departmentList = refreshedLazyDataModel;
-    }
+    int size = refreshedLazyDataModel.getPageSize();
+    int pageSize = (size == 0) ? 1 : size;
+    refreshedLazyDataModel.initialWrappedData(0, pageSize);
+    this.departmentList = refreshedLazyDataModel;
   }
 
   // Update
