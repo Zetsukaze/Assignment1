@@ -12,26 +12,28 @@
 
   <ui:define name="content">
     <h:form id="department_create_form">
-      <div class="entry">
-        <table width="200" border="0">
-          <tr>
-            <td>
-              <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
-            </td>
-            <td>
-              <p:inputText id="name" value="#{addDepartmentBean.department.name}" required="true" label="#{msg['label.department.name']}" maxlength="100">
-              </p:inputText>
-            </td>
-          </tr>
-          <tr>
-            <td><h:outputText value="#{msg['label.department.desc']}" style="width:150px" /></td>
-            <td>
-              <p:inputText id="desc" value="#{addDepartmentBean.department.desc}" label="#{msg['label.department.desc']}" maxlength="200">
-              </p:inputText>
-            </td>
-          </tr>
-        </table>
-      </div>
+      <p:panel id="departmentInformation" header="#{msg['label.department.information']}">
+        <div class="entry">
+          <table width="200" border="0">
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.department.mandatory.name']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+              </td>
+              <td>
+                <p:inputText id="name" value="#{addDepartmentBean.department.name}" required="true" label="#{msg['label.department.mandatory.name']}" maxlength="100">
+                </p:inputText>
+              </td>
+            </tr>
+            <tr>
+              <td><h:outputText value="#{msg['label.department.desc']}" style="width:150px" /></td>
+              <td>
+                <p:inputText id="desc" value="#{addDepartmentBean.department.desc}" label="#{msg['label.department.desc']}" maxlength="200">
+                </p:inputText>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </p:panel>
       <table class="std_table">
         <tr>
           <td><p:commandButton value="#{msg['button.add']}"
