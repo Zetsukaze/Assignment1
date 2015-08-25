@@ -130,11 +130,11 @@ public class DepartmentFormBean {
 
   // Update
 
-  public void initEditContact(String departmentId) {
+  public void initEditDepartment(String departmentId) {
     this.dept = this.getDepartmentService().findById(departmentId);
   }
 
-  public void updateContact() {
+  public void updateDepartment() {
     this.dept = getDepartmentService().update(dept);
     JSFTools.processMessage(MESSAGE_PROPS, "msg.sample.updatesuccess", FacesMessage.SEVERITY_INFO);
   }
