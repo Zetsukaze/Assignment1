@@ -15,7 +15,7 @@ import com.ncs.iframe4.jsf.util.JSFTools;
 
 public class DepartmentFormBean {
 
-  private static final String MESSAGE_PROPS = "com.ncs.iframe4.jsf.il8n.SampleMessages";
+  private static final String MESSAGE_PROPS = "com.ncs.iframe4.jsf.i18n.SampleMessages";
   private LazyDataModel<DepartmentTO> departmentList;
   private DepartmentTO[] selectedDepartments;
   private DepartmentService deptSvc;

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i="http://iconnect.ncs.com.sg/jsf/iframe"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/xhtml/templates/mainLayout.xhtml">
+
+  <ui:define name="content">
+      <i:codesCollection var="codeList1" codeType="contact" scope="session" locale="#{facesContext.getViewRoot().locale.language}"/>
+      <h:form id="department_create_form">
+        <div class="entry">
+          <table width="200" border="0">
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+              </td>
+              <td>
+                <p:inputText id="name" value="#{addDepartmentBean.department.name}" required="true" label="#{msg['label.department.name']}" maxlength="100">
+                </p:inputText>
+              </td>
+            </tr>
+            <tr>
+              <td><h:outputText value="#{msg['label.department.desc']}" style="width:150px" /></td>
+              <td>
+                <p:inputText id="desc" value="#{addDepartmentBean.department.desc}" label="#{msg['label.department.desc']}" maxlength="200">
+                </p:inputText>
+              </td>
+            </tr>
+          </table>
+        </div>
+      <table class="std_table">
+        <tr>
+          <td><p:commandButton value="#{msg['button.add']}"
+            action="#{addDepartmentBean.addDepartmentProcess()}"
+            update="department_create_form,:globalMessages"
+            />
+            &nbsp;&nbsp;
+            <p:commandButton
+            value="#{msg['button.cancel']}" update=":main" immediate="true">
+            <f:setPropertyActionListener value="/xhtml/department/list.xhtml"
+              target="#{commonPageLayout.mainIncludePage}" />
+          </p:commandButton></td>
+        </tr>
+      </table>
+    </h:form>
+  </ui:define>
+</ui:composition>
