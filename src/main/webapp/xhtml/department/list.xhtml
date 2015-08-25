@@ -37,36 +37,28 @@
       </p:commandButton>
       <br></br>
       <br/>
-      <p:dataTable id="searchDeptResult"
-        value="#{searchDepartmentBean.departmentList}" var="department"
-        paginator="true" rows="10"
-        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-        selection="#{searchDepartmentBean.selectedDepartments}"
-        rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd"
-        emptyMessage="#{msgs['msg.no.matching.records']}"
-        paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true"
-        editable="false">
+      <p:dataTable id="searchDeptResult" value="#{searchDepartmentBean.departmentList}" var="department" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selection="#{searchDepartmentBean.selectedDepartments}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msgs['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo" sortBy="#{department.name}" sortOrder="ASCENDING">
         <p:ajax event="rowEdit" update="@this"
           listener="#{searchDepartmentBean.departmentRowEdit}" />
         <p:column selectionMode="multiple">
         </p:column>
-        <p:column headerText="#{msg['label.department.name']}">
+        <p:column headerText="#{msg['label.department.serialno']}">
+          <p:cellEditor>
+            <f:facet name="output">
+              <h:outputText value="#{serialNo + 1}" />
+            </f:facet>
+            <f:facet name="input">
+              <p:inputText value="#{serialNo + 1}" />
+            </f:facet>
+          </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{msg['label.department.name']}" sortBy="#{department.name}">
           <p:cellEditor>
             <f:facet name="output">
               <h:outputText value="#{department.name}" />
             </f:facet>
             <f:facet name="input">
               <p:inputText value="#{department.name}" />
-            </f:facet>
-          </p:cellEditor>
-        </p:column>
-        <p:column headerText="#{msg['label.department.desc']}">
-          <p:cellEditor>
-            <f:facet name="output">
-              <h:outputText value="#{department.desc}" />
-            </f:facet>
-            <f:facet name="input">
-              <p:inputText value="#{department.desc}" />
             </f:facet>
           </p:cellEditor>
         </p:column>

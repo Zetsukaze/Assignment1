@@ -11,28 +11,28 @@
   template="/xhtml/templates/mainLayout.xhtml">
 
   <ui:define name="content">
-      <i:codesCollection var="codeList1" codeType="contact" scope="session" locale="#{facesContext.getViewRoot().locale.language}"/>
-      <h:form id="department_create_form">
-        <div class="entry">
-          <table width="200" border="0">
-            <tr>
-              <td>
-                <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
-              </td>
-              <td>
-                <p:inputText id="name" value="#{addDepartmentBean.department.name}" required="true" label="#{msg['label.department.name']}" maxlength="100">
-                </p:inputText>
-              </td>
-            </tr>
-            <tr>
-              <td><h:outputText value="#{msg['label.department.desc']}" style="width:150px" /></td>
-              <td>
-                <p:inputText id="desc" value="#{addDepartmentBean.department.desc}" label="#{msg['label.department.desc']}" maxlength="200">
-                </p:inputText>
-              </td>
-            </tr>
-          </table>
-        </div>
+    <i:codesCollection var="codeList1" codeType="contact" scope="session" locale="#{facesContext.getViewRoot().locale.language}"/>
+    <h:form id="department_create_form">
+      <div class="entry">
+        <table width="200" border="0">
+          <tr>
+            <td>
+              <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+            </td>
+            <td>
+              <p:inputText id="name" value="#{addDepartmentBean.department.name}" required="true" label="#{msg['label.department.name']}" maxlength="100">
+              </p:inputText>
+            </td>
+          </tr>
+          <tr>
+            <td><h:outputText value="#{msg['label.department.desc']}" style="width:150px" /></td>
+            <td>
+              <p:inputText id="desc" value="#{addDepartmentBean.department.desc}" label="#{msg['label.department.desc']}" maxlength="200">
+              </p:inputText>
+            </td>
+          </tr>
+        </table>
+      </div>
       <table class="std_table">
         <tr>
           <td><p:commandButton value="#{msg['button.add']}"
