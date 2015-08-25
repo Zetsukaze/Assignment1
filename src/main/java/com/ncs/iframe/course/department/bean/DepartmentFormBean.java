@@ -90,9 +90,9 @@ public class DepartmentFormBean {
   public void addDepartmentProcess() {
     try {
       DepartmentTO addition = deptSvc.add(this.dept);
-      this.dept = new DepartmentTO();
       if (addition != null) {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.added", FacesMessage.SEVERITY_INFO);
+        this.dept = new DepartmentTO();
       } else {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
       }
@@ -143,8 +143,17 @@ public class DepartmentFormBean {
   }
 
   public void updateDepartment() {
-    this.dept = getDepartmentService().update(dept);
-    JSFTools.processMessage(MESSAGE_PROPS, "msg.sample.updatesuccess", FacesMessage.SEVERITY_INFO);
+    DepartmentTO updated = deptSvc.update(this.dept);
+    try {
+      if (updated != null) {
+        JSFTools.processMessage(MESSAGE_PROPS, "msg.department.updatesuccess", FacesMessage.SEVERITY_INFO);
+        this.dept = new DepartmentTO();
+      } else {
+        JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
+      }
+    } catch (Exception e) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.adderror", FacesMessage.SEVERITY_ERROR);
+    }
   }
 
   // Delete

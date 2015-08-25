@@ -51,8 +51,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   // Update
   public DepartmentTO update(DepartmentTO dept) {
-    DepartmentTO updated = departmentDAO.update(dept);
-    return updated;
+    boolean hasDuplicate = false;
+    List<DepartmentTO> duplicateList = departmentDAO.findByName(dept.getName()).getResult();
+    for (int i = 0; i < duplicateList.size(); i ++) {
+      DepartmentTO duplicate = duplicateList.get(i);
+      if (duplicate.getName().equals(dept.getName())) {
+        hasDuplicate = true;
+      }
+    }
+    if (!hasDuplicate) {
+      DepartmentTO updated = departmentDAO.update(dept);
+      return updated;
+    }
+    return null;
   }
 
   public void delete(DepartmentTO[] departments) {
