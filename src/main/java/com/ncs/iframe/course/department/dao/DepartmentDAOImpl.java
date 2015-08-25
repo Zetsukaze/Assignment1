@@ -36,7 +36,7 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
     if (!StringUtil.isEmptyString(name)) {
       criteria.add(
         Restrictions.like("name", name, MatchMode.ANYWHERE)
-      ));
+      );
     }
 
     if (PaginationContext.getPaginationSortOrderData() != null && PaginationContext.getPaginationSortOrderData().getSortValue() == null) {
