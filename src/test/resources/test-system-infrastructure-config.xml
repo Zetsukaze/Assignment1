@@ -142,7 +142,7 @@
 	<!-- 4. Direct JDBC Connection without Connection Pooling --><!---->
 	<bean id="iconnectDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/assignment1"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/ryanlimwr"/>
         <property name="username" value="root"/>
         <property name="password" value="password"/>
     </bean>
