@@ -2,7 +2,7 @@ drop table if exists tbl_departments;
 
 create table tbl_departments (
 	id varchar (32) not null,
-  dept_name varchar (100) not null,
+  dept_name varchar (100) not null unique,
   dept_desc varchar (200),
   version integer,
   primary key (id)
