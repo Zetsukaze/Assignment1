@@ -1,5 +1,7 @@
 package com.ncs.iframe.course.department.service;
 
+import java.util.List;
+
 import com.ncs.iframe.course.department.dao.DepartmentDAO;
 import com.ncs.iframe.course.department.to.DepartmentTO;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
@@ -22,8 +24,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   // Create
   public DepartmentTO add(DepartmentTO dept) {
-    departmentDAO.save(dept);
-    return dept;
+    boolean hasDuplicate = false;
+    List<DepartmentTO> duplicateList = departmentDAO.findByName(dept.getName()).getResult();
+    for (int i = 0; i < duplicateList.size(); i ++) {
+      DepartmentTO duplicate = duplicateList.get(i);
+      if (duplicate.getName().equals(dept.getName())) {
+        hasDuplicate = true;
+      }
+    }
+    if (!hasDuplicate) {
+      departmentDAO.save(dept);
+      return dept;
+    }
+    return null;
   }
 
   // Read

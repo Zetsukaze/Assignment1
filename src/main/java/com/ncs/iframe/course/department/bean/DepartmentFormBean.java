@@ -88,9 +88,13 @@ public class DepartmentFormBean {
   // Create
 
   public void addDepartmentProcess() {
-    deptSvc.add(this.dept);
+    DepartmentTO addition = deptSvc.add(this.dept);
     this.dept = new DepartmentTO();
-    JSFTools.processMessage(MESSAGE_PROPS, "msg.department.added", FacesMessage.SEVERITY_INFO);
+    if (addition != null) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.added", FacesMessage.SEVERITY_INFO);
+    } else {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_INFO);
+    }
   }
 
   // Read
