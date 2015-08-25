@@ -1,26 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i="http://iconnect.ncs.com.sg/jsf/iframe"
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:f="http://java.sun.com/jsf/core"
   xmlns:p="http://primefaces.org/ui"
   xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust"
-  xmlns:ui="http://java.sun.com/jsf/facelets">
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/xhtml/templates/mainLayout.xhtml">
 
-<h:body>
-  <ui:composition template="/xhtml/templates/mainLayout.xhtml">
+
 <ui:define name="pageTitle">
-    <h:form>
-      <p:breadCrumb>
-        <p:menuitem value="Categories" url="#" />
-        <p:menuitem value="#{msg['title.maintain.department']}" url="#" />
-      </p:breadCrumb>
+  <h:form>
+    <p:breadCrumb>
+      <p:menuitem value="Categories" url="#" />
+      <p:menuitem value="#{msg['title.maintain.department']}" url="#" />
+    </p:breadCrumb>
+  </h:form>
+</ui:define>
+
+<ui:define name="content">
+  <h:form id="listForm" prependId="true">
+    <p:messages showDetail="true" id="messages" globalOnly="true" showSummary="false" redisplay="true" />
+      <h:panelGrid columns="2">
+        <h:outputLabel value="#{msg['label.department.name']}" />
+        <p:inputText value="#{searchDepartmentBean.name}"
+          autocomplete="off" />
+      </h:panelGrid>
+      <p:commandButton
+        action="#{searchDepartmentBean.searchDepartmentsProcess(searchDepartmentBean.name)}"
+        value="#{msg['button.search']}" update=":listForm:searchDeptResult" /> &nbsp; <p:commandButton
+        update=":main" value="#{msg['button.add']}">
+        <f:setPropertyActionListener value="/xhtml/department/add.xhtml"
+          target="#{commonPageLayout.mainIncludePage}" />
+      </p:commandButton>
+      <br></br>
+      <br/>
+      <p:dataTable id="searchDeptResult"
+        value="#{searchDepartmentBean.departmentList}" var="department"
+        paginator="true" rows="10"
+        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        selection="#{searchDepartmentBean.selectedDepartments}"
+        rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd"
+        emptyMessage="#{msgs['msg.no.matching.records']}"
+        paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true"
+        editable="false">
+        <p:ajax event="rowEdit" update="@this"
+          listener="#{searchDepartmentBean.departmentRowEdit}" />
+        <p:column selectionMode="multiple">
+        </p:column>
+        <p:column headerText="#{msg['label.department.name']}">
+          <p:cellEditor>
+            <f:facet name="output">
+              <h:outputText value="#{department.name}" />
+            </f:facet>
+            <f:facet name="input">
+              <p:inputText value="#{department.name}" />
+            </f:facet>
+          </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{msg['label.department.desc']}">
+          <p:cellEditor>
+            <f:facet name="output">
+              <h:outputText value="#{department.desc}" />
+            </f:facet>
+            <f:facet name="input">
+              <p:inputText value="#{department.desc}" />
+            </f:facet>
+          </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{msg['label.options']}">
+          <p:commandLink styleClass="ui-icon ui-icon-pencil"
+            title="Edit"
+            action="#{updateDepartmentBean.initEditDepartment(department.id)}"
+            update=":main">
+            <f:setPropertyActionListener
+              value="/xhtml/department/update.xhtml"
+              target="#{commonPageLayout.mainIncludePage}" />
+          </p:commandLink>
+        </p:column>
+
+        <f:facet name="footer">
+          <div align="left">&nbsp;&nbsp;<p:commandButton value="#{msg['button.delete']}"
+            onsuccess="PF('confirmation').show();" /></div>
+        </f:facet>
+      </p:dataTable>
+      <br></br>
+      <p:confirmDialog message="#{msg['msg.confirm.delete']}"
+        showEffect="explode" hideEffect="explode" modal="true"
+        header="#{msg['msg.confirm.title']}" widgetVar="confirmation">
+        <p:commandButton value="#{msg['msg.confirm.delete.yes']}"
+          action="#{searchDepartmentBean.deleteDepartmentsProcess}"
+          onclick="PF('confirmation').hide()" update=":listForm:searchDeptResult" />
+        <p:commandButton value="#{msg['msg.confirm.delete.no']}"
+          onclick="PF('confirmation').hide()" />
+      </p:confirmDialog>
     </h:form>
   </ui:define>
-  <ui:define name="content">
-        Welcome to our Course!
-    </ui:define>
-  </ui:composition>
-</h:body>
-</html>
+</ui:composition>
