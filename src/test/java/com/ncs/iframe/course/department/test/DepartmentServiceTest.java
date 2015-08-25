@@ -36,7 +36,7 @@ public class DepartmentServiceTest {
   public void testCRUD() {
     // Create
     DepartmentTO dept = new DepartmentTO();
-    dept.setName("testName");
+    dept.setName("test");
     dept.setDesc("testDesc");
     dept = deptSvc.add(dept);
 
@@ -44,7 +44,7 @@ public class DepartmentServiceTest {
     assertNotNull(dept.getId());
 
     // Update
-    dept.setName("testUpdateName");
+    dept.setName("testU");
     dept = deptSvc.update(dept);
     dept = deptSvc.findById(dept.getId());
     assertNotNull(dept);
