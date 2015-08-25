@@ -56,7 +56,7 @@
         </p:column>
         <p:column headerText="#{msg['label.department.name']}" sortBy="#{department.name}">
           <p:commandLink value="#{department.name}" title="Edit" action="#{updateDepartmentBean.initEditDepartment(department.id)}" update=":main">
-            <f:setPropertyActionListener value="/xhtml/department/update.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            <f:setPropertyActionListener value="/xhtml/department/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
 

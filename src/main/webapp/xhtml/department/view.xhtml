@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i="http://iconnect.ncs.com.sg/jsf/iframe"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/xhtml/templates/mainLayout.xhtml">
+
+  <ui:define name="pageTitle">
+    <h:form>
+      <p:breadCrumb>
+        <p:menuitem value="Categories" url="#" />
+        <p:menuitem value="#{msg['title.department.maintain']}" update=":main">
+          <f:setPropertyActionListener value="/xhtml/department/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+        </p:menuitem>
+        <p:menuitem value="#{msg['title.department.view']}" url="#" />
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <h:form id="department_view_form">
+      <p:panel id="departmentInformation" header="#{msg['label.department.information']}">
+        <div class="entry">
+          <table width="200" border="0">
+              <tr>
+                <td>
+                  <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:200px" />
+                </td>
+                <td>
+                  <h:outputText value="#{updateDepartmentBean.department.name}" style="display:-moz-inline-box;display:inline-block;width:200px" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h:outputText value="#{msg['label.department.desc']}" style="display:-moz-inline-box;display:inline-block;width:200px" />
+                </td>
+                <td>
+                  <h:outputText value="#{updateDepartmentBean.department.desc}" style="display:-moz-inline-box;display:inline-block;width:200px" />
+                </td>
+              </tr>
+            </table>
+        </div>
+      </p:panel>
+      <table class="std_table">
+          <tr>
+            <td>
+              <p:commandButton value="#{msg['button.department.edit']}" action="#{updateDepartmentBean.initEditDepartment(updateDepartmentBean.department.id)}" update=":main">
+                <f:setPropertyActionListener value="/xhtml/department/update.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+              </p:commandButton>
+              &nbsp;&nbsp;
+              <p:commandButton value="#{msg['button.cancel']}" update=":main" immediate="true">
+              <f:setPropertyActionListener value="/xhtml/department/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+              </p:commandButton>
+            </td>
+          </tr>
+        </table>
+      </h:form>
+  </ui:define>
+</ui:composition>
