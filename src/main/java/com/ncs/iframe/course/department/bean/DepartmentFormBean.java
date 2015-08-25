@@ -90,7 +90,7 @@ public class DepartmentFormBean {
   public void addDepartmentProcess() {
     deptSvc.add(this.dept);
     this.dept = new DepartmentTO();
-    JSFTools.processMessage(MESSAGE_PROPS, "msg.added", FacesMessage.SEVERITY_INFO);
+    JSFTools.processMessage(MESSAGE_PROPS, "msg.department.added", FacesMessage.SEVERITY_INFO);
   }
 
   // Read
