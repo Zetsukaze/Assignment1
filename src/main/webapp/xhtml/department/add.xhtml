@@ -10,17 +10,17 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   template="/xhtml/templates/mainLayout.xhtml">
 
-<ui:define name="pageTitle">
-  <h:form>
-    <p:breadCrumb>
-      <p:menuitem value="Categories" url="#" />
-      <p:menuitem value="#{msg['title.department.maintain']}" update=":main">
-        <f:setPropertyActionListener value="/xhtml/department/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
-      </p:menuitem>
-      <p:menuitem value="#{msg['title.department.add']}" url="#" />
-    </p:breadCrumb>
-  </h:form>
-</ui:define>
+  <ui:define name="pageTitle">
+    <h:form>
+      <p:breadCrumb>
+        <p:menuitem value="Categories" url="#" />
+        <p:menuitem value="#{msg['title.department.maintain']}" update=":main">
+          <f:setPropertyActionListener value="/xhtml/department/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+        </p:menuitem>
+        <p:menuitem value="#{msg['title.department.add']}" url="#" />
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
 
   <ui:define name="content">
     <h:form id="department_create_form">

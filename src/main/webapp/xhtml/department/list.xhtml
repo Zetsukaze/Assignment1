@@ -32,7 +32,7 @@
         <p:commandButton
           action="#{searchDepartmentBean.searchDepartmentsProcess(searchDepartmentBean.name)}"
           value="#{msg['button.search']}" update=":listForm:searchDeptResult" /> &nbsp; <p:commandButton
-          update=":main" value="#{msg['button.add']}">
+          update=":main" value="#{msg['button.department.add']}">
           <f:setPropertyActionListener value="/xhtml/department/add.xhtml"
             target="#{commonPageLayout.mainIncludePage}" />
         </p:commandButton>
