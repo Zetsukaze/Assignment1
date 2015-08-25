@@ -46,6 +46,11 @@ public class DepartmentTO implements Serializable {
     return version;
   }
 
+  @Override
+  public String toString() {
+    return "DepartmentTO : {" + "ID: " + id + ", Name: " + name + ", Description: " + desc + "}";
+  }
+
   // Setters
 
   public void setId(String id) {

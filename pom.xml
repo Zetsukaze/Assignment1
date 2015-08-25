@@ -20,6 +20,12 @@
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<contextPath>${context.path}</contextPath>
+          <systemProperties>
+            <systemProperty>
+              <name>log4j.configuration</name>
+              <value>log4j-jetty.properties</value>
+            </systemProperty>
+          </systemProperties>
 				</configuration>
 			</plugin>
 			<plugin>
