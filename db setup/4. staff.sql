@@ -9,13 +9,13 @@ create table tbl_staff (
   phone_no mediumint (8),
   dob date,
   join_date date,
-  dept varchar (100),
+  dept_id varchar (100),
   designation varchar (100),
   ro_id varchar (32),
   photo mediumblob,
   version integer,
   primary key (id),
-  foreign key (dept) references tbl_departments (id),
+  foreign key (dept_id) references tbl_departments (id),
   foreign key (ro_id) references tbl_staff (id)
 );
 
@@ -32,7 +32,7 @@ create table tbl_staff_aud (
   phone_no mediumint (8),
   dob date,
   join_date date,
-  dept varchar (100),
+  dept_id varchar (100),
   designation varchar (100),
   ro_id varchar (32),
   photo mediumblob,
