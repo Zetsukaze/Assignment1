@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.model.LazyDataModel;
+import org.springframework.orm.hibernate4.HibernateOptimisticLockingFailureException;
 
 import com.ncs.iframe.course.department.service.DepartmentService;
 import com.ncs.iframe.course.department.to.DepartmentTO;
@@ -95,13 +96,13 @@ public class DepartmentFormBean {
     try {
       DepartmentTO addition = deptSvc.add(this.dept);
       if (addition != null) {
-        JSFTools.processMessage(MESSAGE_PROPS, "msg.department.added", FacesMessage.SEVERITY_INFO);
+        JSFTools.processMessage(MESSAGE_PROPS, "msg.department.add.ok", FacesMessage.SEVERITY_INFO);
         this.dept = new DepartmentTO();
       } else {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
       }
     } catch (Exception e) {
-      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.adderror", FacesMessage.SEVERITY_ERROR);
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.add.error", FacesMessage.SEVERITY_ERROR);
     }
   }
 
@@ -153,13 +154,13 @@ public class DepartmentFormBean {
     DepartmentTO updated = deptSvc.update(this.dept);
     try {
       if (updated != null) {
-        JSFTools.processMessage(MESSAGE_PROPS, "msg.department.updatesuccess", FacesMessage.SEVERITY_INFO);
+        JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.ok", FacesMessage.SEVERITY_INFO);
         this.dept = new DepartmentTO();
       } else {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
       }
     } catch (Exception e) {
-      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.adderror", FacesMessage.SEVERITY_ERROR);
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.add.error", FacesMessage.SEVERITY_ERROR);
     }
   }
 
@@ -167,16 +168,18 @@ public class DepartmentFormBean {
 
   public void deleteDepartmentsProcess() {
     if (selectedDepartments == null || selectedDepartments.length == 0) {
-      FacesMessage message = MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_ERROR, "label.deleteinfo", null);
-      message.setSeverity(FacesMessage.SEVERITY_ERROR);
-      FacesContext.getCurrentInstance().addMessage(null, message);
+      JSFTools.processMessage(MESSAGE_PROPS, "label.delete.info", FacesMessage.SEVERITY_WARN);
       return;
     }
 
-    deptSvc.delete(selectedDepartments);
-    FacesMessage message = MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "label.deleteok", null);
-    message.setSeverity(FacesMessage.SEVERITY_INFO);
-    FacesContext.getCurrentInstance().addMessage(null, message);
+    try {
+      int length = selectedDepartments.length;
+      deptSvc.delete(selectedDepartments);
+      FacesContext.getCurrentInstance().addMessage(null, MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "msg.department.delete.ok", length));
+    } catch (HibernateOptimisticLockingFailureException e) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+    } catch (Exception e) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.delete.error", FacesMessage.SEVERITY_ERROR);
+    }
   }
-
 }

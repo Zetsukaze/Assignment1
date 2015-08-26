@@ -52,7 +52,7 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
     log.info("Calling DepartmentDAOImpl findById ID: " + id);
     Session session = getCurrentSession();
     session.setCacheMode(CacheMode.REFRESH);
-    DepartmentTO instance = (DepartmentTO) getCurrentSession().get(DepartmentTO.class, id);
+    DepartmentTO instance = (DepartmentTO) session.get(DepartmentTO.class, id);
     return instance;
   }
 
@@ -66,7 +66,7 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
 
   // Delete
   public void delete(DepartmentTO dept) {
-    log.info("Delete DepartmentTO: " + dept);
+    log.info("DepartmentDAOImpl delete: " + dept);
     getCurrentSession().delete(dept);
   }
 }
