@@ -22,17 +22,36 @@ public class DepartmentServiceImpl implements DepartmentService {
     this.departmentDAO = departmentDAO;
   }
 
-  // Create
-  public DepartmentTO add(DepartmentTO dept) {
+  // Validations
+
+  public DepartmentTO checkDuplicateNameExists(DepartmentTO dept) {
     List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
     if (duplicateList.size() == 0) {
-      departmentDAO.save(dept);
       return dept;
     }
     return null;
   }
 
+  public DepartmentTO checkExactDeptExists(DepartmentTO dept) {
+    List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
+    if (duplicateList.size() == 0 || (duplicateList.size() == 1 && duplicateList.get(0).getId().equals(dept.getId()))) {
+      return dept;
+    }
+    return null;
+  }
+
+  // Create
+
+  public DepartmentTO add(DepartmentTO dept) {
+    DepartmentTO added = checkDuplicateNameExists(dept);
+    if (added != null) {
+      departmentDAO.save(dept);
+    }
+    return added;
+  }
+
   // Read
+
   public ListAndPagingInfo<DepartmentTO> findByName(String name) {
     return departmentDAO.findByName(name);
   }
@@ -43,14 +62,16 @@ public class DepartmentServiceImpl implements DepartmentService {
   }
 
   // Update
+
   public DepartmentTO update(DepartmentTO dept) {
-    List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
-    if (duplicateList.size() == 0 || (duplicateList.size() == 1 && duplicateList.get(0).getId().equals(dept.getId()))) {
-      DepartmentTO updated = departmentDAO.update(dept);
-      return updated;
+    DepartmentTO updated = checkExactDeptExists(dept);
+    if (updated != null) {
+      updated = departmentDAO.update(dept);
     }
-    return null;
+    return updated;
   }
+
+  // Delete
 
   public void delete(DepartmentTO[] departments) {
     if (departments != null && departments.length > 0) {

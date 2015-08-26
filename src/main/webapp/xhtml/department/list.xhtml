@@ -29,12 +29,10 @@
           <p:inputText value="#{searchDepartmentBean.name}"
             autocomplete="off" />
         </h:panelGrid>
-        <p:commandButton
-          action="#{searchDepartmentBean.searchDepartmentsProcess(searchDepartmentBean.name)}"
-          value="#{msg['button.search']}" update=":listForm:searchDeptResult" /> &nbsp; <p:commandButton
-          update=":main" value="#{msg['button.department.add']}">
-          <f:setPropertyActionListener value="/xhtml/department/add.xhtml"
-            target="#{commonPageLayout.mainIncludePage}" />
+        <p:commandButton action="#{searchDepartmentBean.searchDepartmentsProcess(searchDepartmentBean.name)}" value="#{msg['button.search']}" update=":listForm:searchDeptResult" />
+        &nbsp;
+        <p:commandButton update=":main" value="#{msg['button.department.add']}">
+          <f:setPropertyActionListener value="/xhtml/department/add.xhtml" target="#{commonPageLayout.mainIncludePage}" />
         </p:commandButton>
       </p:panel>
       <br /><br />
@@ -57,11 +55,10 @@
           </p:cellEditor>
         </p:column>
         <p:column headerText="#{msg['label.department.name']}" sortBy="#{department.name}">
-          <p:commandLink value="#{department.name}" title="View" action="#{updateDepartmentBean.initEditDepartment(department.id)}" update=":main">
+          <p:commandLink value="#{department.name}" title="View Department" action="#{updateDepartmentBean.initEditDepartment(department.id)}" update=":main">
             <f:setPropertyActionListener value="/xhtml/department/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
-
         <f:facet name="footer">
           <div align="left">&nbsp;&nbsp;<p:commandButton value="#{msg['button.delete']}"
             onsuccess="PF('confirmation').show();" /></div>
