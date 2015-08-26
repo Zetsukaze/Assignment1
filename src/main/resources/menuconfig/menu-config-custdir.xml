@@ -4,8 +4,9 @@
 <!-- if you change property file name. note update new property file name in faces-config.xml <resource-bundle>
 and system-infrastructure-config.xml<bean id="messageSource"/>
 -->
-	<Menu name="System Administration" title="title.application.menu" description="no use">
-		<Item name="Maintain Department" title="title.maintain.department" location="/xhtml/department/list.xhtml" target=":main"/>
+	<Menu name="System Administration" title="title.application.menu" description="Menu Header">
+		<Item name="Maintain Department" title="title.department.maintain" location="/xhtml/department/list.xhtml" target=":main"/>
+    <Item name="Maintain Staff" title="title.staff.maintain" location="/xhtml/staff/list.xhtml" target=":main"/>
 	</Menu>
 </Menus>
 
