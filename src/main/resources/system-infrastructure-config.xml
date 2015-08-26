@@ -71,28 +71,28 @@
  		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
  		<property name="properties">
   			<props>
-                <prop key="hibernate.hbm2ddl.auto">none</prop>
-   				<prop key="hibernate.query.substitutions">true 'T', false 'F'</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.jdbc.batch_size">30</prop>
-   				<!-- Uncomment under weblogic -->
-   				<!--  <prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>-->
+          <prop key="hibernate.hbm2ddl.auto">none</prop>
+          <prop key="hibernate.query.substitutions">true 'T', false 'F'</prop>
+          <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+          <prop key="hibernate.jdbc.batch_size">30</prop>
+          <!-- Uncomment under weblogic -->
+          <!--  <prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>-->
 
-   				<!--
-   				<prop key="hibernate.c3p0.minPoolSize">5</prop>
-   				<prop key="hibernate.c3p0.maxPoolSize">20</prop>
-   				<prop key="hibernate.c3p0.timeout">600</prop>
-   				<prop key="hibernate.c3p0.max_statement">50</prop>
-   				<prop key="hibernate.c3p0.testConnectionOnCheckout">false</prop>
-                -->
+          <!--
+          <prop key="hibernate.c3p0.minPoolSize">5</prop>
+          <prop key="hibernate.c3p0.maxPoolSize">20</prop>
+          <prop key="hibernate.c3p0.timeout">600</prop>
+          <prop key="hibernate.c3p0.max_statement">50</prop>
+          <prop key="hibernate.c3p0.testConnectionOnCheckout">false</prop>
+          -->
 
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.format_sql">true</prop>
+          <prop key="hibernate.show_sql">false</prop>
+          <prop key="hibernate.format_sql">true</prop>
    				<prop key="hibernate.cache.use_second_level_cache">true</prop>
    				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop>
+				  <prop key="hibernate.cache.use_query_cache">true</prop>
 
-				<!-- For Envers Configurations, to specify here -->
+				  <!-- For Envers Configurations, to specify here -->
    				<prop key="org.hibernate.envers.auditTableSuffix">_AUD</prop>
    				<prop key="org.hibernate.envers.revisionTypeFieldName">REV_TYPE</prop>
    				<prop key="org.hibernate.envers.doNotAuditOptimisticLockingField">false</prop>
