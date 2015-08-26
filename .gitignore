@@ -69,4 +69,4 @@ target
 
 # Logs
 *.log
-*.log.*
+*.log-*
