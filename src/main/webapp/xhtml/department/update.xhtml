@@ -52,9 +52,9 @@
       <table class="std_table">
       <tr>
         <td>
-          <p:commandButton value="#{msg['button.save']}"
-            action="#{updateDepartmentBean.updateDepartment()}"
-            update="department_update_form,:globalMessages"/>
+          <p:commandButton value="#{msg['button.save']}" action="#{updateDepartmentBean.updateDepartment()}" update=":main">
+            <f:setPropertyActionListener value="/xhtml/department/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+          </p:commandButton>
           &nbsp;&nbsp;
           <p:commandButton
             value="#{msg['button.cancel']}" update=":main" immediate="true">

@@ -155,7 +155,6 @@ public class DepartmentFormBean {
     try {
       if (updated != null) {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.ok", FacesMessage.SEVERITY_INFO);
-        this.dept = new DepartmentTO();
       } else {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
       }
