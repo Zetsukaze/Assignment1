@@ -22,7 +22,7 @@
 
 <ui:define name="content">
   <h:form id="listForm" prependId="true">
-    <p:messages showDetail="true" id="messages" globalOnly="true" showSummary="false" redisplay="true" />
+    <p:messages showDetail="true" id="messages" globalOnly="true" showSummary="false" redisplay="false" />
       <p:panel id="searchCriteria" header="#{msg['label.searchcriteria']}">
         <h:panelGrid columns="2">
           <h:outputLabel value="#{msg['label.department.name']}" />
@@ -56,7 +56,7 @@
         </p:column>
         <p:column headerText="#{msg['label.department.name']}" sortBy="#{department.name}">
           <p:commandLink value="#{department.name}" title="View Department" action="#{updateDepartmentBean.initEditDepartment(department.id)}" update=":main">
-            <f:setPropertyActionListener value="/xhtml/department/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            <f:setPropertyActionListener value="#{updateDepartmentBean.viewDepartmentProcess(department.id)}" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
         <f:facet name="footer">

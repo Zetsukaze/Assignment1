@@ -141,13 +141,21 @@ public class DepartmentFormBean {
     this.departmentList = refreshedLazyDataModel;
   }
 
+  public String viewDepartmentProcess(String departmentId) {
+    String redirectList = "/xhtml/department/list.xhtml";
+    String redirectView = "/xhtml/department/view.xhtml";
+    this.dept = deptSvc.findById(departmentId);
+    if (this.dept == null) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+      return redirectList;
+    }
+    return redirectView;
+  }
+
   // Update
 
   public void initEditDepartment(String departmentId) {
     this.dept = deptSvc.findById(departmentId);
-    if (this.dept == null) {
-      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
-    }
   }
 
   public void updateDepartment() {
