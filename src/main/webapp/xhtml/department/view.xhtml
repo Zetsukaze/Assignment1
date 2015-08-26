@@ -28,38 +28,38 @@
       <p:panel id="departmentInformation" header="#{msg['label.department.information']}">
         <div class="entry">
           <table width="200" border="0">
-              <tr>
-                <td>
-                  <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:200px;height:32px" />
-                </td>
-                <td>
-                  <h:outputText value="#{updateDepartmentBean.department.name}" style="display:-moz-inline-box;display:inline-block;width:200px;height:32px" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h:outputText value="#{msg['label.department.desc']}" style="display:-moz-inline-box;display:inline-block;width:200px" />
-                </td>
-                <td>
-                  <h:outputText value="#{updateDepartmentBean.department.desc}" style="display:-moz-inline-box;display:inline-block;width:200px" />
-                </td>
-              </tr>
-            </table>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:200px;height:32px" />
+              </td>
+              <td>
+                <h:outputText value="#{updateDepartmentBean.department.name}" style="display:-moz-inline-box;display:inline-block;width:200px;height:32px" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.department.desc']}" style="display:-moz-inline-box;display:inline-block;width:200px" />
+              </td>
+              <td>
+                <h:outputText value="#{updateDepartmentBean.department.desc}" style="display:-moz-inline-box;display:inline-block;width:200px" />
+              </td>
+            </tr>
+          </table>
         </div>
       </p:panel>
       <table class="std_table">
-          <tr>
-            <td>
-              <p:commandButton value="#{msg['button.department.edit']}" action="#{updateDepartmentBean.initEditDepartment(updateDepartmentBean.department.id)}" update=":main">
-                <f:setPropertyActionListener value="#{updateDepartmentBean.checkUpdateDepartmentProcess(updateDepartmentBean.department.id)}" target="#{commonPageLayout.mainIncludePage}" />
-              </p:commandButton>
-              &nbsp;&nbsp;
-              <p:commandButton value="#{msg['button.cancel']}" update=":main" immediate="true">
-              <f:setPropertyActionListener value="/xhtml/department/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
-              </p:commandButton>
-            </td>
-          </tr>
-        </table>
-      </h:form>
+        <tr>
+          <td>
+            <p:commandButton value="#{msg['button.department.edit']}" action="#{updateDepartmentBean.initEditDepartment(updateDepartmentBean.department.id)}" update=":main">
+              <f:setPropertyActionListener value="#{updateDepartmentBean.checkUpdateDepartmentProcess(updateDepartmentBean.department.id)}" target="#{commonPageLayout.mainIncludePage}" />
+            </p:commandButton>
+            &nbsp;&nbsp;
+            <p:commandButton value="#{msg['button.cancel']}" update=":main" immediate="true">
+            <f:setPropertyActionListener value="/xhtml/department/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            </p:commandButton>
+          </td>
+        </tr>
+      </table>
+    </h:form>
   </ui:define>
 </ui:composition>
