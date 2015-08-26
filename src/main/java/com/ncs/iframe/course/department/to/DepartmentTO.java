@@ -19,8 +19,6 @@ public class DepartmentTO implements Serializable {
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @Column(name = "id")
   private String id;
-
-
   @Column(name="dept_name")
   private String name;
   @Column(name="dept_desc")
