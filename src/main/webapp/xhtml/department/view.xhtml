@@ -51,7 +51,7 @@
           <tr>
             <td>
               <p:commandButton value="#{msg['button.department.edit']}" action="#{updateDepartmentBean.initEditDepartment(updateDepartmentBean.department.id)}" update=":main">
-                <f:setPropertyActionListener value="/xhtml/department/update.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+                <f:setPropertyActionListener value="#{updateDepartmentBean.checkUpdateDepartmentProcess(updateDepartmentBean.department.id)}" target="#{commonPageLayout.mainIncludePage}" />
               </p:commandButton>
               &nbsp;&nbsp;
               <p:commandButton value="#{msg['button.cancel']}" update=":main" immediate="true">

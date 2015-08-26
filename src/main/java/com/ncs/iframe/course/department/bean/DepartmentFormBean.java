@@ -90,6 +90,30 @@ public class DepartmentFormBean {
     this.dept = dept;
   }
 
+  // Validators
+
+  public String checkViewDepartmentProcess(String departmentId) {
+    String redirectList = "/xhtml/department/list.xhtml";
+    String redirectView = "/xhtml/department/view.xhtml";
+    DepartmentTO checkDept = deptSvc.findById(departmentId);
+    if (checkDept == null) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+      return redirectList;
+    }
+    return redirectView;
+  }
+
+  public String checkUpdateDepartmentProcess(String departmentId) {
+    String redirectList = "/xhtml/department/list.xhtml";
+    String redirectUpdate = "/xhtml/department/update.xhtml";
+    DepartmentTO checkDept = deptSvc.findById(departmentId);
+    if (checkDept == null) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+      return redirectList;
+    }
+    return redirectUpdate;
+  }
+
   // Create
 
   public void addDepartmentProcess() {
@@ -141,17 +165,6 @@ public class DepartmentFormBean {
     this.departmentList = refreshedLazyDataModel;
   }
 
-  public String viewDepartmentProcess(String departmentId) {
-    String redirectList = "/xhtml/department/list.xhtml";
-    String redirectView = "/xhtml/department/view.xhtml";
-    this.dept = deptSvc.findById(departmentId);
-    if (this.dept == null) {
-      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
-      return redirectList;
-    }
-    return redirectView;
-  }
-
   // Update
 
   public void initEditDepartment(String departmentId) {
@@ -159,29 +172,32 @@ public class DepartmentFormBean {
   }
 
   public void updateDepartment() {
-    DepartmentTO updated = deptSvc.update(this.dept);
     try {
+      DepartmentTO updated = deptSvc.update(this.dept);
       if (updated != null) {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.ok", FacesMessage.SEVERITY_INFO);
       } else {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
       }
+    } catch (IllegalArgumentException e) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
     } catch (Exception e) {
-      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.add.error", FacesMessage.SEVERITY_ERROR);
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.error", FacesMessage.SEVERITY_ERROR);
     }
   }
 
   // Delete
 
-  public void deleteDepartmentsProcess() {
-    if (selectedDepartments == null || selectedDepartments.length == 0) {
+  public void deleteDepartmentsProcess(DepartmentTO[] deleteDepartments) {
+    log.info("DepartmentFormBean deleteDepartmentProcess: " + deleteDepartments.length);
+    if (deleteDepartments == null || deleteDepartments.length == 0) {
       JSFTools.processMessage(MESSAGE_PROPS, "label.delete.info", FacesMessage.SEVERITY_WARN);
       return;
     }
 
     try {
-      int length = selectedDepartments.length;
-      deptSvc.delete(selectedDepartments);
+      int length = deleteDepartments.length;
+      deptSvc.delete(deleteDepartments);
       FacesContext.getCurrentInstance().addMessage(null, MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "msg.department.delete.ok", length));
     } catch (HibernateOptimisticLockingFailureException e) {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);

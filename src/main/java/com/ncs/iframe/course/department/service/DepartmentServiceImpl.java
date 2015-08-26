@@ -22,7 +22,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     this.departmentDAO = departmentDAO;
   }
 
-  // Validations
+  // Validators
 
   public DepartmentTO checkDuplicateNameExists(DepartmentTO dept) {
     List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();

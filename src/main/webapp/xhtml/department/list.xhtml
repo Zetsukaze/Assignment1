@@ -37,9 +37,12 @@
       </p:panel>
       <br /><br />
       <p:panel id="searchResults" header="#{msg['label.searchresults']}"/>
+      <!--
       <f:metadata>
-        <f:event listener="#{searchDepartmentBean.searchDepartmentsProcess(searchDepartmentBean.name)}" type="preRenderView"></f:event>
+        <f:event listener="#{searchDepartmentBean.searchDepartmentsProcess(searchDepartmentBean.name)}" type="preRenderView">
+        </f:event>
       </f:metadata>
+      -->
       <p:dataTable id="searchDeptResult" value="#{searchDepartmentBean.departmentList}" var="department" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selection="#{searchDepartmentBean.selectedDepartments}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
         <p:ajax event="rowEdit" update="@this" listener="#{searchDepartmentBean.departmentRowEdit}" />
         <p:column selectionMode="multiple" style="width:16px">
@@ -56,23 +59,19 @@
         </p:column>
         <p:column headerText="#{msg['label.department.name']}" sortBy="#{department.name}">
           <p:commandLink value="#{department.name}" title="View Department" action="#{updateDepartmentBean.initEditDepartment(department.id)}" update=":main">
-            <f:setPropertyActionListener value="#{updateDepartmentBean.viewDepartmentProcess(department.id)}" target="#{commonPageLayout.mainIncludePage}" />
+            <f:setPropertyActionListener value="#{updateDepartmentBean.checkViewDepartmentProcess(department.id)}" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
         <f:facet name="footer">
-          <div align="left">&nbsp;&nbsp;<p:commandButton value="#{msg['button.delete']}"
-            onsuccess="PF('confirmation').show();" /></div>
+          <div align="left">
+            &nbsp;&nbsp;
+            <p:commandButton value="#{msg['button.delete']}" onsuccess="PF('confirmation').show();" /></div>
         </f:facet>
       </p:dataTable>
       <br />
-      <p:confirmDialog message="#{msg['msg.confirm.delete']}"
-        showEffect="explode" hideEffect="explode" modal="true"
-        header="#{msg['msg.confirm.title']}" widgetVar="confirmation">
-        <p:commandButton value="#{msg['msg.confirm.delete.yes']}"
-          action="#{searchDepartmentBean.deleteDepartmentsProcess}"
-          onclick="PF('confirmation').hide()" update=":listForm:searchDeptResult" />
-        <p:commandButton value="#{msg['msg.confirm.delete.no']}"
-          onclick="PF('confirmation').hide()" />
+      <p:confirmDialog message="#{msg['msg.confirm.delete']}" modal="true" header="#{msg['msg.confirm.title']}" widgetVar="confirmation">
+        <p:commandButton value="#{msg['msg.confirm.delete.yes']}" action="#{deleteDepartmentBean.deleteDepartmentsProcess(searchDepartmentBean.selectedDepartments)}" onclick="PF('confirmation').hide()" update=":listForm:searchDeptResult" />
+        <p:commandButton value="#{msg['msg.confirm.delete.no']}" onclick="PF('confirmation').hide()" />
       </p:confirmDialog>
     </h:form>
   </ui:define>
