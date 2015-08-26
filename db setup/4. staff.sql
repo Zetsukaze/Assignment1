@@ -12,7 +12,7 @@ create table tbl_staff (
   dept varchar (100),
   designation varchar (100),
   ro_id varchar (32),
-  picture blob (65535),
+  picture mediumblob,
   version integer,
   primary key (id),
   foreign key (dept) references tbl_departments (id),
