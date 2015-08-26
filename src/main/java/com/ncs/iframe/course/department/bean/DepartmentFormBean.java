@@ -2,12 +2,15 @@ package com.ncs.iframe.course.department.bean;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import org.primefaces.event.RowEditEvent;
+
 import org.primefaces.model.LazyDataModel;
+
 import com.ncs.iframe.course.department.service.DepartmentService;
 import com.ncs.iframe.course.department.to.DepartmentTO;
+import com.ncs.iframe4.commons.logging.Logger;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 import com.ncs.iframe4.jsf.message.MessageUtils;
 import com.ncs.iframe4.jsf.pagination.PaginationDataModel;
@@ -16,6 +19,7 @@ import com.ncs.iframe4.jsf.util.JSFTools;
 public class DepartmentFormBean {
 
   private static final String MESSAGE_PROPS = "com.ncs.iframe4.jsf.i18n.SampleMessages";
+  private transient Logger log = Logger.getLogger(getClass());
   private LazyDataModel<DepartmentTO> departmentList;
   private DepartmentTO[] selectedDepartments;
   private DepartmentService deptSvc;
@@ -139,7 +143,10 @@ public class DepartmentFormBean {
   // Update
 
   public void initEditDepartment(String departmentId) {
-    this.dept = this.getDepartmentService().findById(departmentId);
+    this.dept = deptSvc.findById(departmentId);
+    if (this.dept == null) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+    }
   }
 
   public void updateDepartment() {
@@ -166,7 +173,7 @@ public class DepartmentFormBean {
       return;
     }
 
-    this.getDepartmentService().delete(selectedDepartments);
+    deptSvc.delete(selectedDepartments);
     FacesMessage message = MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "label.deleteok", null);
     message.setSeverity(FacesMessage.SEVERITY_INFO);
     FacesContext.getCurrentInstance().addMessage(null, message);

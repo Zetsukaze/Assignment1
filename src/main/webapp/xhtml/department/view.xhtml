@@ -23,7 +23,8 @@
   </ui:define>
 
   <ui:define name="content">
-    <h:form id="department_view_form">
+    <h:form id="department_view_form" rendered="#{updateDepartmentBean.department.id != null}">
+      <h:inputHidden id="departmentId" value="#{updateDepartmentBean.department.id}" />
       <p:panel id="departmentInformation" header="#{msg['label.department.information']}">
         <div class="entry">
           <table width="200" border="0">
