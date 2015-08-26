@@ -23,15 +23,14 @@
   </ui:define>
 
   <ui:define name="content">
-    <i:codesCollection var="codeList1" codeType="contact" scope="session" locale="#{facesContext.getViewRoot().locale.language}"/>
-    <h:form id="department_update_form">
+    <h:form id="department_update_form" rendered="#{updateDepartmentBean.department.id != null}">
       <h:inputHidden id="departmentId" value="#{updateDepartmentBean.department.id}" />
       <p:panel id="departmentInformation" header="#{msg['label.department.information']}">
         <div class="entry">
           <table width="200" border="0">
             <tr>
               <td>
-                <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.department.name']}" style="display:-moz-inline-box;display:inline-block;width:200px;height:32px" />
               </td>
               <td>
                 <p:inputText id="name" value="#{updateDepartmentBean.department.name}" required="true" label="#{msg['label.department.name']}" maxlength="100">
@@ -40,7 +39,7 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.department.desc']}" style="width:150px" />
+                <h:outputText value="#{msg['label.department.desc']}" style="display:-moz-inline-box;display:inline-block;width:200px;height:32px" />
               </td>
               <td>
                 <p:inputText id="desc" value="#{updateDepartmentBean.department.desc}" label="#{msg['label.department.desc']}" maxlength="200">
@@ -59,7 +58,7 @@
           &nbsp;&nbsp;
           <p:commandButton
             value="#{msg['button.cancel']}" update=":main" immediate="true">
-            <f:setPropertyActionListener value="/xhtml/department/list.xhtml"
+            <f:setPropertyActionListener value="/xhtml/department/view.xhtml"
               target="#{commonPageLayout.mainIncludePage}" />
             </p:commandButton>
         </td>
