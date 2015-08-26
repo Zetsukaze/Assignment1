@@ -57,7 +57,7 @@
                 <value>com.ncs.iframe4.hibernate.audit.entity</value>
                 <value>com.ncs.iframe4.jsf.component.menu.to</value>
                 <value>com.ncs.iframe4.jsf.component.codelookup.entity</value>
-                <value>com.ncs.iframe.course.department.to</value>
+                <value>com.ncs.iframe.course.department.*</value>
             </list>
         </property>
 
