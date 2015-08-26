@@ -26,7 +26,7 @@ public class DepartmentServiceImpl implements DepartmentService {
   public DepartmentTO add(DepartmentTO dept) {
     List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
     if (duplicateList.size() == 0) {
-      DepartmentTO updated = departmentDAO.update(dept);
+      departmentDAO.save(dept);
       return dept;
     }
     return null;
