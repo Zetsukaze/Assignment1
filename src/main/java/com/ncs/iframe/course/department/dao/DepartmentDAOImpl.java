@@ -32,12 +32,29 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
 
   // Read
   public ListAndPagingInfo<DepartmentTO> findByName(String name) {
-    log.debug("Calling DepartmentTO findByName method, name: " + name);
+    log.debug("Calling DepartmentDAOImpl findByName method, name: " + name);
     DetachedCriteria criteria = DetachedCriteria.forClass(DepartmentTO.class);
 
     if (!StringUtil.isEmptyString(name)) {
       criteria.add(
         Restrictions.like("name", name, MatchMode.ANYWHERE)
+      );
+    }
+
+    if (PaginationContext.getPaginationSortOrderData() != null && PaginationContext.getPaginationSortOrderData().getSortValue() == null) {
+      PaginationContext.getPaginationSortOrderData().setSortValue("name");
+      PaginationContext.getPaginationSortOrderData().setAscending(true);
+    }
+    return findByCriteria4Page(criteria);
+  }
+
+  public ListAndPagingInfo<DepartmentTO> findByExactName(String name) {
+    log.debug("Calling DepartmentDAOImpl findByExactName method, name: " + name);
+    DetachedCriteria criteria = DetachedCriteria.forClass(DepartmentTO.class);
+
+    if (!StringUtil.isEmptyString(name)) {
+      criteria.add(
+        Restrictions.like("name", name, MatchMode.EXACT)
       );
     }
 

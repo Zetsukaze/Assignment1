@@ -10,6 +10,8 @@ public interface DepartmentDAO {
 
   // Read
   public ListAndPagingInfo<DepartmentTO> findByName(String name);
+  
+  public ListAndPagingInfo<DepartmentTO> findByExactName(String name);
 
   public DepartmentTO findById(String id);
 

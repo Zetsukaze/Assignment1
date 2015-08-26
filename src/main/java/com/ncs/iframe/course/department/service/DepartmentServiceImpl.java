@@ -24,16 +24,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   // Create
   public DepartmentTO add(DepartmentTO dept) {
-    boolean hasDuplicate = false;
-    List<DepartmentTO> duplicateList = departmentDAO.findByName(dept.getName()).getResult();
-    for (int i = 0; i < duplicateList.size(); i ++) {
-      DepartmentTO duplicate = duplicateList.get(i);
-      if (duplicate.getName().equals(dept.getName())) {
-        hasDuplicate = true;
-      }
-    }
-    if (!hasDuplicate) {
-      departmentDAO.save(dept);
+    List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
+    if (duplicateList.size() == 0) {
+      DepartmentTO updated = departmentDAO.update(dept);
       return dept;
     }
     return null;
@@ -51,15 +44,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   // Update
   public DepartmentTO update(DepartmentTO dept) {
-    boolean hasDuplicate = false;
-    List<DepartmentTO> duplicateList = departmentDAO.findByName(dept.getName()).getResult();
-    for (int i = 0; i < duplicateList.size(); i ++) {
-      DepartmentTO duplicate = duplicateList.get(i);
-      if (duplicate.getName().equals(dept.getName())) {
-        hasDuplicate = true;
-      }
-    }
-    if (!hasDuplicate) {
+    List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
+    if (duplicateList.size() == 0) {
       DepartmentTO updated = departmentDAO.update(dept);
       return updated;
     }
