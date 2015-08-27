@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i="http://iconnect.ncs.com.sg/jsf/iframe"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/xhtml/templates/mainLayout.xhtml">
+
+  <ui:define name="pageTitle">
+    <h:form>
+      <p:breadCrumb>
+        <p:menuitem value="Categories" url="#" />
+        <p:menuitem value="#{msg['title.staff.maintain']}" url="#" />
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <h:form id="listForm" prependId="true">
+      <p:messages showDetail="true" id="messages" globalOnly="true" showSummary="false" redisplay="false" />
+      <p:panel id="searchCriteria" header="#{msg['label.searchcriteria']}">
+        <h:panelGrid columns="2">
+          <h:outputLabel value="#{msg['label.staff.name']}" />
+          <p:inputText value="#{searchStaffBean.name}" autocomplete="off" />
+        </h:panelGrid>
+        <p:commandButton action="#{searchStaffBean.searchStaffProcess(searchStaffBean.name)}" value="#{msg['button.search']}" update=":listForm:searchStaffResult" />
+        &nbsp;
+        <p:commandButton update=":main" value="#{msg['button.staff.add']}">
+          <f:setPropertyActionListener value="/xhtml/staff/add.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+        </p:commandButton>
+      </p:panel>
+      <br /><br />
+      <p:panel id="searchResults" header="#{msg['label.searchresults']}" />
+      <!--
+        <f:metadata>
+          <f:event listener="#{searchStaffBean.searchStaffProcess('')}" type="preRenderView">
+          </f:event>
+        </f:metadata>
+      -->
+      <p:dataTable id="searchStaffResult" value="#{searchStaffBean.staffList}" var="staff" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selection="#{searchStaffBean.selectedstaff}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
+        <p:ajax event="rowEdit" update="@this" listener="#{searchStaffBean.staffRowEdit}" />
+        <p:column selectionMode="multiple" style="width:16px">
+        </p:column>
+        <p:column headerText="#{msg['label.serialno']}" style="width:32px">
+          <p:cellEditor>
+            <f:facet name="output">
+              <h:outputText value="#{serialNo + 1}" />
+            </f:facet>
+            <f:facet name="input">
+              <p:inputText value="#{serialNo + 1}" />
+            </f:facet>
+          </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffnum}">
+          <p:commandLink value="#{staff.no}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
+            <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+          </p:commandLink>
+        </p:column>
+        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffnum}">
+          <p:commandLink value="#{staff.no}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
+            <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+          </p:commandLink>
+        </p:column>
+        <p:column headerText="#{msg['label.staff.name']}" sortBy="#{staff.staff.name}">
+          <p:commandLink value="#{staff.name}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
+            <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+          </p:commandLink>
+        </p:column>
+        <f:facet name="footer">
+          <div align="left">
+            &nbsp;&nbsp;
+            <p:commandButton value="#{msg['button.delete']}" onsuccess="PF('confirmation').show();" />
+          </div>
+        </f:facet>
+      </p:dataTable>
+      <br />
+      <p:confirmDialog message="#{msg['msg.confirm.delete']}" modal="true" header="#{msg['msg.confirm.title']}" widgetVar="confirmation">
+        <p:commandButton value="#{msg['msg.confirm.delete.yes']}" action="#{deleteStaffBean.deleteStaffProcess(searchStaffBean.selectedStaff)}" onclick="PF('confirmation').hide()" update=":listForm:searchStaffResult" />
+        <p:commandButton value="#{msg['msg.confirm.delete.no']}" onclick="PF('confirmation').hide()" />
+      </p:confirmDialog>
+    </h:form>
+  </ui:define>
+</ui:composition>

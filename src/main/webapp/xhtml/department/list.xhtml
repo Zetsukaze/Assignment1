@@ -11,23 +11,22 @@
   template="/xhtml/templates/mainLayout.xhtml">
 
 
-<ui:define name="pageTitle">
-  <h:form>
-    <p:breadCrumb>
-      <p:menuitem value="Categories" url="#" />
-      <p:menuitem value="#{msg['title.department.maintain']}" url="#" />
-    </p:breadCrumb>
-  </h:form>
-</ui:define>
+  <ui:define name="pageTitle">
+    <h:form>
+      <p:breadCrumb>
+        <p:menuitem value="Categories" url="#" />
+        <p:menuitem value="#{msg['title.department.maintain']}" url="#" />
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
 
-<ui:define name="content">
-  <h:form id="listForm" prependId="true">
-    <p:messages showDetail="true" id="messages" globalOnly="true" showSummary="false" redisplay="false" />
+  <ui:define name="content">
+    <h:form id="listForm" prependId="true">
+      <p:messages showDetail="true" id="messages" globalOnly="true" showSummary="false" redisplay="false" />
       <p:panel id="searchCriteria" header="#{msg['label.searchcriteria']}">
         <h:panelGrid columns="2">
           <h:outputLabel value="#{msg['label.department.name']}" />
-          <p:inputText value="#{searchDepartmentBean.name}"
-            autocomplete="off" />
+          <p:inputText value="#{searchDepartmentBean.name}" autocomplete="off" />
         </h:panelGrid>
         <p:commandButton action="#{searchDepartmentBean.searchDepartmentsProcess(searchDepartmentBean.name)}" value="#{msg['button.search']}" update=":listForm:searchDeptResult" />
         &nbsp;
@@ -36,18 +35,18 @@
         </p:commandButton>
       </p:panel>
       <br /><br />
-      <p:panel id="searchResults" header="#{msg['label.searchresults']}"/>
+      <p:panel id="searchResults" header="#{msg['label.searchresults']}" />
       <!--
-      <f:metadata>
-        <f:event listener="#{searchDepartmentBean.searchDepartmentsProcess('')}" type="preRenderView">
-        </f:event>
-      </f:metadata>
+        <f:metadata>
+          <f:event listener="#{searchDepartmentBean.searchDepartmentsProcess('')}" type="preRenderView">
+          </f:event>
+        </f:metadata>
       -->
       <p:dataTable id="searchDeptResult" value="#{searchDepartmentBean.departmentList}" var="department" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selection="#{searchDepartmentBean.selectedDepartments}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
         <p:ajax event="rowEdit" update="@this" listener="#{searchDepartmentBean.departmentRowEdit}" />
         <p:column selectionMode="multiple" style="width:16px">
         </p:column>
-        <p:column headerText="#{msg['label.department.serialno']}" style="width:32px">
+        <p:column headerText="#{msg['label.serialno']}" style="width:32px">
           <p:cellEditor>
             <f:facet name="output">
               <h:outputText value="#{serialNo + 1}" />
@@ -65,7 +64,8 @@
         <f:facet name="footer">
           <div align="left">
             &nbsp;&nbsp;
-            <p:commandButton value="#{msg['button.delete']}" onsuccess="PF('confirmation').show();" /></div>
+            <p:commandButton value="#{msg['button.delete']}" onsuccess="PF('confirmation').show();" />
+          </div>
         </f:facet>
       </p:dataTable>
       <br />

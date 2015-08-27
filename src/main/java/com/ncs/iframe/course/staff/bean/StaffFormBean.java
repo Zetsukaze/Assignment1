@@ -136,6 +136,18 @@ public class StaffFormBean {
 
   // Update
 
+  public void initEditStaff(String staffId) {
+    this.staff = staffSvc.findById(staffId)
+  }
+
+  public void updateStaff() {
+    staffSvc.update(this.staff);
+  }
+
   // Delete
+
+  public void deleteStaffProcess(StaffTO[] deleteStaff) {
+    staffSvc.delete(deleteStaff);
+  }
 
 }
