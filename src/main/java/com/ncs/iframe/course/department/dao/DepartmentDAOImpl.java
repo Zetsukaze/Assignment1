@@ -20,6 +20,8 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
   private static final long serialVersionUID = -8713976812246799563L;
   private transient Logger log = Logger.getLogger(getClass());
 
+  // Constructors
+
   public DepartmentDAOImpl(SessionFactory sessionFactory) {
     super(sessionFactory);
   }

@@ -27,7 +27,7 @@ public class DepartmentFormBean {
   private DepartmentTO dept = new DepartmentTO();
   private String name;
 
-  // Constructor
+  // Constructors
 
   public DepartmentFormBean() {
     departmentList = new PaginationDataModel<DepartmentTO>() {
