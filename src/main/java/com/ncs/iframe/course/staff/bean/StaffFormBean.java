@@ -137,7 +137,7 @@ public class StaffFormBean {
   // Update
 
   public void initEditStaff(String staffId) {
-    this.staff = staffSvc.findById(staffId)
+    this.staff = staffSvc.findById(staffId);
   }
 
   public void updateStaff() {
