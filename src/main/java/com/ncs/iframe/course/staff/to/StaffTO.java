@@ -32,7 +32,7 @@ public class StaffTO implements Serializable {
   @Column(name = "email")
   private String email;
   @Column(name = "phone_no")
-  private int phoneNum;
+  private String phoneNum;
   @Column(name = "dob")
   private Date dob;
   @Column(name = "join_date")
@@ -71,7 +71,7 @@ public class StaffTO implements Serializable {
     return this.email;
   }
 
-  public int getPhoneNum() {
+  public String getPhoneNum() {
     return this.phoneNum;
   }
 
@@ -130,7 +130,7 @@ public class StaffTO implements Serializable {
     this.email = email;
   }
 
-  public void setPhoneNum(int phoneNum) {
+  public void setPhoneNum(String phoneNum) {
     this.phoneNum = phoneNum;
   }
 

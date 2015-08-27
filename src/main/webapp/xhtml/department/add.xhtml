@@ -25,12 +25,12 @@
   <ui:define name="content">
     <h:form id="department_create_form">
       <p:panel id="departmentInformation" header="#{msg['label.department.information']}">
-      <p:focus for="name" />
+        <p:focus for="name" />
         <div class="entry">
           <table width="200" border="0">
             <tr>
               <td>
-                <h:outputText value="#{msg['label.department.mandatory.name']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.department.name.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
               </td>
               <td>
                 <p:inputText id="name" value="#{addDepartmentBean.department.name}" required="true" label="#{msg['label.department.mandatory.name']}" maxlength="100">

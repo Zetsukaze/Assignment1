@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i="http://iconnect.ncs.com.sg/jsf/iframe"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/xhtml/templates/mainLayout.xhtml">
+
+  <ui:define name="pageTitle">
+    <h:form>
+      <p:breadCrumb>
+        <p:menuitem value="Categories" url="#" />
+        <p:menuitem value="#{msg['title.staff.maintain']}" url="#">
+          <f:setPropertyActionListener value="/xhtml/staff/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+        </p:menuitem>
+        <p:menuitem value="#{msg['title.staff.add']}" url="#" />
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <h:form id="staff_create_form">
+      <p:panel id="staffInformation" header="#{msg['label.staff.information']}">
+        <p:focus for="staffNum" />
+        <div class="entry">
+          <table width="200" border="0">
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.staffno.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+              </td>
+              <td>
+                <p:inputText id="staffNum" value="#{addStaffBean.staff.staffNum}" required="true" label="#{msg['label.staff.staffno.mandatory']}" maxlength="5" validatorMessage="#{msg['msg.staff.staffno.invalid']}" style="width:256px">
+                  <f:validateRegex pattern="^(\d{5})$" />
+                  <p:ajax event="blur" />
+                </p:inputText>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.name.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+              </td>
+              <td>
+                <p:inputText id="staffName" value="#{addStaffBean.staff.name}" required="true" label="#{msg['label.staff.name.mandatory']}" maxlength="200" style="width:256px">
+                  <p:ajax event="blur" />
+                </p:inputText>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.loginid.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+              </td>
+              <td>
+                <p:inputText id="loginId" value="#{addStaffBean.staff.loginId}" required="true" label="#{msg['label.staff.loginid.mandatory']}" maxlength="15" validatorMessage="#{msg['msg.staff.loginid.invalid']}" style="width:256px">
+                  <f:validateRegex pattern="^[a-zA-z]{8,15}$" />
+                  <p:ajax event="blur" update="email" />
+                </p:inputText>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.email']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+              </td>
+              <td>
+                <p:inputText id="email" value="#{addStaffBean.staff.loginId}@corp.com.sg" required="true" label="#{msg['label.staff.loginid.mandatory']}" readonly="true" style="width:256px">
+                  <!-- <f:validateRegex pattern="^[a-zA-z]{8,15}@corp\.com\.sg$" /> -->
+                </p:inputText>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.phoneno']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+              </td>
+              <td>
+                <p:inputText id="phoneNum" value="#{addStaffBean.staff.phoneNum}" label="#{msg['label.staff.phoneno']}" maxlength="8" validatorMessage="#{msg['msg.staff.phoneno.invalid']}" style="width:256px">
+                  <f:validateRegex pattern="^(\d{8})$" />
+                  <p:ajax event="blur" />
+                </p:inputText>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </p:panel>
+      <table class="std_table">
+        <tr>
+          <td>
+            <p:commandButton value="#{msg['button.add']}" action="#" update=":staff_create_form" />
+            &nbsp;&nbsp;
+            <p:commandButton value="#{msg['button.cancel']}" update=":main">
+              <f:setPropertyActionListener value="/xhtml/staff/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            </p:commandButton>
+          </td>
+        </tr>
+      </table>
+    </h:form>
+  </ui:define>
+</ui:composition>
