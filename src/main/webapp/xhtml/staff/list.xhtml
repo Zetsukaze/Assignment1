@@ -55,13 +55,8 @@
             </f:facet>
           </p:cellEditor>
         </p:column>
-        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffNum}">
-          <p:commandLink value="#{staff.no}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
-            <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
-          </p:commandLink>
-        </p:column>
-        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffNum}">
-          <p:commandLink value="#{staff.no}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
+        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffNum}" style="width:64px">
+          <p:commandLink value="#{updateStaffBean.formatStaffNum(staff.staffNum)}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
             <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
