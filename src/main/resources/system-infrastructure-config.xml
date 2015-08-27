@@ -65,10 +65,10 @@
     </bean>
 
 	<!-- Hibernate Configurations -->
-	<bean id="sampleHibernateProperties"
- 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
- 		<property name="properties">
-  			<props>
+  	<bean id="sampleHibernateProperties"
+   		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+   		<property name="properties">
+        <props>
           <prop key="hibernate.hbm2ddl.auto">none</prop>
           <prop key="hibernate.query.substitutions">true 'T', false 'F'</prop>
           <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -86,18 +86,17 @@
 
           <prop key="hibernate.show_sql">false</prop>
           <prop key="hibernate.format_sql">true</prop>
-   				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-   				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-				  <prop key="hibernate.cache.use_query_cache">true</prop>
+          <prop key="hibernate.cache.use_second_level_cache">true</prop>
+          <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+          <prop key="hibernate.cache.use_query_cache">true</prop>
 
-				  <!-- For Envers Configurations, to specify here -->
-   				<prop key="org.hibernate.envers.auditTableSuffix">_AUD</prop>
-   				<prop key="org.hibernate.envers.revisionTypeFieldName">REV_TYPE</prop>
-   				<prop key="org.hibernate.envers.doNotAuditOptimisticLockingField">false</prop>
-  			</props>
- 		</property>
-	</bean>
-
+          <!-- For Envers Configurations, to specify here -->
+            <prop key="org.hibernate.envers.auditTableSuffix">_AUD</prop>
+            <prop key="org.hibernate.envers.revisionTypeFieldName">REV_TYPE</prop>
+            <prop key="org.hibernate.envers.doNotAuditOptimisticLockingField">false</prop>
+        </props>
+   		</property>
+  	</bean>
 
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
       <property name="basenames">
@@ -116,39 +115,37 @@
     <bean id="auditFuncInterceptor" class="com.ncs.iframe4.hibernate.audit.func.AuditFuncNameInterceptor"/>
 
     <aop:config>
-        <aop:advisor advice-ref="auditFuncInterceptor" pointcut="execution(* *..bean.*Bean+.*(..))"/>
+      <aop:advisor advice-ref="auditFuncInterceptor" pointcut="execution(* *..bean.*Bean+.*(..))"/>
     </aop:config>
 
-
     <!-- 1. Embedded Database
-	<jdbc:embedded-database type="HSQL" id="iconnectDS">
-        <jdbc:script location="classpath:dbscripts/iframe.sql"/>
-        <jdbc:script location="classpath:dbscripts/itrust.sql"/>
-		<jdbc:script location="classpath:dbscripts/ischeduler.sql"/>
-		<jdbc:script location="classpath:dbscripts/iforge-commonservice.sql"/>
-        <jdbc:script location="classpath:dbscripts/iframe-sample.sql"/>
-    </jdbc:embedded-database>-->
+      <jdbc:embedded-database type="HSQL" id="iconnectDS">
+      <jdbc:script location="classpath:dbscripts/iframe.sql"/>
+      <jdbc:script location="classpath:dbscripts/itrust.sql"/>
+      <jdbc:script location="classpath:dbscripts/ischeduler.sql"/>
+      <jdbc:script location="classpath:dbscripts/iforge-commonservice.sql"/>
+      <jdbc:script location="classpath:dbscripts/iframe-sample.sql"/>
+      </jdbc:embedded-database>
+    -->
 
-
-	<!-- 2. Datasource JNDI lookup definition
-	<jee:jndi-lookup id="iconnectDS" jndi-name="jdbc/iconnectDS"
-		lookup-on-startup="false" proxy-interface="javax.sql.DataSource"
-		cache="true" resource-ref="true" />
--->
+    <!-- 2. Datasource JNDI lookup definition
+      <jee:jndi-lookup id="iconnectDS" jndi-name="jdbc/iconnectDS"
+      lookup-on-startup="false" proxy-interface="javax.sql.DataSource"
+      cache="true" resource-ref="true" />
+    -->
 
     <!-- 3. Datasource JNDI lookup definition for jboss
-       <jee:jndi-lookup id="iconnectDS" jndi-name="jdbc/iconnectDS"
-   		lookup-on-startup="false" proxy-interface="javax.sql.DataSource"
-   		cache="true" resource-ref="false" />-->
+      <jee:jndi-lookup id="iconnectDS" jndi-name="jdbc/iconnectDS"
+      lookup-on-startup="false" proxy-interface="javax.sql.DataSource"
+      cache="true" resource-ref="false" />
+    -->
 
-	<!-- 4. Direct JDBC Connection without Connection Pooling --><!---->
-	<bean id="iconnectDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!-- 4. Direct JDBC Connection without Connection Pooling --><!---->
+      <bean id="iconnectDS" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/ryanlimwr"/>
         <property name="username" value="root"/>
         <property name="password" value="password"/>
-    </bean>
-
-
+      </bean>
 
 </beans>
