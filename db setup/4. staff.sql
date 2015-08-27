@@ -6,7 +6,7 @@ create table tbl_staff (
   staff_name varchar (200) not null,
   login_id varchar (15) not null unique,
   email varchar (27) not null unique,
-  phone_no int (8),
+  phone_no int (8) default 0,
   dob date,
   join_date date,
   dept_id varchar (100),
