@@ -134,10 +134,6 @@ public class StaffFormBean {
     this.staffList = refreshedLazyDataModel;
   }
 
-  public String formatStaffNum(int staffNum) {
-    return String.format("%05d", staffNum);
-  }
-
   // Update
 
   public void initEditStaff(String staffId) {

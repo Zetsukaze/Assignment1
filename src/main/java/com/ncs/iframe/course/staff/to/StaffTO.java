@@ -24,7 +24,7 @@ public class StaffTO implements Serializable {
   @Column(name = "id")
   private String id;
   @Column(name = "staff_no")
-  private int staffNum;
+  private String staffNum;
   @Column(name = "staff_name")
   private String name;
   @Column(name = "login_id")
@@ -55,7 +55,7 @@ public class StaffTO implements Serializable {
     return this.id;
   }
 
-  public int getStaffNum() {
+  public String getStaffNum() {
     return this.staffNum;
   }
 
@@ -114,7 +114,7 @@ public class StaffTO implements Serializable {
     this.id = id;
   }
 
-  public void setStaffNum(int staffNum) {
+  public void setStaffNum(String staffNum) {
     this.staffNum = staffNum;
   }
 
