@@ -14,7 +14,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 
-    <!-- For Transparent Exception Translation-->
+  <!-- For Transparent Exception Translation-->
     <bean id="persistenceExceptionInterceptor" class="org.springframework.dao.support.PersistenceExceptionTranslationInterceptor"/>
 
     <aop:config>
@@ -23,48 +23,46 @@
 
 	<!-- TransactionManager -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+      <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
 	<!-- txAdvice -->
     <tx:advice id="txAdvice">
-        <tx:attributes>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="*" propagation="REQUIRED" />
-            <!--
-            <tx:method name="create*" propagation="REQUIRED" />
-            <tx:method name="update*" propagation="REQUIRED" />
-            <tx:method name="delete*" propagation="REQUIRED" />
-            <tx:method name="*" read-only="true"/>
-            -->
-        </tx:attributes>
+      <tx:attributes>
+        <tx:method name="get*" read-only="true"/>
+        <tx:method name="*" propagation="REQUIRED" />
+        <!--
+        <tx:method name="create*" propagation="REQUIRED" />
+        <tx:method name="update*" propagation="REQUIRED" />
+        <tx:method name="delete*" propagation="REQUIRED" />
+        <tx:method name="*" read-only="true"/>
+        -->
+      </tx:attributes>
     </tx:advice>
 
 	<!--  uses JDK Dynamic Proxy instead of CGLIB Proxy, default proxy-target-class="false"-->
     <aop:config>
-        <aop:pointcut id="interceptorPointCuts" expression="execution(* *..service.*Service+.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="interceptorPointCuts" />
+      <aop:pointcut id="interceptorPointCuts" expression="execution(* *..service.*Service+.*(..))" />
+      <aop:advisor advice-ref="txAdvice" pointcut-ref="interceptorPointCuts" />
     </aop:config>
 
 	<!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="iconnectDS"/>
-		<property name="hibernateProperties" ref="sampleHibernateProperties" />
-
-        <property name="packagesToScan">
-            <list>
-                <value>com.ncs.itrust4.hibernate.to</value>
-                <value>com.ncs.iframe4.hibernate.audit.entity</value>
-                <value>com.ncs.iframe4.jsf.component.menu.to</value>
-                <value>com.ncs.iframe4.jsf.component.codelookup.entity</value>
-                <value>com.ncs.iframe.course.department.*</value>
-            </list>
-        </property>
-
-		<!-- Interceptor for createDt,createBy,updateDt,updateBy -->
+  		<property name="dataSource" ref="iconnectDS"/>
+  		<property name="hibernateProperties" ref="sampleHibernateProperties" />
+      <property name="packagesToScan">
+        <list>
+          <value>com.ncs.itrust4.hibernate.to</value>
+          <value>com.ncs.iframe4.hibernate.audit.entity</value>
+          <value>com.ncs.iframe4.jsf.component.menu.to</value>
+          <value>com.ncs.iframe4.jsf.component.codelookup.entity</value>
+          <value>com.ncs.iframe.course.department.*</value>
+          <value>com.ncs.iframe.course.staff.*</value>
+        </list>
+      </property>
+		  <!-- Interceptor for createDt,createBy,updateDt,updateBy -->
         <property name="entityInterceptor" ref="iframeTableAuditInterceptor"/>
-
-	</bean>
+    </bean>
 
 	<!-- Hibernate Configurations -->
 	<bean id="sampleHibernateProperties"

@@ -11,34 +11,71 @@
   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
   <!-- menu configuration -->
-  <import resource="classpath:menu-config.xml" />
+
+    <import resource="classpath:menu-config.xml" />
 
   <!-- service configuration -->
-  <bean id="departmentDAO" class="com.ncs.iframe.course.department.dao.DepartmentDAOImpl">
-    <constructor-arg ref="sessionFactory"/>
-  </bean>
-  <bean id="departmentService" class="com.ncs.iframe.course.department.service.DepartmentServiceImpl">
-    <property name="departmentDAO" ref="departmentDAO"/>
-  </bean>
+
+    <!-- Department -->
+
+      <bean id="departmentDAO" class="com.ncs.iframe.course.department.dao.DepartmentDAOImpl">
+        <constructor-arg ref="sessionFactory"/>
+      </bean>
+      <bean id="departmentService" class="com.ncs.iframe.course.department.service.DepartmentServiceImpl">
+        <property name="departmentDAO" ref="departmentDAO"/>
+      </bean>
+      <bean id="addDepartmentBean" class="com.ncs.iframe.course.department.bean.DepartmentFormBean" scope="view">
+        <property name="departmentService" ref="departmentService"/>
+      </bean>
+      <bean id="searchDepartmentBean" class="com.ncs.iframe.course.department.bean.DepartmentFormBean" scope="view">
+        <property name="departmentService" ref="departmentService"/>
+      </bean>
+      <bean id="updateDepartmentBean" class="com.ncs.iframe.course.department.bean.DepartmentFormBean" scope="view">
+        <property name="departmentService" ref="departmentService"/>
+      </bean>
+      <bean id="deleteDepartmentBean" class="com.ncs.iframe.course.department.bean.DepartmentFormBean" scope="view">
+        <property name="departmentService" ref="departmentService"/>
+      </bean>
+
+    <!-- Staff -->
+
+      <bean id="staffDAO" class="com.ncs.iframe.course.staff.dao.StaffDAOImpl">
+        <constructor-arg ref="sessionFactory"/>
+      </bean>
+      <bean id="staffService" class="com.ncs.iframe.course.staff.service.StaffServiceImpl">
+        <property name="staffDAO" ref="staffDAO"/>
+      </bean>
+      <bean id="addStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
+        <property name="staffService" ref="staffService"/>
+      </bean>
+      <bean id="searchStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
+        <property name="staffService" ref="staffService"/>
+      </bean>
+      <bean id="updateStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
+        <property name="staffService" ref="staffService"/>
+      </bean>
+      <bean id="deleteStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
+        <property name="staffService" ref="staffService"/>
+      </bean>
 
   <!-- Page Controller begin -->
 
-  <bean id="conversationManager"
-    class="com.ncs.iframe4.jsf.scope.web.conversation.ConversationManager">
-    <property name="conversationTimeout" value="3600000"></property>
-  </bean>
+    <bean id="conversationManager"
+      class="com.ncs.iframe4.jsf.scope.web.conversation.ConversationManager">
+      <property name="conversationTimeout" value="3600000"></property>
+    </bean>
 
-  <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
-    <property name="scopes">
-     <map>
-      <entry key="conversation">
-       <bean class="com.ncs.iframe4.jsf.scope.web.context.ConversationScope" />
-     </entry>
-     <entry key="view">
-       <bean class="com.ncs.iframe4.jsf.scope.web.context.ViewScope" />
-     </entry>
-   </map>
- </property>
-</bean>
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+      <property name="scopes">
+        <map>
+          <entry key="conversation">
+            <bean class="com.ncs.iframe4.jsf.scope.web.context.ConversationScope" />
+          </entry>
+          <entry key="view">
+            <bean class="com.ncs.iframe4.jsf.scope.web.context.ViewScope" />
+          </entry>
+        </map>
+      </property>
+    </bean>
 
 </beans>
