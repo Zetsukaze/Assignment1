@@ -25,12 +25,14 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
   }
 
   // Create
+
   public void save(DepartmentTO dept) {
     this.getCurrentSession().save(dept);
     log.info("Saved departmentTO successful: " + dept);
   }
 
   // Read
+
   public ListAndPagingInfo<DepartmentTO> findByName(String name) {
     log.debug("Calling DepartmentDAOImpl findByName method, name: " + name);
     DetachedCriteria criteria = DetachedCriteria.forClass(DepartmentTO.class);
@@ -74,6 +76,7 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
   }
 
   // Update
+
   public DepartmentTO update(DepartmentTO dept) {
     DepartmentTO updateDepartmentTO = (DepartmentTO) getCurrentSession().get(DepartmentTO.class, dept.getId());
     BeanUtils.copyProperties(dept, updateDepartmentTO);
@@ -82,6 +85,7 @@ public class DepartmentDAOImpl extends IframeHibernatePaginationDaoSupport imple
   }
 
   // Delete
+
   public void delete(DepartmentTO dept) {
     log.info("DepartmentDAOImpl delete: " + dept);
     getCurrentSession().delete(dept);

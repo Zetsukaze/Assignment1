@@ -21,5 +21,5 @@ public interface DepartmentService {
 
   // Delete
 
-  public void delete(DepartmentTO[] department);
+  public void delete(DepartmentTO[] departmentArray);
 }
