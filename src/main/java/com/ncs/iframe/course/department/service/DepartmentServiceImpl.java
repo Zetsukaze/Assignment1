@@ -32,10 +32,15 @@ public class DepartmentServiceImpl implements DepartmentService {
     return null;
   }
 
-  public DepartmentTO checkExactDeptExists(DepartmentTO dept) {
-    List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
-    if (duplicateList.size() == 0 || (duplicateList.size() == 1 && duplicateList.get(0).getId().equals(dept.getId()))) {
-      return dept;
+  public DepartmentTO checkExactDeptExists(DepartmentTO dept) throws NullPointerException {
+    DepartmentTO checkExist = departmentDAO.findById(dept.getId());
+    if (checkExist != null) {
+      List<DepartmentTO> duplicateList = departmentDAO.findByExactName(dept.getName()).getResult();
+      if (duplicateList.size() == 0 || (duplicateList.size() == 1 && duplicateList.get(0).getId().equals(dept.getId()))) {
+        return dept;
+      }
+    } else {
+      throw new NullPointerException();
     }
     return null;
   }
@@ -75,9 +80,21 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   public void delete(DepartmentTO[] departments) {
     if (departments != null && departments.length > 0) {
+      boolean allExists = true;
+      checkExists:
       for (int i = 0; i < departments.length; i++) {
         DepartmentTO department = departments[i];
-        this.getDepartmentDAO().delete(department);
+        DepartmentTO deptExist = departmentDAO.findById(department.getId());
+        if (deptExist == null) {
+          allExists = false;
+          break checkExists;
+        }
+      }
+      if (allExists) {
+        for (int i = 0; i < departments.length; i++) {
+          DepartmentTO department = departments[i];
+          departmentDAO.delete(department);
+        }
       }
     }
   }

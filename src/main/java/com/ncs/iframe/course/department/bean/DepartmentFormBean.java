@@ -173,16 +173,21 @@ public class DepartmentFormBean {
 
   public void updateDepartment() {
     try {
+      String deptId = this.dept.getId();
       DepartmentTO updated = deptSvc.update(this.dept);
       if (updated != null) {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.ok", FacesMessage.SEVERITY_INFO);
       } else {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
+        this.dept = deptSvc.findById(deptId);
       }
-    } catch (IllegalArgumentException e) {
+    } catch (NullPointerException e) {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+      this.dept = null;
     } catch (Exception e) {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.error", FacesMessage.SEVERITY_ERROR);
+      // JSFTools.processMessage(MESSAGE_PROPS, e.toString(), FacesMessage.SEVERITY_ERROR);
+      this.dept = null;
     }
   }
 
@@ -203,6 +208,7 @@ public class DepartmentFormBean {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
     } catch (Exception e) {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.delete.error", FacesMessage.SEVERITY_ERROR);
+      // JSFTools.processMessage(MESSAGE_PROPS, e.toString(), FacesMessage.SEVERITY_ERROR);
     }
   }
 }
