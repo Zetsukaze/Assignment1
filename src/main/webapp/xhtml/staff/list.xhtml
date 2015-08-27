@@ -41,7 +41,7 @@
           </f:event>
         </f:metadata>
       -->
-      <p:dataTable id="searchStaffResult" value="#{searchStaffBean.staffList}" var="staff" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selection="#{searchStaffBean.selectedstaff}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
+      <p:dataTable id="searchStaffResult" value="#{searchStaffBean.staffList}" var="staff" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" selection="#{searchStaffBean.selectedStaff}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
         <p:ajax event="rowEdit" update="@this" listener="#{searchStaffBean.staffRowEdit}" />
         <p:column selectionMode="multiple" style="width:16px">
         </p:column>
@@ -55,12 +55,12 @@
             </f:facet>
           </p:cellEditor>
         </p:column>
-        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffnum}">
+        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffNum}">
           <p:commandLink value="#{staff.no}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
             <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
-        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffnum}">
+        <p:column headerText="#{msg['label.staff.no']}" sortBy="#{staff.staff.staffNum}">
           <p:commandLink value="#{staff.no}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
             <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>

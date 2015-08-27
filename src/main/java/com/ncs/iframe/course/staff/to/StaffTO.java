@@ -13,7 +13,7 @@ import org.hibernate.envers.Audited;
 
 @Audited
 @Entity
-@Table(name="tbl_departments")
+@Table(name="tbl_staff")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class StaffTO implements Serializable {
 
