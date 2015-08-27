@@ -53,13 +53,11 @@
       <tr>
         <td>
           <p:commandButton value="#{msg['button.save']}" action="#{updateDepartmentBean.updateDepartment()}" update=":main">
-            <f:setPropertyActionListener value="/xhtml/department/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            <f:setPropertyActionListener value="#{updateDepartmentBean.checkDuplicateNameUpdateDepartmentProcess(updateDepartmentBean.department)}" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandButton>
           &nbsp;&nbsp;
-          <p:commandButton
-            value="#{msg['button.cancel']}" update=":main" immediate="true">
-            <f:setPropertyActionListener value="/xhtml/department/view.xhtml"
-              target="#{commonPageLayout.mainIncludePage}" />
+          <p:commandButton value="#{msg['button.cancel']}" update=":main">
+            <f:setPropertyActionListener value="#{updateDepartmentBean.reloadView(updateDepartmentBean.department.id)}" target="#{commonPageLayout.mainIncludePage}" />
             </p:commandButton>
         </td>
       </tr>

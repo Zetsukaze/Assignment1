@@ -114,6 +114,27 @@ public class DepartmentFormBean {
     return redirectUpdate;
   }
 
+  public String checkDuplicateNameUpdateDepartmentProcess(DepartmentTO checkDept) {
+    String redirectUpdate = "/xhtml/department/update.xhtml";
+    String redirectView = "/xhtml/department/view.xhtml";
+    log.info("DepartmentFormBean checking for duplicates..");
+    try {
+      DepartmentTO checkExactDept = deptSvc.checkExactDeptExists(checkDept);
+      if (checkExactDept == null) {
+        log.info("DepartmentFormBean found duplicate!");
+        // JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
+        return redirectUpdate;
+      }
+      log.info("DepartmentFormBean found no duplicates, should be able to update CheckExact: " + checkExactDept);
+      return redirectView;
+    } catch (NullPointerException e) {
+      log.info("DepartmentFormBean encountered NullPointerException while searching for duplicates...");
+      // JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+      // this.dept = null;
+      return redirectView;
+    }
+  }
+
   // Create
 
   public void addDepartmentProcess() {
@@ -165,6 +186,11 @@ public class DepartmentFormBean {
     this.departmentList = refreshedLazyDataModel;
   }
 
+  public String reloadView(String departmentId) {
+    this.dept = deptSvc.findById(departmentId);
+    return "/xhtml/department/view.xhtml";
+  }
+
   // Update
 
   public void initEditDepartment(String departmentId) {
@@ -179,7 +205,6 @@ public class DepartmentFormBean {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.ok", FacesMessage.SEVERITY_INFO);
       } else {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
-        this.dept = deptSvc.findById(deptId);
       }
     } catch (NullPointerException e) {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);

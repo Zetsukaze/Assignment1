@@ -5,6 +5,12 @@ import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 
 public interface DepartmentService {
 
+  // Validators
+
+  public DepartmentTO checkDuplicateNameExists(DepartmentTO dept);
+
+  public DepartmentTO checkExactDeptExists(DepartmentTO dept) throws NullPointerException;
+
   // Create
 
   public DepartmentTO add(DepartmentTO department);
