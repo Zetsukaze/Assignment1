@@ -58,6 +58,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Sublime Text 3
+*.sublime-project
+*.sublime-workspace
+
 # Eclipse IDE
 .classpath
 .project
