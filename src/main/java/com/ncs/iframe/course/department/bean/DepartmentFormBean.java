@@ -21,11 +21,11 @@ public class DepartmentFormBean {
 
   private static final String MESSAGE_PROPS = "com.ncs.iframe4.jsf.i18n.SampleMessages";
   private transient Logger log = Logger.getLogger(getClass());
+  private String name;
+  private DepartmentService deptSvc;
   private LazyDataModel<DepartmentTO> departmentList;
   private DepartmentTO[] selectedDepartments;
-  private DepartmentService deptSvc;
   private DepartmentTO dept = new DepartmentTO();
-  private String name;
 
   // Constructors
 
