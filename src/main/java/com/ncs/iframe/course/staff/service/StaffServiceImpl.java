@@ -6,10 +6,12 @@ import com.ncs.iframe.course.department.dao.DepartmentDAO;
 import com.ncs.iframe.course.department.to.DepartmentTO;
 import com.ncs.iframe.course.staff.dao.StaffDAO;
 import com.ncs.iframe.course.staff.to.StaffTO;
+import com.ncs.iframe4.commons.logging.Logger;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 
 public class StaffServiceImpl implements StaffService {
 
+  private transient Logger log = Logger.getLogger(getClass());
   private StaffDAO staffDAO;
   private DepartmentDAO departmentDAO;
 
@@ -44,7 +46,8 @@ public class StaffServiceImpl implements StaffService {
   }
 
   public StaffTO checkDuplicateLoginIdExists(StaffTO staff) {
-    List<StaffTO> duplicateList = staffDAO.findByLoginId(staff.getStaffNum()).getResult();
+    log.info("StaffServiceImpl checking for duplicate loginId: " + staff.getLoginId());
+    List<StaffTO> duplicateList = staffDAO.findByLoginId(staff.getLoginId()).getResult();
     if (duplicateList.size() == 0) {
       return staff;
     }
@@ -67,7 +70,7 @@ public class StaffServiceImpl implements StaffService {
   public StaffTO add(StaffTO staff) throws InterruptedException {
     StaffTO duplicateStaffNum = checkDuplicateStaffNumExists(staff);
     StaffTO duplicateLoginId = checkDuplicateLoginIdExists(staff);
-    DepartmentTO department = departmentDAO.findById(staff.getDepartment().getId());
+    DepartmentTO departmentExists = staff.getDepartment();
 
     if (duplicateStaffNum == null) {
       throw new InterruptedException("1");
@@ -77,8 +80,11 @@ public class StaffServiceImpl implements StaffService {
       throw new InterruptedException("2");
     }
 
-    if (department == null) {
-      throw new InterruptedException("3");
+    if (departmentExists != null) {
+      DepartmentTO department = departmentDAO.findById(departmentExists.getId());
+      if (department == null) {
+        throw new InterruptedException("3");
+      }
     }
 
     staffDAO.save(staff);
