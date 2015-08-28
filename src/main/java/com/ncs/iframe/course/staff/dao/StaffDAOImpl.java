@@ -52,18 +52,35 @@ public class StaffDAOImpl extends IframeHibernatePaginationDaoSupport implements
     return findByCriteria4Page(criteria);
   }
 
-  public ListAndPagingInfo<StaffTO> findByExactName(String name) {
-    log.debug("StaffDAOImpl findByExactName: " + name);
+  public ListAndPagingInfo<StaffTO> findByStaffNum(String staffNum) {
+    log.debug("StaffDAOImpl findByStaffNo: " + staffNum);
     DetachedCriteria criteria = DetachedCriteria.forClass(StaffTO.class);
 
-    if (!StringUtil.isEmptyString(name)) {
+    if (!StringUtil.isEmptyString(staffNum)) {
       criteria.add(
-        Restrictions.like("name", name, MatchMode.EXACT)
+        Restrictions.like("staffNum", staffNum, MatchMode.EXACT)
       );
     }
 
     if (PaginationContext.getPaginationSortOrderData() != null && PaginationContext.getPaginationSortOrderData().getSortValue() == null) {
-      PaginationContext.getPaginationSortOrderData().setSortValue("name");
+      PaginationContext.getPaginationSortOrderData().setSortValue("staffNum");
+      PaginationContext.getPaginationSortOrderData().setAscending(true);
+    }
+    return findByCriteria4Page(criteria);
+  }
+
+  public ListAndPagingInfo<StaffTO> findByLoginId(String loginId) {
+    log.debug("StaffDAOImpl findByLoginId: " + loginId);
+    DetachedCriteria criteria = DetachedCriteria.forClass(StaffTO.class);
+
+    if (!StringUtil.isEmptyString(loginId)) {
+      criteria.add(
+        Restrictions.like("loginId", loginId, MatchMode.EXACT)
+      );
+    }
+
+    if (PaginationContext.getPaginationSortOrderData() != null && PaginationContext.getPaginationSortOrderData().getSortValue() == null) {
+      PaginationContext.getPaginationSortOrderData().setSortValue("loginId");
       PaginationContext.getPaginationSortOrderData().setAscending(true);
     }
     return findByCriteria4Page(criteria);

@@ -13,7 +13,9 @@ public interface StaffDAO {
 
   public ListAndPagingInfo<StaffTO> findByName(String name);
 
-  public ListAndPagingInfo<StaffTO> findByExactName(String name);
+  public ListAndPagingInfo<StaffTO> findByStaffNum(String staffNum);
+
+  public ListAndPagingInfo<StaffTO> findByLoginId(String loginId);
 
   public StaffTO findById(String id);
 

@@ -1,5 +1,9 @@
 package com.ncs.iframe.course.staff.service;
 
+import java.util.List;
+
+import com.ncs.iframe.course.department.dao.DepartmentDAO;
+import com.ncs.iframe.course.department.to.DepartmentTO;
 import com.ncs.iframe.course.staff.dao.StaffDAO;
 import com.ncs.iframe.course.staff.to.StaffTO;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
@@ -7,11 +11,16 @@ import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 public class StaffServiceImpl implements StaffService {
 
   private StaffDAO staffDAO;
+  private DepartmentDAO departmentDAO;
 
   // Getters
 
   public StaffDAO getStaffDAO() {
     return staffDAO;
+  }
+
+  public DepartmentDAO getDepartmentDAO() {
+    return departmentDAO;
   }
 
   // Setters
@@ -20,11 +29,58 @@ public class StaffServiceImpl implements StaffService {
     this.staffDAO = staffDAO;
   }
 
+  public void setDepartmentDAO(DepartmentDAO departmentDAO) {
+    this.departmentDAO = departmentDAO;
+  }
+
   // Validators
+
+  public StaffTO checkDuplicateStaffNumExists(StaffTO staff) {
+    List<StaffTO> duplicateList = staffDAO.findByStaffNum(staff.getStaffNum()).getResult();
+    if (duplicateList.size() == 0) {
+      return staff;
+    }
+    return null;
+  }
+
+  public StaffTO checkDuplicateLoginIdExists(StaffTO staff) {
+    List<StaffTO> duplicateList = staffDAO.findByLoginId(staff.getStaffNum()).getResult();
+    if (duplicateList.size() == 0) {
+      return staff;
+    }
+    return null;
+  }
+
+  public boolean checkCyclicReportingOfficer(StaffTO staff) {
+    StaffTO changedRo = staff.getReportingOfficer();
+    if (changedRo != null) {
+      if (changedRo.getId().equals(staff.getId())) {
+        return true;
+      }
+      checkCyclicReportingOfficer(changedRo);
+    }
+    return false;
+  }
 
   // Create
 
-  public StaffTO add(StaffTO staff) {
+  public StaffTO add(StaffTO staff) throws InterruptedException {
+    StaffTO duplicateStaffNum = checkDuplicateStaffNumExists(staff);
+    StaffTO duplicateLoginId = checkDuplicateLoginIdExists(staff);
+    DepartmentTO department = departmentDAO.findById(staff.getDepartment().getId());
+
+    if (duplicateStaffNum == null) {
+      throw new InterruptedException("1");
+    }
+
+    if (duplicateLoginId == null) {
+      throw new InterruptedException("2");
+    }
+
+    if (department == null) {
+      throw new InterruptedException("3");
+    }
+
     staffDAO.save(staff);
     return staff;
   }

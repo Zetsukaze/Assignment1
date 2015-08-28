@@ -5,9 +5,15 @@ import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 
 public interface StaffService {
 
+  // Validators
+
+  public StaffTO checkDuplicateStaffNumExists(StaffTO staff);
+
+  public StaffTO checkDuplicateLoginIdExists(StaffTO staff);
+
   // Create
 
-  public StaffTO add(StaffTO staff);
+  public StaffTO add(StaffTO staff) throws InterruptedException;
 
   // Read
 

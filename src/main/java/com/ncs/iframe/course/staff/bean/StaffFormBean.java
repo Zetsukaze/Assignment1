@@ -188,13 +188,38 @@ public class StaffFormBean {
   // Create
 
   public void addStaffProcess() {
-    String loginId = this.staff.getLoginId();
-    String deptId = this.staff.getDeptId();
-    String roId = this.staff.getRoId();
-    this.staff.setEmail(loginId + "@corp.com.sg");
-    this.staff.setDepartment(deptSvc.findById(deptId));
-    this.staff.setReportingOfficer(staffSvc.findById(roId));
-    staffSvc.add(this.staff);
+    try {
+      String loginId = this.staff.getLoginId();
+      String deptId = this.staff.getDeptId();
+      String roId = this.staff.getRoId();
+      this.staff.setEmail(loginId + "@corp.com.sg");
+      this.staff.setDepartment(deptSvc.findById(deptId));
+      this.staff.setReportingOfficer(staffSvc.findById(roId));
+      StaffTO addition = staffSvc.add(this.staff);
+      if (addition != null) {
+        JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.add.ok", FacesMessage.SEVERITY_INFO);
+        this.staff = new StaffTO();
+      }
+    } catch (InterruptedException e) {
+      int errorType = Integer.parseInt(e.getMessage());
+      switch (errorType) {
+        case 1:
+          JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.staffnum.duplicate", FacesMessage.SEVERITY_WARN);
+          break;
+        case 2:
+          JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.loginid.duplicate", FacesMessage.SEVERITY_WARN);
+          break;
+        case 3:
+          JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.department.invalid", FacesMessage.SEVERITY_WARN);
+          break;
+        default:
+          log.info("StaffFormBean InterruptedException: " + e.toString());
+          break;
+      }
+    } catch (Exception e) {
+      log.info("StaffFormBean Exception: " + e.toString());
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.add.error", FacesMessage.SEVERITY_ERROR);
+    }
   }
 
   // Read

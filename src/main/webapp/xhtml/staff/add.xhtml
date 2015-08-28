@@ -31,10 +31,10 @@
           <table width="512" border="0">
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.staffno.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
+                <h:outputText value="#{msg['label.staff.staffnum.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
-                <p:inputText id="staffNum" value="#{addStaffBean.staff.staffNum}" required="true" label="#{msg['label.staff.staffno.mandatory']}" maxlength="5" validatorMessage="#{msg['msg.staff.staffno.invalid']}">
+                <p:inputText id="staffNum" value="#{addStaffBean.staff.staffNum}" required="true" label="#{msg['label.staff.staffnum.mandatory']}" maxlength="5" validatorMessage="#{msg['msg.staff.staffnum.invalid']}">
                   <f:validateRegex pattern="^(\d{5})$" />
                   <p:ajax event="blur" />
                 </p:inputText>
@@ -73,10 +73,10 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.phoneno']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
+                <h:outputText value="#{msg['label.staff.phonenum']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
-                <p:inputText id="phoneNum" value="#{addStaffBean.staff.phoneNum}" label="#{msg['label.staff.phoneno']}" maxlength="8" validatorMessage="#{msg['msg.staff.phoneno.invalid']}">
+                <p:inputText id="phoneNum" value="#{addStaffBean.staff.phoneNum}" label="#{msg['label.staff.phonenum']}" maxlength="8" validatorMessage="#{msg['msg.staff.phonenum.invalid']}">
                   <f:validateRegex pattern="^(\d{8})$" />
                   <p:ajax event="blur" />
                 </p:inputText>

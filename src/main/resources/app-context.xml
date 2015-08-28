@@ -44,6 +44,7 @@
       </bean>
       <bean id="staffService" class="com.ncs.iframe.course.staff.service.StaffServiceImpl">
         <property name="staffDAO" ref="staffDAO"/>
+        <property name="departmentDAO" ref="departmentDAO"/>
       </bean>
       <bean id="addStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>

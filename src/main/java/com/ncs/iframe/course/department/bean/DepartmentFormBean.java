@@ -207,6 +207,7 @@ public class DepartmentFormBean {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.duplicate", FacesMessage.SEVERITY_WARN);
       }
     } catch (NullPointerException e) {
+      log.info("DepartmentFormBean NullPointer: " + e.toString());
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
       this.dept = null;
     } catch (Exception e) {
