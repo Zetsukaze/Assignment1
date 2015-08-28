@@ -87,17 +87,17 @@
                 <h:outputText value="#{msg['label.staff.dob']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
-                <p:calendar id="dob" value="#{addStaffBean.staff.dob}" label="#{msg['label.staff.dob']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.getDate100yAgo()}" maxdate="#{addStaffBean.getDateYesterday()}" pages="3" required="true">
+                <p:calendar id="dob" value="#{addStaffBean.staff.dob}" label="#{msg['label.staff.dob']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.getDate100yAgo()}" maxdate="#{addStaffBean.getDate16yAgo()}" pages="3" required="true">
                   <p:ajax event="dateSelect" update="joinDate" />
+                  <p:ajax event="blur" update="joinDate" />
                 </p:calendar>
               </td>
-            </tr>
-            <tr>
+            </tr> <tr>
               <td>
                 <h:outputText value="#{msg['label.staff.joindate']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
-                <p:calendar id="joinDate" value="#{addStaffBean.staff.joinDate}" label="#{msg['label.staff.joindate']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.staff.dob}" pages="3" required="true">
+                <p:calendar id="joinDate" value="#{addStaffBean.staff.joinDate}" label="#{msg['label.staff.joindate']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.getDayAfterDob()}" pages="3" required="true">
                 </p:calendar>
               </td>
             </tr>
@@ -135,10 +135,10 @@
               </td>
             </tr>
             <tr>
-              <td>
+              <td style="padding-top:64px;padding-bottom:64px">
                 <h:outputText value="#{msg['label.staff.photo']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
-              <td>
+              <td style="padding-top:64px;padding-bottom:64px">
                 <p:fileUpload fileUploadListener="#{addStaffBean.handleFileUpload}" mode="advanced" dragDropSupport="true" sizeLimit="150000" fileLimit="1" allowTypes="/(\.)(jpe?g)$/" />
               </td>
             </tr>
@@ -148,7 +148,7 @@
       <table class="std_table">
         <tr>
           <td>
-            <p:commandButton value="#{msg['button.add']}" action="#" update=":staff_create_form" />
+            <p:commandButton value="#{msg['button.add']}" action="#{addStaffBean.addStaffProcess()}" update=":staff_create_form, :globalMessages" />
             &nbsp;&nbsp;
             <p:commandButton value="#{msg['button.cancel']}" update=":main">
               <f:setPropertyActionListener value="/xhtml/staff/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />

@@ -125,16 +125,16 @@ public class StaffFormBean {
 
   // Validators
 
-  public String getDateYesterday() {
+  public String getDate16yAgo() {
     Calendar dateTimeNow = Calendar.getInstance();
-    dateTimeNow.add(Calendar.DATE, -1);
+    dateTimeNow.add(Calendar.YEAR, -16);
     dateTimeNow.set(Calendar.HOUR_OF_DAY, 0);
     dateTimeNow.set(Calendar.MINUTE, 0);
     dateTimeNow.set(Calendar.SECOND, 0);
     dateTimeNow.set(Calendar.MILLISECOND, 0);
     Date returnDate = dateTimeNow.getTime();
     String returnString = String.format("%1$td/%1$tm/%1$tY", returnDate);
-    log.info("Date yesterday: " + returnString);
+    log.info("Date 16 years ago: " + returnString);
     return "" + returnString;
   }
 
@@ -149,6 +149,20 @@ public class StaffFormBean {
     String returnString = String.format("%1$td/%1$tm/%1$tY", returnDate);
     log.info("Date 100 years ago: " + returnString);
     return "" + returnString;
+  }
+
+  public String getDayAfterDob() {
+    Calendar dateTimeNow = Calendar.getInstance();
+    Date dob = staff.getDob();
+    if (dob != null) {
+      dateTimeNow.setTimeInMillis(dob.getTime());
+      dateTimeNow.add(Calendar.YEAR, 16);
+      Date returnDate = dateTimeNow.getTime();
+      String returnString = String.format("%1$td/%1$tm/%1$tY", returnDate);
+      log.info("Mindate for joining: " + returnString);
+      return "" + returnString;
+    }
+    return "";
   }
 
   public void handleFileUpload(FileUploadEvent event) {
@@ -174,6 +188,8 @@ public class StaffFormBean {
   // Create
 
   public void addStaffProcess() {
+    String loginId = this.staff.getLoginId();
+    this.staff.setEmail(loginId + "@corp.com.sg");
     staffSvc.add(this.staff);
   }
 

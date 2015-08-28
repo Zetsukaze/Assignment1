@@ -49,16 +49,14 @@
       </p:panel>
       <table class="std_table">
         <tr>
-          <td><p:commandButton value="#{msg['button.add']}"
-            action="#{addDepartmentBean.addDepartmentProcess()}"
-            update="department_create_form,:globalMessages"
-            />
+          <td>
+            <p:commandButton value="#{msg['button.add']}" action="#{addDepartmentBean.addDepartmentProcess()}"
+            update="department_create_form,:globalMessages" />
             &nbsp;&nbsp;
-            <p:commandButton
-            value="#{msg['button.cancel']}" update=":main" immediate="true">
-            <f:setPropertyActionListener value="/xhtml/department/list.xhtml"
-              target="#{commonPageLayout.mainIncludePage}" />
-          </p:commandButton></td>
+            <p:commandButton value="#{msg['button.cancel']}" update=":main" immediate="true">
+              <f:setPropertyActionListener value="/xhtml/department/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            </p:commandButton>
+          </td>
         </tr>
       </table>
     </h:form>
