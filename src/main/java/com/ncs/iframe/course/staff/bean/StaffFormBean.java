@@ -1,5 +1,7 @@
 package com.ncs.iframe.course.staff.bean;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +94,32 @@ public class StaffFormBean {
   }
 
   // Validators
+
+  public String getDateYesterday() {
+    Calendar dateTimeNow = Calendar.getInstance();
+    dateTimeNow.add(Calendar.DATE, -1);
+    dateTimeNow.set(Calendar.HOUR_OF_DAY, 0);
+    dateTimeNow.set(Calendar.MINUTE, 0);
+    dateTimeNow.set(Calendar.SECOND, 0);
+    dateTimeNow.set(Calendar.MILLISECOND, 0);
+    Date returnDate = dateTimeNow.getTime();
+    String returnString = String.format("%1$td/%1$tm/%1$tY", returnDate);
+    log.info("Date yesterday: " + returnString);
+    return "" + returnString;
+  }
+
+  public String getDate100yAgo() {
+    Calendar dateTimeNow = Calendar.getInstance();
+    dateTimeNow.add(Calendar.YEAR, -100);
+    dateTimeNow.set(Calendar.HOUR_OF_DAY, 0);
+    dateTimeNow.set(Calendar.MINUTE, 0);
+    dateTimeNow.set(Calendar.SECOND, 0);
+    dateTimeNow.set(Calendar.MILLISECOND, 0);
+    Date returnDate = dateTimeNow.getTime();
+    String returnString = String.format("%1$td/%1$tm/%1$tY", returnDate);
+    log.info("Date 100 years ago: " + returnString);
+    return "" + returnString;
+  }
 
   // Create
 
