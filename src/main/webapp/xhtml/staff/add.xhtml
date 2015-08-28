@@ -23,6 +23,7 @@
   </ui:define>
 
   <ui:define name="content">
+    <i:codesCollection var="designationList" codeType="designation" scope="session" locale="#{facesContext.getViewRoot().locale.language}" />
     <h:form id="staff_create_form">
       <p:panel id="staffInformation" header="#{msg['label.staff.information']}">
         <p:focus for="staffNum" />
@@ -30,7 +31,7 @@
           <table width="512" border="0">
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.staffno.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.staff.staffno.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
                 <p:inputText id="staffNum" value="#{addStaffBean.staff.staffNum}" required="true" label="#{msg['label.staff.staffno.mandatory']}" maxlength="5" validatorMessage="#{msg['msg.staff.staffno.invalid']}">
@@ -41,7 +42,7 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.name.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.staff.name.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
                 <p:inputText id="staffName" value="#{addStaffBean.staff.name}" required="true" label="#{msg['label.staff.name.mandatory']}" maxlength="200">
@@ -51,7 +52,7 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.loginid.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.staff.loginid.mandatory']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
                 <p:inputText id="loginId" value="#{addStaffBean.staff.loginId}" required="true" label="#{msg['label.staff.loginid.mandatory']}" maxlength="15" validatorMessage="#{msg['msg.staff.loginid.invalid']}">
@@ -62,7 +63,7 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.email']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.staff.email']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
                 <p:inputText id="email" value="#{addStaffBean.staff.loginId}@corp.com.sg" required="true" label="#{msg['label.staff.loginid.mandatory']}" readonly="true">
@@ -72,7 +73,7 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.phoneno']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.staff.phoneno']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
                 <p:inputText id="phoneNum" value="#{addStaffBean.staff.phoneNum}" label="#{msg['label.staff.phoneno']}" maxlength="8" validatorMessage="#{msg['msg.staff.phoneno.invalid']}">
@@ -83,7 +84,7 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.dob']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.staff.dob']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
                 <p:calendar id="dob" value="#{addStaffBean.staff.dob}" label="#{msg['label.staff.dob']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.getDate100yAgo()}" maxdate="#{addStaffBean.getDateYesterday()}" pages="3">
@@ -93,11 +94,22 @@
             </tr>
             <tr>
               <td>
-                <h:outputText value="#{msg['label.staff.joindate']}" style="display:-moz-inline-box;display:inline-block;width:150px" />
+                <h:outputText value="#{msg['label.staff.joindate']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
                 <p:calendar id="joinDate" value="#{addStaffBean.staff.joinDate}" label="#{msg['label.staff.joindate']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.staff.dob}" pages="3">
                 </p:calendar>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.designation']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
+              </td>
+              <td>
+                <p:selectOneMenu id="designationType" value="#{addStaffBean.staff.designation}">
+                  <f:selectItem itemLabel="Please select an Option" />
+                  <f:selectItems value="#{sessionScope.designationList}" />
+                </p:selectOneMenu>
               </td>
             </tr>
           </table>
