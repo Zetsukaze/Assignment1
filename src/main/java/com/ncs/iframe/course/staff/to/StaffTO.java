@@ -65,7 +65,7 @@ public class StaffTO implements Serializable {
   @JoinColumn(name = "ro_id")
   private StaffTO reportingOfficer;
   @Column(name = "photo")
-  private String photo;
+  private byte[] photo;
   @Column(name = "version")
   private Integer version;
   @OneToMany(fetch=FetchType.EAGER, mappedBy="reportingOfficer")
@@ -127,7 +127,7 @@ public class StaffTO implements Serializable {
     return reportingOfficer;
   }
 
-  public String getPhoto() {
+  public byte[] getPhoto() {
     return this.photo;
   }
 
@@ -198,7 +198,7 @@ public class StaffTO implements Serializable {
     this.reportingOfficer = reportingOfficer;
   }
 
-  public void setPhoto(String photo) {
+  public void setPhoto(byte[] photo) {
     this.photo = photo;
   }
 

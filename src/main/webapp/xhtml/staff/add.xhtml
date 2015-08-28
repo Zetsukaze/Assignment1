@@ -134,6 +134,14 @@
                 </p:selectOneMenu>
               </td>
             </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.photo']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
+              </td>
+              <td>
+                <p:fileUpload fileUploadListener="#{addStaffBean.handleFileUpload}" mode="advanced" dragDropSupport="true" sizeLimit="150000" fileLimit="1" allowTypes="/(\.)(jpe?g)$/" />
+              </td>
+            </tr>
           </table>
         </div>
       </p:panel>

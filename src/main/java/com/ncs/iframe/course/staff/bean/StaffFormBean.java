@@ -1,11 +1,18 @@
 package com.ncs.iframe.course.staff.bean;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.UploadedFile;
 
 import com.ncs.iframe.course.department.service.DepartmentService;
 import com.ncs.iframe.course.department.to.DepartmentTO;
@@ -13,7 +20,9 @@ import com.ncs.iframe.course.staff.service.StaffService;
 import com.ncs.iframe.course.staff.to.StaffTO;
 import com.ncs.iframe4.commons.logging.Logger;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
+import com.ncs.iframe4.jsf.message.MessageUtils;
 import com.ncs.iframe4.jsf.pagination.PaginationDataModel;
+import com.ncs.iframe4.jsf.util.JSFTools;
 
 public class StaffFormBean {
 
@@ -140,6 +149,26 @@ public class StaffFormBean {
     String returnString = String.format("%1$td/%1$tm/%1$tY", returnDate);
     log.info("Date 100 years ago: " + returnString);
     return "" + returnString;
+  }
+
+  public void handleFileUpload(FileUploadEvent event) {
+    UploadedFile file = event.getFile();
+    if(file != null) {
+      try {
+        String fileName = file.getFileName();
+        long fileSize = file.getSize();
+        int size = (int) fileSize;
+        byte[] buffer = new byte[size];
+        InputStream stream = file.getInputstream();
+        stream.read(buffer);
+        stream.close();
+        this.staff.setPhoto(buffer);
+        FacesContext.getCurrentInstance().addMessage(null, MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "msg.staff.photo.uploaded", fileName));
+      } catch (IOException e) {
+        log.info("StaffFormBean handleFileUpload failure: " + e.toString());
+        JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.photo.uploadfailed", FacesMessage.SEVERITY_WARN);
+      }
+    }
   }
 
   // Create
