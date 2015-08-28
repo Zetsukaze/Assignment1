@@ -87,7 +87,7 @@
                 <h:outputText value="#{msg['label.staff.dob']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
-                <p:calendar id="dob" value="#{addStaffBean.staff.dob}" label="#{msg['label.staff.dob']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.getDate100yAgo()}" maxdate="#{addStaffBean.getDateYesterday()}" pages="3">
+                <p:calendar id="dob" value="#{addStaffBean.staff.dob}" label="#{msg['label.staff.dob']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.getDate100yAgo()}" maxdate="#{addStaffBean.getDateYesterday()}" pages="3" required="true">
                   <p:ajax event="dateSelect" update="joinDate" />
                 </p:calendar>
               </td>
@@ -97,7 +97,7 @@
                 <h:outputText value="#{msg['label.staff.joindate']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>
-                <p:calendar id="joinDate" value="#{addStaffBean.staff.joinDate}" label="#{msg['label.staff.joindate']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.staff.dob}" pages="3">
+                <p:calendar id="joinDate" value="#{addStaffBean.staff.joinDate}" label="#{msg['label.staff.joindate']}" showOn="button" pattern="dd/MM/yyyy" mindate="#{addStaffBean.staff.dob}" pages="3" required="true">
                 </p:calendar>
               </td>
             </tr>
