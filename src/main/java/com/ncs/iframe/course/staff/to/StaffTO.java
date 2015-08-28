@@ -1,19 +1,26 @@
 package com.ncs.iframe.course.staff.to;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.Audited;
 
@@ -52,12 +59,19 @@ public class StaffTO implements Serializable {
   private DepartmentTO departmentTO;
   @Column(name = "designation")
   private String designation;
-  @Column(name = "ro_id")
+  @Transient
   private String roId;
+  @ManyToOne
+  @JoinColumn(name = "ro_id")
+  private StaffTO reportingOfficer;
   @Column(name = "photo")
   private String photo;
   @Column(name = "version")
   private Integer version;
+  @OneToMany(fetch=FetchType.EAGER, mappedBy="reportingOfficer")
+  @Fetch(value = FetchMode.SUBSELECT)
+  @Cascade(value={org.hibernate.annotations.CascadeType.MERGE})
+  private List<StaffTO> staffList = new ArrayList<StaffTO>();
 
   // Getters
 
@@ -109,12 +123,20 @@ public class StaffTO implements Serializable {
     return this.roId;
   }
 
+  public StaffTO getReportingOfficer() {
+    return reportingOfficer;
+  }
+
   public String getPhoto() {
     return this.photo;
   }
 
   public Integer getVersion() {
     return this.version;
+  }
+
+  public List<StaffTO> getStaffList() {
+    return staffList;
   }
 
   @Override
@@ -172,11 +194,19 @@ public class StaffTO implements Serializable {
     this.roId = roId;
   }
 
+  public void setReportingOfficer(StaffTO reportingOfficer) {
+    this.reportingOfficer = reportingOfficer;
+  }
+
   public void setPhoto(String photo) {
     this.photo = photo;
   }
 
   public void setVersion(Integer version) {
     this.version = version;
+  }
+
+  public void setStaffList(List<StaffTO> staffList) {
+    this.staffList = staffList;
   }
 }

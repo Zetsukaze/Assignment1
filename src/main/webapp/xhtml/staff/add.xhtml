@@ -108,7 +108,7 @@
               <td>
                 <p:selectOneMenu id="department" value="#{addStaffBean.staff.deptId}">
                   <f:selectItem itemLabel="Please select an Option" />
-                  <f:selectItems value="#{addStaffBean.getDepartmentList()}" var="department" itemLabel="#{department.name}" itemValue="#{department.id}" />
+                  <f:selectItems value="#{addStaffBean.getAllDepartments()}" var="department" itemLabel="#{department.name}" itemValue="#{department.id}" />
                 </p:selectOneMenu>
               </td>
             </tr>
@@ -120,6 +120,17 @@
                 <p:selectOneMenu id="designationType" value="#{addStaffBean.staff.designation}">
                   <f:selectItem itemLabel="Please select an Option" />
                   <f:selectItems value="#{sessionScope.designationList}" />
+                </p:selectOneMenu>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h:outputText value="#{msg['label.staff.reportingofficer']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
+              </td>
+              <td>
+                <p:selectOneMenu id="reportingOfficer" value="#{addStaffBean.staff.roId}">
+                  <f:selectItem itemLabel="Please select an Option" />
+                  <f:selectItems value="#{addStaffBean.getAllStaff()}" var="reportingOfficer" itemLabel="#{reportingOfficer.name}" itemValue="#{reportingOfficer.id}" />
                 </p:selectOneMenu>
               </td>
             </tr>

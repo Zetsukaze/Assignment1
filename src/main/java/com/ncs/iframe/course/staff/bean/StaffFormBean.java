@@ -72,6 +72,22 @@ public class StaffFormBean {
     return deptSvc;
   }
 
+  public List<DepartmentTO> getAllDepartments() {
+    ListAndPagingInfo<DepartmentTO> listAndPageInfo = deptSvc.findByName("");
+    if (listAndPageInfo != null) {
+      return listAndPageInfo.getResult();
+    }
+    return null;
+  }
+
+  public List<StaffTO> getAllStaff() {
+    ListAndPagingInfo<StaffTO> listAndPageInfo = staffSvc.findByName("");
+    if (listAndPageInfo != null) {
+      return listAndPageInfo.getResult();
+    }
+    return null;
+  }
+
   // Setters
 
   public void setName(String name) {
@@ -165,14 +181,6 @@ public class StaffFormBean {
     int pageSize = (size == 0) ? 1 : size;
     refreshedLazyDataModel.initialWrappedData(0, pageSize);
     this.staffList = refreshedLazyDataModel;
-  }
-
-  public List<DepartmentTO> getDepartmentList() {
-    ListAndPagingInfo<DepartmentTO> listAndPageDept = deptSvc.findByName("");
-    if (listAndPageDept != null) {
-      return listAndPageDept.getResult();
-    }
-    return null;
   }
 
   // Update

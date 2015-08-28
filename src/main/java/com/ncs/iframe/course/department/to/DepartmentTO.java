@@ -16,7 +16,6 @@ import javax.persistence.Version;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.Audited;
 
@@ -41,7 +40,7 @@ public class DepartmentTO implements Serializable {
   @Version
   private Integer version;
   @OneToMany(fetch=FetchType.EAGER, mappedBy="departmentTO")
-  @Cascade(value={org.hibernate.annotations.CascadeType.SAVE_UPDATE,CascadeType.DELETE})
+  @Cascade(value={org.hibernate.annotations.CascadeType.MERGE})
   private List<StaffTO> staffList = new ArrayList<StaffTO>();
 
   // Getters
