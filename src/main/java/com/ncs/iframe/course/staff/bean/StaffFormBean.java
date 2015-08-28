@@ -5,19 +5,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
 import org.primefaces.model.LazyDataModel;
-import org.springframework.orm.hibernate4.HibernateOptimisticLockingFailureException;
 
+import com.ncs.iframe.course.department.service.DepartmentService;
+import com.ncs.iframe.course.department.to.DepartmentTO;
 import com.ncs.iframe.course.staff.service.StaffService;
 import com.ncs.iframe.course.staff.to.StaffTO;
 import com.ncs.iframe4.commons.logging.Logger;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
-import com.ncs.iframe4.jsf.message.MessageUtils;
 import com.ncs.iframe4.jsf.pagination.PaginationDataModel;
-import com.ncs.iframe4.jsf.util.JSFTools;
 
 public class StaffFormBean {
 
@@ -28,6 +24,7 @@ public class StaffFormBean {
   private LazyDataModel<StaffTO> staffList;
   private StaffTO[] selectedStaff;
   private StaffTO staff = new StaffTO();
+  private DepartmentService deptSvc;
 
 
   // Constructors
@@ -71,6 +68,10 @@ public class StaffFormBean {
     return staff;
   }
 
+  public DepartmentService getDepartmentService() {
+    return deptSvc;
+  }
+
   // Setters
 
   public void setName(String name) {
@@ -91,6 +92,10 @@ public class StaffFormBean {
 
   public void setStaff(StaffTO staff) {
     this.staff = staff;
+  }
+
+  public void setDepartmentService(DepartmentService deptSvc) {
+    this.deptSvc = deptSvc;
   }
 
   // Validators
@@ -160,6 +165,14 @@ public class StaffFormBean {
     int pageSize = (size == 0) ? 1 : size;
     refreshedLazyDataModel.initialWrappedData(0, pageSize);
     this.staffList = refreshedLazyDataModel;
+  }
+
+  public List<DepartmentTO> getDepartmentList() {
+    ListAndPagingInfo<DepartmentTO> listAndPageDept = deptSvc.findByName("");
+    if (listAndPageDept != null) {
+      return listAndPageDept.getResult();
+    }
+    return null;
   }
 
   // Update

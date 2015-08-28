@@ -103,6 +103,17 @@
             </tr>
             <tr>
               <td>
+                <h:outputText value="#{msg['label.staff.department']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
+              </td>
+              <td>
+                <p:selectOneMenu id="department" value="#{addStaffBean.staff.deptId}">
+                  <f:selectItem itemLabel="Please select an Option" />
+                  <f:selectItems value="#{addStaffBean.getDepartmentList()}" var="department" itemLabel="#{department.name}" itemValue="#{department.id}" />
+                </p:selectOneMenu>
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <h:outputText value="#{msg['label.staff.designation']}" style="display:-moz-inline-box;display:inline-block;width:128px" />
               </td>
               <td>

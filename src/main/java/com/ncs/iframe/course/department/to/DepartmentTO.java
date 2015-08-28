@@ -1,11 +1,26 @@
 package com.ncs.iframe.course.department.to;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.Audited;
+
+import com.ncs.iframe.course.staff.to.StaffTO;
 
 @Audited
 @Entity
@@ -25,6 +40,9 @@ public class DepartmentTO implements Serializable {
   private String desc;
   @Version
   private Integer version;
+  @OneToMany(fetch=FetchType.EAGER, mappedBy="departmentTO")
+  @Cascade(value={org.hibernate.annotations.CascadeType.SAVE_UPDATE,CascadeType.DELETE})
+  private List<StaffTO> staffList = new ArrayList<StaffTO>();
 
   // Getters
 
@@ -42,6 +60,10 @@ public class DepartmentTO implements Serializable {
 
   public Integer getVersion() {
     return version;
+  }
+
+  public List<StaffTO> getStaffList() {
+    return staffList;
   }
 
   @Override
@@ -64,5 +86,9 @@ public class DepartmentTO implements Serializable {
 
   public void setVersion(Integer version) {
     this.version = version;
+  }
+
+  public void setStaffList(List<StaffTO> staffList) {
+    this.staffList = staffList;
   }
 }

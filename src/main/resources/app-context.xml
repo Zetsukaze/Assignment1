@@ -47,15 +47,19 @@
       </bean>
       <bean id="addStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
+        <property name="departmentService" ref="departmentService"/>
       </bean>
       <bean id="searchStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
+        <property name="departmentService" ref="departmentService"/>
       </bean>
       <bean id="updateStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
+        <property name="departmentService" ref="departmentService"/>
       </bean>
       <bean id="deleteStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
+        <property name="departmentService" ref="departmentService"/>
       </bean>
 
   <!-- Page Controller begin -->

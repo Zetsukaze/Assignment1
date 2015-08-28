@@ -3,13 +3,21 @@ package com.ncs.iframe.course.staff.to;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.Audited;
 
+import com.ncs.iframe.course.department.to.DepartmentTO;
 
 @Audited
 @Entity
@@ -37,8 +45,11 @@ public class StaffTO implements Serializable {
   private Date dob;
   @Column(name = "join_date")
   private Date joinDate;
-  @Column(name = "dept_id")
+  @Transient
   private String deptId;
+  @ManyToOne
+  @JoinColumn(name="dept_id")
+  private DepartmentTO departmentTO;
   @Column(name = "designation")
   private String designation;
   @Column(name = "ro_id")
@@ -47,7 +58,6 @@ public class StaffTO implements Serializable {
   private String photo;
   @Column(name = "version")
   private Integer version;
-
 
   // Getters
 
@@ -85,6 +95,10 @@ public class StaffTO implements Serializable {
 
   public String getDeptId() {
     return this.deptId;
+  }
+
+  public DepartmentTO getDepartmentTO() {
+    return departmentTO;
   }
 
   public String getDesignation() {
@@ -144,6 +158,10 @@ public class StaffTO implements Serializable {
 
   public void setDeptId(String deptId) {
     this.deptId = deptId;
+  }
+
+  public void setDepartmentTO(DepartmentTO departmentTO) {
+    this.departmentTO = departmentTO;
   }
 
   public void setDesignation(String designation) {
