@@ -189,7 +189,11 @@ public class StaffFormBean {
 
   public void addStaffProcess() {
     String loginId = this.staff.getLoginId();
+    String deptId = this.staff.getDeptId();
+    String roId = this.staff.getRoId();
     this.staff.setEmail(loginId + "@corp.com.sg");
+    this.staff.setDepartment(deptSvc.findById(deptId));
+    this.staff.setReportingOfficer(staffSvc.findById(roId));
     staffSvc.add(this.staff);
   }
 

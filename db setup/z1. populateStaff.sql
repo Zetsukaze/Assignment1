@@ -1,7 +1,0 @@
-truncate tbl_staff;
-insert into tbl_staff (id, staff_no, staff_name, login_id, email, phone_no, dob, join_date, designation, ro_id) values('1337-00', '00000', 'Testing Staff 0', 'ts0', 'ts0@corp.com.sg', '12345678', str_to_date('1337/01/30', '%Y/%m/%d'), str_to_date('2015/01/01', '%Y/%m/%d'), 'Gamer', null);
-insert into tbl_staff (id, staff_no, staff_name, login_id, email, dob, join_date, designation, ro_id) values('1337-01', '00001', 'Testing Staff 1', 'ts1', 'ts1@corp.com.sg', str_to_date('1337/01/30', '%Y/%m/%d'), str_to_date('2015/01/01', '%Y/%m/%d'), 'Noob', '1337-01');
-insert into tbl_staff (id, staff_no, staff_name, login_id, email, dob, join_date, designation, ro_id) values('1337-02', '00002', 'Testing Staff 2', 'ts2', 'ts2@corp.com.sg', str_to_date('1337/01/30', '%Y/%m/%d'), str_to_date('2015/01/01', '%Y/%m/%d'), 'Feeder', '1337-02');
-insert into tbl_staff (id, staff_no, staff_name, login_id, email, dob, join_date, designation, ro_id) values('1337-03', '00003', 'Testing Staff 3', 'ts3', 'ts3@corp.com.sg', str_to_date('1337/01/30', '%Y/%m/%d'), str_to_date('2015/01/01', '%Y/%m/%d'), 'Pro', '1337-03');
-insert into tbl_staff (id, staff_no, staff_name, login_id, email, dob, join_date, designation, ro_id) values('1337-04', '00004', 'Testing Staff 4', 'ts4', 'ts4@corp.com.sg', str_to_date('1337/01/30', '%Y/%m/%d'), str_to_date('2015/01/01', '%Y/%m/%d'), 'Lame', '1337-04');
-select * from tbl_staff;
