@@ -56,7 +56,7 @@ public class StaffTO implements Serializable {
   private String deptId;
   @ManyToOne
   @JoinColumn(name="dept_id")
-  private DepartmentTO departmentTO;
+  private DepartmentTO department;
   @Column(name = "designation")
   private String designation;
   @Transient
@@ -111,8 +111,8 @@ public class StaffTO implements Serializable {
     return this.deptId;
   }
 
-  public DepartmentTO getDepartmentTO() {
-    return departmentTO;
+  public DepartmentTO getDepartment() {
+    return department;
   }
 
   public String getDesignation() {
@@ -182,8 +182,8 @@ public class StaffTO implements Serializable {
     this.deptId = deptId;
   }
 
-  public void setDepartmentTO(DepartmentTO departmentTO) {
-    this.departmentTO = departmentTO;
+  public void setDepartment(DepartmentTO department) {
+    this.department = department;
   }
 
   public void setDesignation(String designation) {

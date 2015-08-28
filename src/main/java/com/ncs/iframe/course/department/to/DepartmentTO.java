@@ -39,7 +39,7 @@ public class DepartmentTO implements Serializable {
   private String desc;
   @Version
   private Integer version;
-  @OneToMany(fetch=FetchType.EAGER, mappedBy="departmentTO")
+  @OneToMany(fetch=FetchType.EAGER, mappedBy="department")
   @Cascade(value={org.hibernate.annotations.CascadeType.MERGE})
   private List<StaffTO> staffList = new ArrayList<StaffTO>();
 
