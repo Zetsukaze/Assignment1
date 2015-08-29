@@ -67,7 +67,6 @@
               </td>
               <td>
                 <p:inputText id="email" value="#{addStaffBean.staff.loginId}@corp.com.sg" required="true" label="#{msg['label.staff.loginid.mandatory']}" readonly="true">
-                  <!-- <f:validateRegex pattern="^[a-zA-z]{8,15}@corp\.com\.sg$" /> -->
                 </p:inputText>
               </td>
             </tr>
@@ -107,7 +106,7 @@
               </td>
               <td>
                 <p:selectOneMenu id="department" value="#{addStaffBean.staff.deptId}">
-                  <f:selectItem itemLabel="Please select an Option" />
+                  <f:selectItem itemLabel="Please select an Option" itemValue="null" />
                   <f:selectItems value="#{addStaffBean.getAllDepartments()}" var="department" itemLabel="#{department.name}" itemValue="#{department.id}" />
                 </p:selectOneMenu>
               </td>
@@ -129,7 +128,7 @@
               </td>
               <td>
                 <p:selectOneMenu id="reportingOfficer" value="#{addStaffBean.staff.roId}">
-                  <f:selectItem itemLabel="Please select an Option" />
+                  <f:selectItem itemLabel="Please select an Option" itemValue="null" />
                   <f:selectItems value="#{addStaffBean.getAllStaff()}" var="reportingOfficer" itemLabel="#{reportingOfficer.name}" itemValue="#{reportingOfficer.id}" />
                 </p:selectOneMenu>
               </td>

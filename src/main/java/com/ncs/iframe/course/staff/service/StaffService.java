@@ -10,6 +10,10 @@ public interface StaffService {
   public StaffTO checkDuplicateStaffNumExists(StaffTO staff);
 
   public StaffTO checkDuplicateLoginIdExists(StaffTO staff);
+  
+  public boolean checkCyclicReportingOfficer(StaffTO staff);
+  
+  public StaffTO checkExactStaffExists(StaffTO staff) throws InterruptedException;
 
   // Create
 
@@ -23,7 +27,7 @@ public interface StaffService {
 
   // Update
 
-  public StaffTO update(StaffTO staff);
+  public StaffTO update(StaffTO staff)throws InterruptedException;
 
   // Delete
 

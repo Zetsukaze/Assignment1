@@ -199,7 +199,6 @@ public class DepartmentFormBean {
 
   public void updateDepartment() {
     try {
-      String deptId = this.dept.getId();
       DepartmentTO updated = deptSvc.update(this.dept);
       if (updated != null) {
         JSFTools.processMessage(MESSAGE_PROPS, "msg.department.update.ok", FacesMessage.SEVERITY_INFO);
