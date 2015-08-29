@@ -98,8 +98,9 @@ public class StaffDAOImpl extends IframeHibernatePaginationDaoSupport implements
 
   public StaffTO update(StaffTO staff) {
     StaffTO updateStaffTO = (StaffTO) getCurrentSession().get(StaffTO.class, staff.getId());
+    log.info("StaffDAOImpl about to update staff: " + staff);
     BeanUtils.copyProperties(staff, updateStaffTO);
-    log.info("Updated StaffTO with id: " + staff.getId());
+    log.info("StaffDAOImpl updated staff: " + updateStaffTO);
     return updateStaffTO;
   }
 

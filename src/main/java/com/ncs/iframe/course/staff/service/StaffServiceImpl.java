@@ -54,26 +54,32 @@ public class StaffServiceImpl implements StaffService {
     return null;
   }
 
-  public boolean checkCyclicReportingOfficer(StaffTO staff) {
-    log.info("StaffServiceImpl checking for cyclic relationships..");
-    StaffTO changedRo = staff.getReportingOfficer();
-    if (changedRo != null) {
-      if (changedRo.getId().equals(staff.getId())) {
-        return true;
-      }
-      checkCyclicReportingOfficer(changedRo);
+  public void checkCyclicReportingOfficer(StaffTO staff, final StaffTO firstStaff) throws InterruptedException {
+    log.info("StaffServiceImpl STARTING cyclic check");
+    StaffTO ro = staff.getReportingOfficer();
+    if (ro == null) {
+      log.info("StaffServiceImpl did not find a cyclic relationship!");
+      return;
     }
-    return false;
+    String roId = ro.getId();
+    staff.setRoId(roId);
+    log.info("StaffServiceImpl checking staff id: " + firstStaff.getId() + " for cyclic relationship with RO: " + roId + " Name: " + ro.getName());
+    if (roId.equals(firstStaff.getId())) {
+      log.info("StaffServiceImpl found cyclic relationship!");
+      throw new InterruptedException("4");
+    }
+    log.info("StaffServiceImpl ENDING cyclic check");
+    checkCyclicReportingOfficer(ro, firstStaff);
   }
 
   public StaffTO checkExactStaffExists(StaffTO staff) throws InterruptedException {
     StaffTO checkExist = staffDAO.findById(staff.getId());
     if (checkExist != null) {
-      List<StaffTO> duplicateStaffNum = staffDAO.findByStaffNum(staff.getStaffNum()).getResult();
-      List<StaffTO> duplicateStaffLoginId = staffDAO.findByLoginId(staff.getLoginId()).getResult();
-      if (duplicateStaffNum.size() == 0 || duplicateStaffNum.size() == 1 && duplicateStaffNum.get(0).getId().equals(staff.getId())) {
-        if (duplicateStaffLoginId.size() == 0 || duplicateStaffLoginId.size() == 1 && duplicateStaffLoginId.get(0).getId().equals(staff.getId())) {
-          return staff;
+      List<StaffTO> duplicateStaffNum = staffDAO.findByStaffNum(checkExist.getStaffNum()).getResult();
+      List<StaffTO> duplicateStaffLoginId = staffDAO.findByLoginId(checkExist.getLoginId()).getResult();
+      if (duplicateStaffNum.size() == 0 || duplicateStaffNum.size() == 1 && duplicateStaffNum.get(0).getId().equals(checkExist.getId())) {
+        if (duplicateStaffLoginId.size() == 0 || duplicateStaffLoginId.size() == 1 && duplicateStaffLoginId.get(0).getId().equals(checkExist.getId())) {
+          return checkExist;
         } else {
           throw new InterruptedException("2");
         }
@@ -89,7 +95,7 @@ public class StaffServiceImpl implements StaffService {
   public StaffTO add(StaffTO staff) throws InterruptedException {
     StaffTO duplicateStaffNum = checkDuplicateStaffNumExists(staff);
     StaffTO duplicateLoginId = checkDuplicateLoginIdExists(staff);
-    DepartmentTO departmentExists = departmentDAO.findById(staff.getDeptId());
+    String deptId = staff.getDeptId();
 
     if (duplicateStaffNum == null) {
       throw new InterruptedException("1");
@@ -99,9 +105,9 @@ public class StaffServiceImpl implements StaffService {
       throw new InterruptedException("2");
     }
 
-    if (departmentExists != null) {
-      DepartmentTO department = departmentDAO.findById(departmentExists.getId());
-      if (department == null) {
+    if (deptId != null) {
+      DepartmentTO departmentExists = departmentDAO.findById(staff.getDeptId());
+      if (departmentExists != null) {
         throw new InterruptedException("3");
       }
     }
@@ -125,19 +131,20 @@ public class StaffServiceImpl implements StaffService {
 
   public StaffTO update(StaffTO staff) throws InterruptedException {
     StaffTO duplicateAnything = checkExactStaffExists(staff);
-    DepartmentTO departmentExists = departmentDAO.findById(staff.getDeptId());
-    boolean isCyclicRelationship = checkCyclicReportingOfficer(staff);
-
-    if (departmentExists != null) {
-      DepartmentTO department = departmentDAO.findById(departmentExists.getId());
-      if (department == null) {
-        throw new InterruptedException("3");
+    DepartmentTO tempDept = staff.getDepartment();
+    if (tempDept != null) {
+      String deptId = tempDept.getId();
+      if (deptId != null) {
+        DepartmentTO departmentExists = departmentDAO.findById(deptId);
+        if (departmentExists == null) {
+          throw new InterruptedException("3");
+        }
       }
     }
 
-    if (!isCyclicRelationship) {
-      throw new InterruptedException("4");
-    }
+    log.info("StaffServiceImpl BEFORE cyclic check");
+    checkCyclicReportingOfficer(staff, staff);
+    log.info("StaffServiceImpl AFTER cyclic check");
 
     StaffTO updated = staffDAO.update(staff);
     return updated;

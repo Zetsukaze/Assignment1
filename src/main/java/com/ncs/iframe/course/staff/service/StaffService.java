@@ -10,9 +10,9 @@ public interface StaffService {
   public StaffTO checkDuplicateStaffNumExists(StaffTO staff);
 
   public StaffTO checkDuplicateLoginIdExists(StaffTO staff);
-  
-  public boolean checkCyclicReportingOfficer(StaffTO staff);
-  
+
+  public void checkCyclicReportingOfficer(StaffTO staff, final StaffTO firstStaff) throws InterruptedException;
+
   public StaffTO checkExactStaffExists(StaffTO staff) throws InterruptedException;
 
   // Create

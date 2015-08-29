@@ -176,6 +176,7 @@ public class StaffFormBean {
         stream.read(buffer);
         stream.close();
         this.staff.setPhoto(buffer);
+        log.info("StaffFormBean updated photo: " + buffer);
         FacesContext.getCurrentInstance().addMessage(null, MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "msg.staff.photo.uploaded", fileName));
       } catch (IOException e) {
         log.info("StaffFormBean handleFileUpload failure: " + e.toString());
@@ -207,57 +208,62 @@ public class StaffFormBean {
   }
 
   public String checkForUpdatingStaffProcess(StaffTO staff) {
+    log.info("StaffFormBean checkForUpdatingStaffProcess START: " + staff);
     String redirectUpdate = "/xhtml/staff/update.xhtml";
     String redirectView = "/xhtml/staff/view.xhtml";
     try {
-      staffSvc.checkExactStaffExists(staff);
+      StaffTO duplicatedStaff = staffSvc.checkExactStaffExists(staff);
+      log.info("StaffFormBean checkForUpdatingStaffProcess checkExactStaffExists: " + staff);
       String deptId = staff.getDeptId();
+      log.info("StaffFormBean checkForUpdatingStaffProcess 1");
       String roId = staff.getRoId();
+      log.info("StaffFormBean checkForUpdatingStaffProcess 2");
 
-      if (!deptId.equals("null")) {
+      if (deptId != null && !deptId.equals("null")) {
+        log.info("StaffFormBean checkForUpdatingStaffProcess department exists");
         DepartmentTO departmentExists = deptSvc.findById(staff.getDeptId());
         if (departmentExists == null) {
-          return redirectUpdate;
+          throw new InterruptedException("3");
         }
+        staff.setDepartment(departmentExists);
       }
 
-      if (!roId.equals("null")) {
-        boolean isCyclicRelationship = staffSvc.checkCyclicReportingOfficer(staff);
-        if (isCyclicRelationship) {
-          throw new InterruptedException("4");
+      if (roId != null && !roId.equals("null")) {
+        log.info("StaffFormBean checkForUpdatingStaffProcess for cyclic RO");
+        StaffTO reportingOfficerExists = staffSvc.findById(roId);
+        if (reportingOfficerExists == null) {
+          throw new InterruptedException("MISSING RO OFFICER");
         }
+        staff.setReportingOfficer(reportingOfficerExists);
+        staffSvc.checkCyclicReportingOfficer(staff, staff);
       }
+      log.info("StaffFormBean checkForUpdatingStaffProcess DONE");
       return redirectView;
     } catch (InterruptedException e) {
       int errorType = Integer.parseInt(e.getMessage());
       switch (errorType) {
         case 1:
           log.info("StaffFormBean found duplicate staff number!");
-          // JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.staffnum.duplicate", FacesMessage.SEVERITY_WARN);
           break;
         case 2:
           log.info("StaffFormBean found duplicate staff login!");
-          // JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.loginid.duplicate", FacesMessage.SEVERITY_WARN);
           break;
         case 3:
           log.info("StaffFormBean found missing department!");
-          // JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.department.invalid", FacesMessage.SEVERITY_WARN);
           break;
         case 4:
           log.info("StaffFormBean found cyclic relationship!");
-          // JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.reportingofficer.invalid", FacesMessage.SEVERITY_WARN);
           break;
         case 5:
           log.info("StaffFormBean found missing staff!");
-          // JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.missing", FacesMessage.SEVERITY_WARN);
           break;
         default:
-          log.info("StaffFormBean updateStaffCheck InterruptedException: " + e.toString());
+          log.info("StaffFormBean checkForUpdatingStaffProcess InterruptedException: " + e.toString());
           break;
       }
       return redirectUpdate;
     } catch (Exception e) {
-      log.info("StaffFormBean updateStaffCheck Exception: " + e.toString());
+      log.info("StaffFormBean checkForUpdatingStaffProcess Exception: " + e.toString());
       return redirectUpdate;
     }
   }
@@ -270,10 +276,10 @@ public class StaffFormBean {
       String deptId = this.staff.getDeptId();
       String roId = this.staff.getRoId();
       this.staff.setEmail(loginId + "@corp.com.sg");
-      if (!deptId.equals("null")) {
+      if (deptId != null && !deptId.equals("null")) {
         this.staff.setDepartment(deptSvc.findById(deptId));
       }
-      if (!roId.equals("null")) {
+      if (roId != null && !roId.equals("null")) {
         this.staff.setReportingOfficer(staffSvc.findById(roId));
       }
       StaffTO addition = staffSvc.add(this.staff);
@@ -346,21 +352,22 @@ public class StaffFormBean {
 
   public void updateStaff() {
     try {
+      log.info("StaffFormBean updateStaff");
       String loginId = this.staff.getLoginId();
       String deptId = this.staff.getDeptId();
       String roId = this.staff.getRoId();
       this.staff.setEmail(loginId + "@corp.com.sg");
-      if (!deptId.equals("null")) {
+      if (deptId != null && !deptId.equals("null")) {
         this.staff.setDepartment(deptSvc.findById(deptId));
       }
-      if (!roId.equals("null")) {
+      if (roId != null && !roId.equals("null")) {
         this.staff.setReportingOfficer(staffSvc.findById(roId));
       }
       log.info("StaffFormBean about to update staff: " + this.staff);
       StaffTO updated = staffSvc.update(this.staff);
       if (updated != null) {
-        JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.add.ok", FacesMessage.SEVERITY_INFO);
-        this.staff = new StaffTO();
+        JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.update.ok", FacesMessage.SEVERITY_INFO);
+        this.staff = staffSvc.findById(updated.getId());
       }
     } catch (InterruptedException e) {
       int errorType = Integer.parseInt(e.getMessage());
