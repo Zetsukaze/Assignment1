@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i="http://iconnect.ncs.com.sg/jsf/iframe"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:aa="http://iconnect.ncs.com.sg/jsf/itrust"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/xhtml/templates/mainLayout.xhtml">
+
+  <ui:define name="pageTitle">
+    <h:form>
+      <p:breadCrumb>
+        <p:menuitem value="Categories" url="#" />
+        <p:menuitem value="#{msg['title.staff.maintain']}" update=":main">
+          <f:setPropertyActionListener value="/xhtml/staff/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+        </p:menuitem>
+        <p:menuitem value="#{msg['title.staff.view']}" url="#" />
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <h:form id="staff_view_form" value="#{updateStaffBean.staff}" val="staff" rendered="#{updateStaffBean.staff.id != null}">
+      <h:inputHidden id="staffId" value="#{updateStaffBean.staff.id}" />
+      <p:panel id="staffInformation" header="#{msg['label.staff.view']}">
+        <div class="entry">
+          <p:graphicImage value="#{imageStaffBean.displayPicture}">
+            <f:param name="staffId" value="#{updateStaffBean.staff.id}" />
+          </p:graphicImage>
+          <p:panelGrid>
+            <p:row>
+              <p:column>
+
+              </p:column>
+              <p:column>
+
+              </p:column>
+            </p:row>
+          </p:panelGrid>
+        </div>
+      </p:panel>
+    </h:form>
+  </ui:define>
+
+</ui:composition>
+

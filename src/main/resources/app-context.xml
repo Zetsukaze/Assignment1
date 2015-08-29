@@ -62,6 +62,9 @@
         <property name="staffService" ref="staffService"/>
         <property name="departmentService" ref="departmentService"/>
       </bean>
+      <bean id="imageStaffBean" class="com.ncs.iframe.course.staff.bean.StaffImageBean" scope="session">
+        <property name="staffService" ref="staffService"/>
+      </bean>
 
   <!-- Page Controller begin -->
 
