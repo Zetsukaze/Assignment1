@@ -184,6 +184,17 @@ public class StaffFormBean {
     }
   }
 
+  public String checkViewStaffProcess(String staffId) {
+    String redirectList = "/xhtml/staff/list.xhtml";
+    String redirectView = "/xhtml/staff/view.xhtml";
+    StaffTO checkStaff = staffSvc.findById(staffId);
+    if (checkStaff == null) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.missing", FacesMessage.SEVERITY_WARN);
+      return redirectList;
+    }
+    return redirectView;
+  }
+
   // Create
 
   public void addStaffProcess() {

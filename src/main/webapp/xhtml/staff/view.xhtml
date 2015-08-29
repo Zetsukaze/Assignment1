@@ -110,7 +110,10 @@
                 <h:outputText value="#{msg['label.staff.view.reportingofficer']}" />
               </p:column>
               <p:column>
-                <h:outputText value="#{updateStaffBean.staff.reportingOfficer.name}" />
+                <p:commandLink value="#{updateStaffBean.staff.reportingOfficer.name}" title="View Staff" action="#{updateStaffBean.initEditStaff(updateStaffBean.staff.reportingOfficer.id)}" update=":main">
+                  <f:setPropertyActionListener value="#{updateStaffBean.checkViewStaffProcess(updateStaffBean.staff.reportingOfficer.id)}" target="#{commonPageLayout.mainIncludePage}" />
+                </p:commandLink>
+                <h:outputText  />
               </p:column>
             </p:row>
             <p:row>
@@ -129,9 +132,9 @@
                       </f:facet>
                     </p:cellEditor>
                   </p:column>
-                  <p:column headerText="#{msg['label.staff.name']}" sortBy="#{sameStaff.name}">
+                  <p:column headerText="#{msg['label.staff.name']}">
                     <p:commandLink value="#{sameStaff.name}" title="View Staff" action="#{updateStaffBean.initEditStaff(sameStaff.id)}" update=":main">
-                      <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+                      <f:setPropertyActionListener value="#{updateStaffBean.checkViewStaffProcess(sameStaff.id)}" target="#{commonPageLayout.mainIncludePage}" />
                     </p:commandLink>
                   </p:column>
                 </p:dataTable>
@@ -153,9 +156,9 @@
                       </f:facet>
                     </p:cellEditor>
                   </p:column>
-                  <p:column headerText="#{msg['label.staff.name']}" sortBy="#{directStaff.name}">
+                  <p:column headerText="#{msg['label.staff.name']}">
                     <p:commandLink value="#{directStaff.name}" title="View Staff" action="#{updateStaffBean.initEditStaff(directStaff.id)}" update=":main">
-                      <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+                      <f:setPropertyActionListener value="#{updateStaffBean.checkViewStaffProcess(directStaff.id)}" target="#{commonPageLayout.mainIncludePage}" />
                     </p:commandLink>
                   </p:column>
                 </p:dataTable>

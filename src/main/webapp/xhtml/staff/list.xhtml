@@ -57,12 +57,12 @@
         </p:column>
         <p:column headerText="#{msg['label.staff.staffnum']}" sortBy="#{staff.staffNum}" style="width:64px">
           <p:commandLink value="#{staff.staffNum}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
-            <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            <f:setPropertyActionListener value="#{updateStaffBean.checkViewStaffProcess(staff.id)}" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
         <p:column headerText="#{msg['label.staff.name']}" sortBy="#{staff.name}">
           <p:commandLink value="#{staff.name}" title="View Staff" action="#{updateStaffBean.initEditStaff(staff.id)}" update=":main">
-            <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            <f:setPropertyActionListener value="#{updateStaffBean.checkViewStaffProcess(staff.id)}" target="#{commonPageLayout.mainIncludePage}" />
           </p:commandLink>
         </p:column>
         <f:facet name="footer">
