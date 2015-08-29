@@ -140,6 +140,17 @@ public class StaffTO implements Serializable {
     return staffList;
   }
 
+  public List<StaffTO> getStaffListWithout(String staffId) {
+    List<StaffTO> returnList = new ArrayList<StaffTO>();
+    for (int i = 0; i < staffList.size(); i++) {
+      StaffTO addStaff = staffList.get(i);
+      if (addStaff.getId() != staffId) {
+        returnList.add(addStaff);
+      }
+    }
+    return returnList;
+  }
+
   @Override
   public String toString() {
     return "StaffTO : {" + "ID: " + this.id + ", Staff No: " + this.staffNum + ", Name: " + this.name + ", Login ID: " + this.loginId + ", Email: " + this.email + ", Phone No: " + this.phoneNum + ", DOB: " + String.format("%1$tY/%1$tm/%1$td", dob) + ", Join Date: " + String.format("%1$tY/%1$tm/%1$td", joinDate) + ", Department ID: " + this.deptId + ", Designation: " + this.designation + ", RO ID: " + this.roId + ", Photo: " + this.photo + ", Version: " + this.version + "}";
