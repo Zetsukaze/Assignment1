@@ -106,7 +106,7 @@ public class StaffServiceImpl implements StaffService {
       throw new InterruptedException("2");
     }
 
-    if (deptId != null) {
+    if (deptId != null && !deptId.equals("null")) {
       DepartmentTO departmentExists = departmentDAO.findById(staff.getDeptId());
       if (departmentExists == null) {
         throw new InterruptedException("3");

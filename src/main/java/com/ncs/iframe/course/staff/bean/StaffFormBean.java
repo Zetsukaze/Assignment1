@@ -23,6 +23,7 @@ import com.ncs.iframe4.commons.logging.Logger;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 import com.ncs.iframe4.commons.to.SubjectBaseTO;
 import com.ncs.iframe4.commons.to.SubjectLoginBaseTO;
+import com.ncs.iframe4.commons.to.SubjectLoginBaseTOId;
 import com.ncs.iframe4.commons.tools.StringUtil;
 import com.ncs.iframe4.jsf.message.MessageUtils;
 import com.ncs.iframe4.jsf.pagination.PaginationDataModel;
@@ -303,13 +304,14 @@ public class StaffFormBean {
       StaffTO addition = staffSvc.add(this.staff);
       if (addition != null) {
         // iTrust stuff
+        String subjectId = this.staff.getId();
         SubjectBaseTO subject = aaCRUDService.getSubjectTOInstance();
+        subject.setSubjectId(subjectId);
         subject.setFirstName(this.staff.getName());
         subject.setEmail(this.staff.getEmail());
         subject.setStatus(ITrustConstants.ACTIVE_STATUS_VALUE);
         aaCRUDService.createSubject(subject);
-
-        String subjectId = subject.getSubjectId();
+        subjectId = subject.getSubjectId();
 
         SubjectLoginBaseTO subjectLogin = this.aaCRUDService.getSubjectLoginTOInstance();
         subjectLogin.setSubjectId(subjectId);
@@ -403,6 +405,26 @@ public class StaffFormBean {
       log.info("StaffFormBean about to update staff: " + this.staff);
       StaffTO updated = staffSvc.update(this.staff);
       if (updated != null) {
+        // iTrust stuff
+        String subjectId = this.staff.getId();
+
+        SubjectBaseTO baseSubject = aaCRUDService.getSubjectTOInstance();
+        baseSubject.setSubjectId(subjectId);
+        SubjectBaseTO subject = aaCRUDService.getSubject(baseSubject);
+        subject.setFirstName(updated.getName());
+        subject.setEmail(updated.getEmail());
+        aaCRUDService.updateSubject(subject);
+        subjectId = subject.getSubjectId();
+
+        SubjectLoginBaseTOId baseSubjectLoginId = aaCRUDService.getSubjectLoginTOIdInstance();
+        baseSubjectLoginId.setSubjectId(subjectId);
+        baseSubjectLoginId.setLoginMechanism(ITrustConstants.PASSWORD_AUTH_METHOD);
+        SubjectLoginBaseTO baseSubjectLogin = aaCRUDService.getSubjectLoginTOInstance();
+        baseSubjectLogin.setId(baseSubjectLoginId);
+        SubjectLoginBaseTO subjectLogin = aaCRUDService.getSubjectLogin(baseSubjectLogin);
+        subjectLogin.setLoginName(this.staff.getLoginId());
+        aaCRUDService.updateSubjectLogin(subjectLogin);
+
         JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.update.ok", FacesMessage.SEVERITY_INFO);
         this.staff = staffSvc.findById(updated.getId());
       }
