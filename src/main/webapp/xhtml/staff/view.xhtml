@@ -27,7 +27,7 @@
       <h:inputHidden id="staffId" value="#{updateStaffBean.staff.id}" />
       <p:panel id="staffInformation" header="#{msg['label.staff.view']}">
         <div class="entry">
-          <p:panelGrid rowStyleClass="even,odd">
+          <p:panelGrid>
             <p:row>
               <p:column rowspan="10">
                 <p:graphicImage value="#{imageStaffBean.displayPicture}" style="width:256px;height:256px">
@@ -118,7 +118,7 @@
                 <h:outputText value="#{msg['label.staff.view.samereportingofficer']}" />
               </p:column>
               <p:column colspan="2">
-                <p:dataTable id="searchSameReportingOfficerResults" value="#{updateStaffBean.staff.reportingOfficer.staffList}" var="sameStaff" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
+                <p:dataTable id="sameReportinfOfficer" value="#{updateStaffBean.staff.reportingOfficer.staffList}" var="sameStaff" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
                   <p:column headerText="#{msg['label.serialno']}" style="width:16px">
                     <p:cellEditor>
                       <f:facet name="output">
@@ -142,13 +142,41 @@
                 <h:outputText value="#{msg['label.staff.view.directreports']}" />
               </p:column>
               <p:column colspan="2">
-                <h:outputText value="#{updateStaffBean.staff.reportingOfficer.name}" />
+                <p:dataTable id="directReports" value="#{updateStaffBean.staff.staffList}" var="directStaff" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
+                  <p:column headerText="#{msg['label.serialno']}" style="width:16px">
+                    <p:cellEditor>
+                      <f:facet name="output">
+                        <h:outputText value="#{serialNo + 1}" />
+                      </f:facet>
+                      <f:facet name="input">
+                        <p:inputText value="#{serialNo + 1}" />
+                      </f:facet>
+                    </p:cellEditor>
+                  </p:column>
+                  <p:column headerText="#{msg['label.staff.name']}" sortBy="#{directStaff.name}">
+                    <p:commandLink value="#{directStaff.name}" title="View Staff" action="#{updateStaffBean.initEditStaff(directStaff.id)}" update=":main">
+                      <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+                    </p:commandLink>
+                  </p:column>
+                </p:dataTable>
               </p:column>
             </p:row>
           </p:panelGrid>
         </div>
       </p:panel>
+      <table class="std_table">
+        <tr>
+          <td>
+            <p:commandButton value="#{msg['button.staff.edit']}" action="#{updateStaffBean.initEditStaff(updateStaffBean.staff.id)}" update=":main">
+              <f:setPropertyActionListener value="/xhtml/staff/update.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            </p:commandButton>
+            &nbsp;&nbsp;
+            <p:commandButton value="#{msg['button.cancel']}" update=":main" immediate="true">
+              <f:setPropertyActionListener value="/xhtml/staff/list.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+            </p:commandButton>
+          </td>
+        </tr>
+      </table>
     </h:form>
   </ui:define>
-
 </ui:composition>

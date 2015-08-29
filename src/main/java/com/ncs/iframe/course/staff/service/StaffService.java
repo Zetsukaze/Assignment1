@@ -21,8 +21,6 @@ public interface StaffService {
 
   public StaffTO findById(String id);
 
-  public ListAndPagingInfo<StaffTO> findByReportingOfficer(String roId);
-
   // Update
 
   public StaffTO update(StaffTO staff);

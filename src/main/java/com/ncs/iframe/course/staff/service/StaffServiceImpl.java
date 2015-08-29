@@ -102,10 +102,6 @@ public class StaffServiceImpl implements StaffService {
     return staff;
   }
 
-  public ListAndPagingInfo<StaffTO> findByReportingOfficer(String roId) {
-    return staffDAO.findByReportingOfficer(roId);
-  }
-
   // Update
 
   public StaffTO update(StaffTO staff) {

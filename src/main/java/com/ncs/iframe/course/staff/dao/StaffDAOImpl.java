@@ -94,28 +94,6 @@ public class StaffDAOImpl extends IframeHibernatePaginationDaoSupport implements
     return instance;
   }
 
-  public ListAndPagingInfo<StaffTO> findByReportingOfficer(String roId) {
-    log.info("StaffDAOImpl findByReportingOfficer: " + roId);
-    DetachedCriteria criteria = DetachedCriteria.forClass(StaffTO.class);
-
-    if (!StringUtil.isEmptyString(roId)) {
-      log.info("StaffDAOImpl findByReportingOfficer step1");
-      criteria.add(
-        Restrictions.like("reportingOfficer", roId, MatchMode.EXACT)
-      );
-    }
-
-    if (PaginationContext.getPaginationSortOrderData() != null && PaginationContext.getPaginationSortOrderData().getSortValue() == null) {
-      log.info("StaffDAOImpl findByReportingOfficer step2");
-      PaginationContext.getPaginationSortOrderData().setSortValue("name");
-      PaginationContext.getPaginationSortOrderData().setAscending(true);
-      log.info("StaffDAOImpl findByReportingOfficer step3");
-    }
-    ListAndPagingInfo<StaffTO> returnStuff = findByCriteria4Page(criteria);
-    log.info("StaffDAOImpl findByReportingOfficer step4");
-    return returnStuff;
-  }
-
   // Update
 
   public StaffTO update(StaffTO staff) {

@@ -19,8 +19,6 @@ public interface StaffDAO {
 
   public StaffTO findById(String id);
 
-  public ListAndPagingInfo<StaffTO> findByReportingOfficer(String roId);
-
   // Update
 
   public StaffTO update(StaffTO staff);
