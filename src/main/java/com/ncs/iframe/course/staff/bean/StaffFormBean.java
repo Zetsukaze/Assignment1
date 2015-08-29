@@ -31,6 +31,7 @@ public class StaffFormBean {
   private String name;
   private StaffService staffSvc;
   private LazyDataModel<StaffTO> staffList;
+  private LazyDataModel<StaffTO> sameReportingOfficerStaffList;
   private StaffTO[] selectedStaff;
   private StaffTO staff = new StaffTO();
   private DepartmentService deptSvc;
@@ -96,7 +97,41 @@ public class StaffFormBean {
     return null;
   }
 
+  public LazyDataModel<StaffTO> getSameReportingOfficerStaffList(final String roId) {
+    PaginationDataModel<StaffTO> refreshedLazyDataModel = new PaginationDataModel<StaffTO>() {
 
+      ListAndPagingInfo<StaffTO> listAndPagingInfo = null;
+
+      public ListAndPagingInfo loadPaginationData(Map filters) {
+        log.info("StaffFormBean getSameReportingOfficerStaffList loading pagination data with RO ID: " + roId);
+        listAndPagingInfo = staffSvc.findByReportingOfficer(roId);
+        return listAndPagingInfo;
+      }
+
+      public StaffTO getRowData(String rowKey) {
+        if (listAndPagingInfo != null) {
+          List<StaffTO> list = listAndPagingInfo.getResult();
+          for (int i = 0; i < list.size(); i++) {
+            StaffTO staffTO = list.get(i);
+            String id = staffTO.getId();
+            if (id.equals(rowKey)) {
+              return staffTO;
+            }
+          }
+        }
+        return null;
+      }
+      public Object getRowKey(StaffTO object) {
+        return object.getId();
+      }
+    };
+
+    int size = refreshedLazyDataModel.getPageSize();
+    int pageSize = (size == 0) ? 1 : size;
+    refreshedLazyDataModel.initialWrappedData(0, pageSize);
+    sameReportingOfficerStaffList = refreshedLazyDataModel;
+    return sameReportingOfficerStaffList;
+  }
 
   // Setters
 
@@ -122,6 +157,11 @@ public class StaffFormBean {
 
   public void setDepartmentService(DepartmentService deptSvc) {
     this.deptSvc = deptSvc;
+  }
+
+  public void setSameReportingOfficerStaffList(LazyDataModel<StaffTO> sameReportingOfficerStaffList) {
+    log.info("StaffFormBean setSameReportingOfficerStaffList");
+    this.sameReportingOfficerStaffList = sameReportingOfficerStaffList;
   }
 
   // Validators

@@ -1,9 +1,13 @@
 package com.ncs.iframe.course.staff.bean;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
+import javax.imageio.ImageIO;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -16,7 +20,6 @@ public class StaffImageBean {
 
   private transient Logger log = Logger.getLogger(getClass());
   private StaffService staffSvc;
-  private StreamedContent displayPicture;
 
   // Getters
 
@@ -36,15 +39,20 @@ public class StaffImageBean {
         StaffTO staff = staffSvc.findById(staffId);
         byte[] buffer = staff.getPhoto();
         String mimeType = "image/jpg";
-        log.info("StaffImage before generating image for staff: " + staff + "with photo: " + buffer);
-        this.displayPicture = new DefaultStreamedContent(new ByteArrayInputStream(buffer));
-        return this.displayPicture;
-        // return buffer == null ? new DefaultStreamedContent() : new DefaultStreamedContent(new ByteArrayInputStream(buffer), mimeType);
+        log.info("StaffImage before generating image for staff: " + staff + " with photo: " + buffer);
+        if (buffer != null) {
+          return new DefaultStreamedContent(new ByteArrayInputStream(buffer), mimeType);
+        }
+        BufferedImage placeholderImage = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = placeholderImage.createGraphics();
+        graphics.drawString("There is no image found", 28, 10);
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(placeholderImage, "jpg", os);
+        return new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()), mimeType);
       } catch (Exception e) {
-        log.info("StaffImageBean getDisplayPicture error: " + e.getStackTrace());
+        log.info("StaffImageBean getDisplayPicture error: " + e.getCause());
+        return new DefaultStreamedContent();
       }
-      log.info("StaffImageBean getDisplayPicture should not reach here!");
-      return new DefaultStreamedContent();
     }
   }
 

@@ -23,20 +23,126 @@
   </ui:define>
 
   <ui:define name="content">
-    <h:form id="staff_view_form" value="#{updateStaffBean.staff}" val="staff" rendered="#{updateStaffBean.staff.id != null}">
+    <h:form id="staff_view_form" value="#{updateStaffBean.staff}" rendered="#{updateStaffBean.staff.id != null}">
       <h:inputHidden id="staffId" value="#{updateStaffBean.staff.id}" />
       <p:panel id="staffInformation" header="#{msg['label.staff.view']}">
         <div class="entry">
-          <p:graphicImage value="#{imageStaffBean.displayPicture}">
-            <f:param name="staffId" value="#{updateStaffBean.staff.id}" />
-          </p:graphicImage>
-          <p:panelGrid>
+          <p:panelGrid rowStyleClass="even,odd">
             <p:row>
-              <p:column>
-
+              <p:column rowspan="10">
+                <p:graphicImage value="#{imageStaffBean.displayPicture}" style="width:256px;height:256px">
+                  <f:param name="staffId" value="#{updateStaffBean.staff.id}" />
+                </p:graphicImage>
               </p:column>
               <p:column>
-
+                <h:outputText value="#{msg['label.staff.view.name']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.name}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.staffnum']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.staffNum}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.loginid']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.loginId}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.email']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.email}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.phonenum']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.phoneNum}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.dob']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.dob}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.joindate']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.joinDate}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.department']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.department.getName()}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.designation']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.designation}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.reportingofficer']}" />
+              </p:column>
+              <p:column>
+                <h:outputText value="#{updateStaffBean.staff.reportingOfficer.name}" />
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.samereportingofficer']}" />
+              </p:column>
+              <p:column colspan="2">
+                <p:dataTable id="searchSameReportingOfficerResults" value="#{updateStaffBean.staff.reportingOfficer.staffList}" var="sameStaff" paginator="true" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" rowStyleClass="even,odd" emptyMessage="#{msg['msg.no.matching.records']}" paginatorPosition="top" paginatorAlwaysVisible="true" lazy="true" editable="false" rowIndexVar="serialNo">
+                  <p:column headerText="#{msg['label.serialno']}" style="width:16px">
+                    <p:cellEditor>
+                      <f:facet name="output">
+                        <h:outputText value="#{serialNo + 1}" />
+                      </f:facet>
+                      <f:facet name="input">
+                        <p:inputText value="#{serialNo + 1}" />
+                      </f:facet>
+                    </p:cellEditor>
+                  </p:column>
+                  <p:column headerText="#{msg['label.staff.name']}" sortBy="#{sameStaff.name}">
+                    <p:commandLink value="#{sameStaff.name}" title="View Staff" action="#{updateStaffBean.initEditStaff(sameStaff.id)}" update=":main">
+                      <f:setPropertyActionListener value="/xhtml/staff/view.xhtml" target="#{commonPageLayout.mainIncludePage}" />
+                    </p:commandLink>
+                  </p:column>
+                </p:dataTable>
+              </p:column>
+            </p:row>
+            <p:row>
+              <p:column>
+                <h:outputText value="#{msg['label.staff.view.directreports']}" />
+              </p:column>
+              <p:column colspan="2">
+                <h:outputText value="#{updateStaffBean.staff.reportingOfficer.name}" />
               </p:column>
             </p:row>
           </p:panelGrid>
