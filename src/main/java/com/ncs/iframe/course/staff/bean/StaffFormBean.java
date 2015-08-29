@@ -21,9 +21,15 @@ import com.ncs.iframe.course.staff.service.StaffService;
 import com.ncs.iframe.course.staff.to.StaffTO;
 import com.ncs.iframe4.commons.logging.Logger;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
+import com.ncs.iframe4.commons.to.SubjectBaseTO;
+import com.ncs.iframe4.commons.to.SubjectLoginBaseTO;
+import com.ncs.iframe4.commons.tools.StringUtil;
 import com.ncs.iframe4.jsf.message.MessageUtils;
 import com.ncs.iframe4.jsf.pagination.PaginationDataModel;
 import com.ncs.iframe4.jsf.util.JSFTools;
+import com.ncs.itrust4.core.ITrustConstants;
+import com.ncs.itrust4.core.service.AACRUDService;
+import com.ncs.itrust4.crypto.PasswordService;
 
 public class StaffFormBean {
 
@@ -35,6 +41,7 @@ public class StaffFormBean {
   private StaffTO[] selectedStaff;
   private StaffTO staff = new StaffTO();
   private DepartmentService deptSvc;
+  private AACRUDService aaCRUDService;
 
   // Constructors
 
@@ -97,6 +104,10 @@ public class StaffFormBean {
     return null;
   }
 
+  public AACRUDService getAaCRUDService() {
+    return aaCRUDService;
+  }
+
   // Setters
 
   public void setName(String name) {
@@ -121,6 +132,10 @@ public class StaffFormBean {
 
   public void setDepartmentService(DepartmentService deptSvc) {
     this.deptSvc = deptSvc;
+  }
+
+  public void setAaCRUDService(AACRUDService aaCRUDService) {
+    this.aaCRUDService = aaCRUDService;
   }
 
   // Validators
@@ -278,13 +293,34 @@ public class StaffFormBean {
       String roId = this.staff.getRoId();
       this.staff.setEmail(loginId + "@corp.com.sg");
       if (deptId != null && !deptId.equals("null")) {
+        log.info("StaffFormBean addStaffProcess check for department: " + deptId);
         this.staff.setDepartment(deptSvc.findById(deptId));
       }
       if (roId != null && !roId.equals("null")) {
+        log.info("StaffFormBean addStaffProcess check for RO: " + roId);
         this.staff.setReportingOfficer(staffSvc.findById(roId));
       }
       StaffTO addition = staffSvc.add(this.staff);
       if (addition != null) {
+        // iTrust stuff
+        SubjectBaseTO subject = aaCRUDService.getSubjectTOInstance();
+        subject.setFirstName(this.staff.getName());
+        subject.setEmail(this.staff.getEmail());
+        subject.setStatus(ITrustConstants.ACTIVE_STATUS_VALUE);
+        aaCRUDService.createSubject(subject);
+
+        String subjectId = subject.getSubjectId();
+
+        SubjectLoginBaseTO subjectLogin = this.aaCRUDService.getSubjectLoginTOInstance();
+        subjectLogin.setSubjectId(subjectId);
+        subjectLogin.setLoginMechanism(ITrustConstants.PASSWORD_AUTH_METHOD);
+        subjectLogin.setLoginName(this.staff.getLoginId());
+        String password = "password1";
+        if(!StringUtil.isEmptyString(password)){
+          subjectLogin.setPassword(PasswordService.encrypt(password));
+        }
+        aaCRUDService.createSubjectLogin(subjectLogin);
+
         JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.add.ok", FacesMessage.SEVERITY_INFO);
         this.staff = new StaffTO();
       }

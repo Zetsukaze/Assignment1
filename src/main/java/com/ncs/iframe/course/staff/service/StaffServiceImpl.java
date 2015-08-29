@@ -38,6 +38,7 @@ public class StaffServiceImpl implements StaffService {
   // Validators
 
   public StaffTO checkDuplicateStaffNumExists(StaffTO staff) {
+    log.info("StaffServiceImpl checkDuplicateStaffNumExists staffNum: " + staff.getStaffNum());
     List<StaffTO> duplicateList = staffDAO.findByStaffNum(staff.getStaffNum()).getResult();
     if (duplicateList.size() == 0) {
       return staff;
@@ -46,7 +47,7 @@ public class StaffServiceImpl implements StaffService {
   }
 
   public StaffTO checkDuplicateLoginIdExists(StaffTO staff) {
-    log.info("StaffServiceImpl checking for duplicate loginId: " + staff.getLoginId());
+    log.info("StaffServiceImpl checkDuplicateLoginIdExists loginId: " + staff.getLoginId());
     List<StaffTO> duplicateList = staffDAO.findByLoginId(staff.getLoginId()).getResult();
     if (duplicateList.size() == 0) {
       return staff;
@@ -107,7 +108,7 @@ public class StaffServiceImpl implements StaffService {
 
     if (deptId != null) {
       DepartmentTO departmentExists = departmentDAO.findById(staff.getDeptId());
-      if (departmentExists != null) {
+      if (departmentExists == null) {
         throw new InterruptedException("3");
       }
     }
