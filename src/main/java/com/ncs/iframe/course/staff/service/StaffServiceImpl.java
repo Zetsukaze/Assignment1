@@ -156,6 +156,13 @@ public class StaffServiceImpl implements StaffService {
     if (staffArray != null && staffArray.length > 0) {
       for (int i = 0; i < staffArray.length; i++) {
         StaffTO staff = staffArray[i];
+        List<StaffTO> directReports = staff.getStaffList();
+        for (int i1 = 0; i1 < directReports.size(); i1++) {
+          StaffTO underling = directReports.get(i1);
+          underling.setReportingOfficer(null);
+          underling.setRoId(null);
+          staffDAO.update(underling);
+        }
         staffDAO.delete(staff);
       }
     }

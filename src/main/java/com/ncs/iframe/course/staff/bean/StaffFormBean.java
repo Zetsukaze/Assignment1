@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.UploadedFile;
+import org.springframework.orm.hibernate4.HibernateOptimisticLockingFailureException;
 
 import com.ncs.iframe.course.department.service.DepartmentService;
 import com.ncs.iframe.course.department.to.DepartmentTO;
@@ -400,7 +401,20 @@ public class StaffFormBean {
   // Delete
 
   public void deleteStaffProcess(StaffTO[] deleteStaff) {
-    staffSvc.delete(deleteStaff);
+    log.info("StaffFormBean deleteStaffProcess: " + deleteStaff.length);
+    if (deleteStaff == null || deleteStaff.length == 0) {
+      JSFTools.processMessage(MESSAGE_PROPS, "label.delete.info", FacesMessage.SEVERITY_WARN);
+      return;
+    }
+    try {
+      int length = deleteStaff.length;
+      staffSvc.delete(deleteStaff);
+      FacesContext.getCurrentInstance().addMessage(null, MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "msg.staff.delete.ok", length));
+    } catch (HibernateOptimisticLockingFailureException e) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.missing", FacesMessage.SEVERITY_WARN);
+    } catch (Exception e) {
+      log.info("StaffFormBean deleteStaffProcess Exception: " + e.toString());
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.delete.error", FacesMessage.SEVERITY_ERROR);
+    }
   }
-
 }
