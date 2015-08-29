@@ -27,5 +27,5 @@ public interface DepartmentService {
 
   // Delete
 
-  public void delete(DepartmentTO[] departmentArray);
+  public void delete(DepartmentTO[] departmentArray) throws InterruptedException;
 }

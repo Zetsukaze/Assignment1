@@ -231,6 +231,8 @@ public class DepartmentFormBean {
       FacesContext.getCurrentInstance().addMessage(null, MessageUtils.getMessage(MESSAGE_PROPS, FacesMessage.SEVERITY_INFO, "msg.department.delete.ok", length));
     } catch (HibernateOptimisticLockingFailureException e) {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.missing", FacesMessage.SEVERITY_WARN);
+    } catch (InterruptedException e) {
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.department.delete.staff", FacesMessage.SEVERITY_WARN);
     } catch (Exception e) {
       JSFTools.processMessage(MESSAGE_PROPS, "msg.department.delete.error", FacesMessage.SEVERITY_ERROR);
       // JSFTools.processMessage(MESSAGE_PROPS, e.toString(), FacesMessage.SEVERITY_ERROR);

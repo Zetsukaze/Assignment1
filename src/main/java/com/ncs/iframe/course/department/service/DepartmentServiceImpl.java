@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ncs.iframe.course.department.dao.DepartmentDAO;
 import com.ncs.iframe.course.department.to.DepartmentTO;
+import com.ncs.iframe.course.staff.to.StaffTO;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
 
 public class DepartmentServiceImpl implements DepartmentService {
@@ -78,10 +79,14 @@ public class DepartmentServiceImpl implements DepartmentService {
 
   // Delete
 
-  public void delete(DepartmentTO[] departmentArray) {
+  public void delete(DepartmentTO[] departmentArray) throws InterruptedException {
     if (departmentArray != null && departmentArray.length > 0) {
       for (int i = 0; i < departmentArray.length; i++) {
         DepartmentTO department = departmentArray[i];
+        List<StaffTO> staffList = department.getStaffList();
+        if (staffList.size() > 0) {
+          throw new InterruptedException();
+        }
         departmentDAO.delete(department);
       }
     }
