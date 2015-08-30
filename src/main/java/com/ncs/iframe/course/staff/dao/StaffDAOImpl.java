@@ -181,6 +181,14 @@ public class StaffDAOImpl extends IframeHibernatePaginationDaoSupport implements
 
   public void delete(StaffTO staff) {
     StaffTO deleteStaffTO = (StaffTO) getCurrentSession().get(StaffTO.class, staff.getId());
+    String subjectId = deleteStaffTO.getId();
+    SubjectLoginBaseTO subjectLogin = this.aaCRUDService.getSubjectLoginTOInstance();
+    subjectLogin.setSubjectId(subjectId);
+    aaCRUDService.deleteSubjectLogin(subjectLogin);
+    SubjectBaseTO subject = aaCRUDService.getSubjectTOInstance();
+    subject.setSubjectId(subjectId);
+    aaCRUDService.deleteSubject(subject, true);
+
     getCurrentSession().delete(deleteStaffTO);
     log.info("StaffDAOImpl delete: " + staff);
   }
