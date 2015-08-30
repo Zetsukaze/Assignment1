@@ -74,11 +74,9 @@ public class StaffDAOImpl extends IframeHibernatePaginationDaoSupport implements
     }
     aaCRUDService.createSubjectLogin(subjectLogin);
     log.info("StaffDAOImpl after saving staff iTrustLogin: " + subjectId);
+    
     staff.setId(subjectId);
     this.getCurrentSession().save(staff);
-    // StaffTO addStaffTO = (StaffTO) getCurrentSession().get(StaffTO.class, staff.getId());
-
-    // BeanUtils.copyProperties(staff, addStaffTO);
     log.info("StaffDAOImpl saved StaffTO successful: " + staff);
   }
 
