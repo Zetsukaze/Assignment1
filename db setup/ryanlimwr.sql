@@ -3,6 +3,7 @@ drop schema if exists ryanlimwr;
 create schema ryanlimwr default character set utf8;
 use ryanlimwr;
 
+drop table if exists tbl_itrust_aud;
 drop table if exists tbl_departments_aud;
 drop table if exists tbl_departments;
 drop table if exists tbl_staff_aud;
@@ -872,6 +873,19 @@ create table tbl_staff_aud (
   version integer,
   primary key (id, rev),
   foreign key (rev) references tbl_audit_rev_info (id)
+);
+
+create table tbl_itrust_aud (
+  audit_id int(8) not null auto_increment,
+  txn_type varchar(6),
+  tbl_name varchar(256),
+  record_id varchar(32),
+  txn_author_id varchar(32),
+  txn_date timestamp not null default current_timestamp,
+  txn_field longtext,
+  txn_detail_bef longtext,
+  txn_detail_aft longtext,
+  primary key (audit_id)
 );
 
 insert into TBL_CODETYPE (CODETYPE_ID, CODETYPE_DESC, CODETYPE_TABLE, READ_ONLY, COL_CODETYPE_ID, COL_CODE_ID, COL_CODE_DESC, COL_CODE_SEQ, COL_STATUS, COL_EFFECTIVE_DT, COL_EXPIRY_DT, EDIT_URL, ADD_URL, OWNER_GROUP, UPDATED_BY, UPDATED_DT, COL_CODE_LOCALE) values('acm_res','ACM Resources Type','TBL_CODE_INT','Y','CODETYPE_ID','CODE_ID','CODE_DESC','CODE_SEQ',null,null,null,'/codeadmin/viewedit_int.do',null,'DEF-group-groupA',null,null,'LOCALE');
