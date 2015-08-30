@@ -1,5 +1,8 @@
 package com.ncs.iframe.course.staff.dao;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -48,6 +51,8 @@ public class StaffDAOImpl extends IframeHibernatePaginationDaoSupport implements
   // Create
 
   public void save(StaffTO staff) {
+    Calendar dateTimeNow = Calendar.getInstance();
+    Timestamp timestamp = new Timestamp(dateTimeNow.getTimeInMillis());
     String subjectId = staff.getId();
     log.info("StaffDAOImpl before saving staff: " + subjectId);
     SubjectBaseTO subject = aaCRUDService.getSubjectTOInstance();
@@ -62,6 +67,7 @@ public class StaffDAOImpl extends IframeHibernatePaginationDaoSupport implements
     subjectLogin.setSubjectId(subjectId);
     subjectLogin.setLoginMechanism(ITrustConstants.PASSWORD_AUTH_METHOD);
     subjectLogin.setLoginName(staff.getLoginId());
+    subjectLogin.setPasswordChangedDate(timestamp);
     String password = "password1";
     if(!StringUtil.isEmptyString(password)){
       subjectLogin.setPassword(PasswordService.encrypt(password));
