@@ -41,6 +41,7 @@
 
       <bean id="staffDAO" class="com.ncs.iframe.course.staff.dao.StaffDAOImpl">
         <constructor-arg ref="sessionFactory"/>
+        <property name="aaCRUDService" ref="itrust.core.aaCRUDService"/>
       </bean>
       <bean id="staffService" class="com.ncs.iframe.course.staff.service.StaffServiceImpl">
         <property name="staffDAO" ref="staffDAO"/>
@@ -49,22 +50,18 @@
       <bean id="addStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
         <property name="departmentService" ref="departmentService"/>
-        <property name="aaCRUDService" ref="itrust.core.aaCRUDService"/>
       </bean>
       <bean id="searchStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
         <property name="departmentService" ref="departmentService"/>
-        <property name="aaCRUDService" ref="itrust.core.aaCRUDService"/>
       </bean>
       <bean id="updateStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
         <property name="departmentService" ref="departmentService"/>
-        <property name="aaCRUDService" ref="itrust.core.aaCRUDService"/>
       </bean>
       <bean id="deleteStaffBean" class="com.ncs.iframe.course.staff.bean.StaffFormBean" scope="view">
         <property name="staffService" ref="staffService"/>
         <property name="departmentService" ref="departmentService"/>
-        <property name="aaCRUDService" ref="itrust.core.aaCRUDService"/>
       </bean>
       <bean id="imageStaffBean" class="com.ncs.iframe.course.staff.bean.StaffImageBean" scope="request">
         <property name="staffService" ref="staffService"/>

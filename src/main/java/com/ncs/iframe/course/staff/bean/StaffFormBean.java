@@ -21,16 +21,9 @@ import com.ncs.iframe.course.staff.service.StaffService;
 import com.ncs.iframe.course.staff.to.StaffTO;
 import com.ncs.iframe4.commons.logging.Logger;
 import com.ncs.iframe4.commons.pagination.ListAndPagingInfo;
-import com.ncs.iframe4.commons.to.SubjectBaseTO;
-import com.ncs.iframe4.commons.to.SubjectLoginBaseTO;
-import com.ncs.iframe4.commons.to.SubjectLoginBaseTOId;
-import com.ncs.iframe4.commons.tools.StringUtil;
 import com.ncs.iframe4.jsf.message.MessageUtils;
 import com.ncs.iframe4.jsf.pagination.PaginationDataModel;
 import com.ncs.iframe4.jsf.util.JSFTools;
-import com.ncs.itrust4.core.ITrustConstants;
-import com.ncs.itrust4.core.service.AACRUDService;
-import com.ncs.itrust4.crypto.PasswordService;
 
 public class StaffFormBean {
 
@@ -42,7 +35,6 @@ public class StaffFormBean {
   private StaffTO[] selectedStaff;
   private StaffTO staff = new StaffTO();
   private DepartmentService deptSvc;
-  private AACRUDService aaCRUDService;
 
   // Constructors
 
@@ -105,10 +97,6 @@ public class StaffFormBean {
     return null;
   }
 
-  public AACRUDService getAaCRUDService() {
-    return aaCRUDService;
-  }
-
   // Setters
 
   public void setName(String name) {
@@ -133,10 +121,6 @@ public class StaffFormBean {
 
   public void setDepartmentService(DepartmentService deptSvc) {
     this.deptSvc = deptSvc;
-  }
-
-  public void setAaCRUDService(AACRUDService aaCRUDService) {
-    this.aaCRUDService = aaCRUDService;
   }
 
   // Validators
@@ -303,26 +287,6 @@ public class StaffFormBean {
       }
       StaffTO addition = staffSvc.add(this.staff);
       if (addition != null) {
-        // iTrust stuff
-        String subjectId = this.staff.getId();
-        SubjectBaseTO subject = aaCRUDService.getSubjectTOInstance();
-        subject.setSubjectId(subjectId);
-        subject.setFirstName(this.staff.getName());
-        subject.setEmail(this.staff.getEmail());
-        subject.setStatus(ITrustConstants.ACTIVE_STATUS_VALUE);
-        aaCRUDService.createSubject(subject);
-        subjectId = subject.getSubjectId();
-
-        SubjectLoginBaseTO subjectLogin = this.aaCRUDService.getSubjectLoginTOInstance();
-        subjectLogin.setSubjectId(subjectId);
-        subjectLogin.setLoginMechanism(ITrustConstants.PASSWORD_AUTH_METHOD);
-        subjectLogin.setLoginName(this.staff.getLoginId());
-        String password = "password1";
-        if(!StringUtil.isEmptyString(password)){
-          subjectLogin.setPassword(PasswordService.encrypt(password));
-        }
-        aaCRUDService.createSubjectLogin(subjectLogin);
-
         JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.add.ok", FacesMessage.SEVERITY_INFO);
         this.staff = new StaffTO();
       }
@@ -405,26 +369,6 @@ public class StaffFormBean {
       log.info("StaffFormBean about to update staff: " + this.staff);
       StaffTO updated = staffSvc.update(this.staff);
       if (updated != null) {
-        // iTrust stuff
-        String subjectId = this.staff.getId();
-
-        SubjectBaseTO baseSubject = aaCRUDService.getSubjectTOInstance();
-        baseSubject.setSubjectId(subjectId);
-        SubjectBaseTO subject = aaCRUDService.getSubject(baseSubject);
-        subject.setFirstName(updated.getName());
-        subject.setEmail(updated.getEmail());
-        aaCRUDService.updateSubject(subject);
-        subjectId = subject.getSubjectId();
-
-        SubjectLoginBaseTOId baseSubjectLoginId = aaCRUDService.getSubjectLoginTOIdInstance();
-        baseSubjectLoginId.setSubjectId(subjectId);
-        baseSubjectLoginId.setLoginMechanism(ITrustConstants.PASSWORD_AUTH_METHOD);
-        SubjectLoginBaseTO baseSubjectLogin = aaCRUDService.getSubjectLoginTOInstance();
-        baseSubjectLogin.setId(baseSubjectLoginId);
-        SubjectLoginBaseTO subjectLogin = aaCRUDService.getSubjectLogin(baseSubjectLogin);
-        subjectLogin.setLoginName(this.staff.getLoginId());
-        aaCRUDService.updateSubjectLogin(subjectLogin);
-
         JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.update.ok", FacesMessage.SEVERITY_INFO);
         this.staff = staffSvc.findById(updated.getId());
       }
@@ -452,7 +396,7 @@ public class StaffFormBean {
       }
     } catch (Exception e) {
       log.info("StaffFormBean updateStaff Exception: " + e.toString());
-      JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.add.error", FacesMessage.SEVERITY_ERROR);
+      JSFTools.processMessage(MESSAGE_PROPS, "msg.staff.update.error", FacesMessage.SEVERITY_ERROR);
     }
   }
 

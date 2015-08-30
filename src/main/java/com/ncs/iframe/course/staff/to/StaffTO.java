@@ -35,8 +35,6 @@ public class StaffTO implements Serializable {
 
   private static final long serialVersionUID = 702347721425471803L;
   @Id
-  @GeneratedValue(generator = "system-uuid")
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @Column(name = "id")
   private String id;
   @Column(name = "staff_no")
